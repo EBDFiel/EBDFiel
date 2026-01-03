@@ -175,6 +175,34 @@
             color: var(--secondary);
         }
         
+        /* Quiz Button */
+        .quiz-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quiz-button:hover {
+            background-color: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+        }
+        
+        .quiz-button:active {
+            transform: translateY(1px);
+        }
+        
         /* Main Content */
         .container {
             max-width: 1200px;
@@ -1040,6 +1068,25 @@
         <section id="lessons">
             <h2 class="section-title">Lições da EBD Betel</h2>
             
+            <!-- NOVA SEÇÃO: QUIZ DAS LIÇÕES -->
+            <div class="quiz-section" style="text-align: center; margin-bottom: 3rem;">
+                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 2.5rem; border-radius: var(--radius); box-shadow: var(--shadow); color: white; max-width: 800px; margin: 0 auto 2rem;">
+                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: white;">
+                        <i class="fas fa-question-circle"></i> Teste seu Conhecimento
+                    </h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
+                        Aprimore seu aprendizado com nossos quizzes interativos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras.
+                    </p>
+                    <a href="https://ebdfiel.github.io/ebd-licoes-2026/" target="_blank" class="quiz-button" style="display: inline-block; background-color: var(--secondary); color: var(--dark); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; transition: all 0.3s; border: 2px solid var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
+                        <i class="fas fa-brain"></i> Quiz das Lições
+                    </a>
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                        <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
+                    </p>
+                </div>
+            </div>
+            <!-- FIM DA SEÇÃO QUIZ -->
+            
             <div class="filters">
                 <button class="filter-btn active" data-filter="all">Todas as Lições</button>
                 <button class="filter-btn" data-filter="trim1">1º Trimestre</button>
@@ -1498,14 +1545,14 @@
                 subpoints: [
                     {
                         title: "1.1. O arrependimento é uma ordenança",
-                        content: "No AT, os profetas tinham a incumbência de confrontar o povo e pregar a mensagem do arrependimento. Alguns deles falaram ao povo sobre a importância de voltarem-se para Deus mediante o arrependimento sincero (Is 30.15; Jr 8.6; Ez 14.6). A advertência dos profetas era para que os israelitas se arrependessem de suas iniquidades e se voltassem para Deus, abandonando a vida de pecado para fazer o bem (Cl 3.9,10).",
+                        content: "No AT, os profetas tinham a incumbência de confrontar o povo e pregar a mensagem do arrependimento. Alguns deles falaram ao povo sobre a importância de voltarem-se para God mediante o arrependimento sincero (Is 30.15; Jr 8.6; Ez 14.6). A advertência dos profetas era para que os israelitas se arrependessem de suas iniquidades e se voltassem para God, abandonando a vida de pecado para fazer o bem (Cl 3.9,10).",
                         explanation: "Desde o Antigo Testamento, Deus chama o ser humano ao arrependimento por meio de profetas (Isaías 30:15; Jeremias 8:6). No Novo Testamento, João Batista e Jesus iniciam seus ministérios com a mensagem: 'Arrependei-vos!' (Mateus 3:2; 4:17). O arrependimento não é opcional; é uma resposta necessária ao convite divino, produzida pela convicção do Espírito Santo através da Palavra (João 16:8; Hebreus 4:12). O arrependimento bíblico (metanoia) implica mudança de mente e direção, não apenas remorso temporário.",
                         application: "Na vida cristã, o arrependimento se expressa quando reconhecemos pecados específicos (como mentiras ou mágoas) e os confessamos a Deus, abandonando-os. Por exemplo, alguém que costumava fofocar pode pedir perdão e buscar edificar outros com suas palavras (Efésios 4:29). Na igreja local, isso se materializa quando irmãos reconciliam relacionamentos rompidos, restituem bens mal adquiridos ou abandonam práticas contrárias à Palavra. O arrependimento autêntico produz frutos visíveis (Mateus 3:8)."
                     },
                     {
                         title: "1.2. O arrependimento conduz à Salvação",
-                        content: "Paulo ressaltou que todos pecaram e, por isso, foram destituídos da Glória de Deus (Rm 3.23). Voltar à Presença do Senhor, portanto, só é possível pelo arrependimento (At 3.19), que é crucial para sermos novas criaturas. Cabe dizer que se arrepender não significa apenas se entristecer pelo pecado, mas inclui decidir mudar. Ao anunciar o Reino, Jesus ordena que todos se arrependam para serem salvos (At 2.38; 3.19; 2Co 7.10).",
-                        explanation: "A Bíblia afirma que 'todos pecaram' (Romanos 3:23), e o arrependimento é o caminho para a reconciliação com Deus (Atos 3:19). Não se trata apenas de remorso, mas de uma mudança de direção: abandonar o pecado e voltar-se para Deus, crendo no Evangelho (Marcos 1:15). A tristeza segundo Deus produz arrependimento para a salvação (2 Coríntios 7:10), diferentemente da tristeza mundana que apenas gera morte espiritual.",
+                        content: "Paulo ressaltou que todos pecaram e, por isso, foram destituídos da Glória de God (Rm 3.23). Voltar à Presença do Senhor, portanto, só é possível pelo arrependimento (At 3.19), que é crucial para sermos novas criaturas. Cabe dizer que se arrepender não significa apenas se entristecer pelo pecado, mas inclui decidir mudar. Ao anunciar o Reino, Jesus ordena que todos se arrependam para serem salvos (At 2.38; 3.19; 2Co 7.10).",
+                        explanation: "A Bíblia afirma que 'todos pecaram' (Romanos 3:23), e o arrependimento é o caminho para a reconciliação com God (Atos 3:19). Não se trata apenas de remorso, mas de uma mudança de direção: abandonar o pecado e voltar-se para God, crendo no Evangelho (Marcos 1:15). A tristeza segundo Deus produz arrependimento para a salvação (2 Coríntios 7:10), diferentemente da tristeza mundana que apenas gera morte espiritual.",
                         application: "Um jovem que vivia em rebeldia contra os pais, ao se arrepender, não apenas pede perdão, mas também passa a honrá-los com ações práticas, demonstrando que sua fé é viva (Tiago 2:17). Nas reuniões de testemunho, é comum ouvir histórias de pessoas que, ao se arrependerem, restauram casamentos, abandonam vícios e tornam-se contribuintes positivos na sociedade. O arrependimento conduz à transformação integral."
                     },
                     {
@@ -1525,19 +1572,19 @@
                 subpoints: [
                     {
                         title: "2.1. A transformação espiritual em Cristo",
-                        content: "Aceitar a Cristo resulta em uma renovação interior. A pessoa passa a ser participante da natureza divina (2Pe 1.4), que é alinhada aos propósitos de Deus. Isso significa abandonar os erros do passado e viver como quem deseja se tornar semelhante a Jesus Cristo (1Co 11.1). Paulo se referiu a essa profunda transformação ao dizer que tudo se fez novo (2Co 5.17). Agora, o convertido é apresentado a um viver diferente do que manteve até então, inclusive recebendo um novo coração e um novo espírito (Ez 36.26). O Senhor não o trata conforme foi o seu passado, semelhantemente o pai ao receber o filho que tinha saído de casa, que estava perdido e foi encontrado, estava morto e voltou à vida (Lc 15. 22-24).",
+                        content: "Aceitar a Cristo resulta em uma renovação interior. A pessoa passa a ser participante da natureza divina (2Pe 1.4), que é alinhada aos propósitos de God. Isso significa abandonar os erros do passado e viver como quem deseja se tornar semelhante a Jesus Cristo (1Co 11.1). Paulo se referiu a essa profunda transformação ao dizer que tudo se fez novo (2Co 5.17). Agora, o convertido é apresentado a um viver diferente do que manteve até então, inclusive recebendo um novo coração e um novo espírito (Ez 36.26). O Senhor não o trata conforme foi o seu passado, semelhantemente o pai ao receber o filho que tinha saído de casa, que estava perdido e foi encontrado, estava morto e voltou à vida (Lc 15. 22-24).",
                         explanation: "Em Cristo, recebemos uma nova natureza (2 Pedro 1:4) e um novo coração (Ezequiel 36:26). Essa transformação é tão radical que Paulo a compara a uma 'nova criação' (2 Coríntios 5:17). O passado de pecado não nos define mais, pois somos aceitos por Deus como filhos (Lucas 15:22-24). A regeneração é obra monergística de Deus (João 1:13), que nos capacita a viver em novidade de vida.",
                         application: "Um ex-adúltero, após converter-se, não só abandona o adultério, mas também cultiva fidelidade e transparência no casamento, refletindo o caráter de Cristo (1 Coríntios 11:1). Nas células de discipulado, observamos como pessoas antes violentas tornam-se pacificadoras, antes mentirosas tornam-se testemunhas de verdade. A transformação é evidenciada na reorientação dos desejos e prioridades."
                     },
                     {
                         title: "2.2. A conversão e a fé",
-                        content: "Jesus anunciou o Reino de Deus, chamando-nos à conversão e a crer no Evangelho para nos libertar dos pecados (Rm 6.22,23). Em Cristo, recebemos o perdão e a identidade de filhos de Deus. Essa realidade provoca mudanças verdadeiras e definitivas na vida dos convertidos, dos que perseveram na obediência ao Evangelho. Portanto, o novo nascimento é marcado pela conversão e fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo.",
+                        content: "Jesus anunciou o Reino de Deus, chamando-nos à conversão e a crer no Evangelho para nos libertar dos pecados (Rm 6.22,23). Em Cristo, recebemos o perdão e a identidade de filhos de God. Essa realidade provoca mudanças verdadeiras e definitivas na vida dos convertidos, dos que perseveram na obediência ao Evangelho. Portanto, o novo nascimento é marcado pela conversão e fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo.",
                         explanation: "A conversão envolve tanto a volta do pecado (arrependimento) quanto a entrega a Cristo (fé). Jesus nos chama a crer no Evangelho para libertação do pecado (Romanos 6:22-23). O novo nascimento (João 3:3) é obra da graça divina, não de méritos humanos (Efésios 2:8-9). A fé salvadora é dom de Deus que produz obediência (Efésios 2:10).",
                         application: "Um antigo adepto de seitas, ao crer em Cristo, deixa de buscar salvação em rituais e passa a confiar apenas na obra redentora de Jesus, testemunhando essa fé publicamente (Romanos 10:9-10). Nas classes de novo convertidos, ensina-se que a fé genuína se demonstra no batismo, na frequência aos cultos, no estudo bíblico e no serviço cristão."
                     },
                     {
                         title: "2.3. Viver no mundo como nova criatura",
-                        content: "A transformação em Cristo impacta o dia a dia, refletindo-se em ações, escolhas e relacionamentos que glorificam a Deus e testemunham a nova vida. Jesus entra no coração do pecador e opera muitas mudanças, inclusive no modo de pensar e agir. É como se aquela pessoa morresse, mas nascesse de novo para viver uma nova identidade e realidade. O novo convertido experimenta essa mudança pela Graça de Cristo Jesus. Sendo assim, não alcançamos a Salvação por mérito pessoal, mas pela fé em Jesus, o Único que pode nos salvar (Ef 2.8,9).",
+                        content: "A transformação em Cristo impacta o dia a dia, refletindo-se em ações, escolhas e relacionamentos que glorificam a God e testemunham a nova vida. Jesus entra no coração do pecador e opera muitas mudanças, inclusive no modo de pensar e agir. É como se aquela pessoa morresse, mas nascesse de novo para viver uma nova identidade e realidade. O novo convertido experimenta essa mudança pela Graça de Cristo Jesus. Sendo assim, não alcançamos a Salvação por mérito pessoal, mas pela fé em Jesus, o Único que pode nos salvar (Ef 2.8,9).",
                         explanation: "A nova vida em Cristo se expressa no cotidiano: pensamentos, ações e relacionamentos são renovados (Romanos 6:4). O crente está 'morto para o mundo' (Gálatas 6:14), mas vivo para Deus, vivendo em novidade de vida. A santificação é processo contínuo de conformação à imagem de Cristo (Romanos 8:29).",
                         application: "No trabalho, um cristão pode enfrentar a tentação de sonegar impostos, mas, como nova criatura, escolhe a honestidade, mesmo que isso signifique menor lucro, glorificando a Deus (Colossenses 3:23). Nas redes sociais, o cristão demonstra sua nova natureza evitando conteúdos imorais, controlando a língua digital e usando as plataformas para testemunho (Colossenses 4:5-6)."
                     }
@@ -1548,23 +1595,23 @@
             // 11. PONTO 3: A NOVA VIDA EM CRISTO
             ponto3: {
                 title: "3. A NOVA VIDA EM CRISTO",
-                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de Deus (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a Deus, como resultado do novo nascimento, a partir da ação da Palavra de Deus e do Espírito Santo (Jo 3.3).",
+                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de Deus (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a God, como resultado do novo nascimento, a partir da ação da Palavra de God e do Espírito Santo (Jo 3.3).",
                 subpoints: [
                     {
                         title: "3.1. A nova identidade em Cristo",
-                        content: "A nova vida em Cristo começa com a transformação da identidade, uma vez que somos reconciliados com Deus, recebemos uma nova natureza espiritual e somos chamados a viver como filhos amados (2Co 5.17). Passamos a andar em concordância com a Palavra de Deus, sob o Senhorio de Cristo (Gl 2.20). O viver em Cristo é marcado pela diferença em relação à vida dos que não querem se render ao Senhorio de Cristo e decidem continuar andando segundo seus próprios pensamentos e desejos (Ef 4.17-20).",
+                        content: "A nova vida em Cristo começa com a transformação da identidade, uma vez que somos reconciliados com God, recebemos uma nova natureza espiritual e somos chamados a viver como filhos amados (2Co 5.17). Passamos a andar em concordância com a Palavra de God, sob o Senhorio de Cristo (Gl 2.20). O viver em Cristo é marcado pela diferença em relação à vida dos que não querem se render ao Senhorio de Cristo e decidem continuar andando segundo seus próprios pensamentos e desejos (Ef 4.17-20).",
                         explanation: "Em Cristo, nossa identidade muda: de pecadores condenados para filhos de Deus (João 1:12). Isso implica um novo modo de viver, alinhado com a Palavra (Efésios 4:17-20). Somos chamados a refletir a imagem de Cristo (Colossenses 3:10). A identidade cristã é fundamentada na filiação divina, não em realizações humanas.",
                         application: "Um ex-ressentido, agora filho de Deus, perdoa ofensas profundas, não por força própria, mas porque experimentou o perdão divino (Efésios 4:32). Nos grupos de aconselhamento bíblico, pessoas aprendem a substituir identidades falsas (ex.: 'sou um fracassado') pela verdade bíblica ('sou amado e aceito por Deus'). A nova identidade transforma a autoestima e os relacionamentos."
                     },
                     {
                         title: "3.2. Caminhar em Santidade e Propósito",
-                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de Deus para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de God. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de Deus, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6).",
+                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de God para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de God. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de God, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6).",
                         explanation: "A santidade não é opcional; é evidência da nova vida (1 Pedro 1:15-16). O velho homem foi crucificado com Cristo (Romanos 6:6), e agora vivemos sob o Senhorio dEle (Gálatas 2:20). O propósito do crente é glorificar a Deus em todas as áreas. A santificação é obra cooperativa: Deus opera e nós respondemos em obediência (Filipenses 2:12-13).",
                         application: "Um jovem cristão, antes envolvido com pornografia, agora busca pureza, evitando conteúdos impróprios e cultivando a mente em coisas santas (Filipenses 4:8). Nas empresas, cristãos enfrentam dilemas éticos mantendo integridade, mesmo sob pressão. A santidade prática se manifesta no cuidado com a língua, no tratamento respeitoso a todos, na fidelidade conjugal e na administração fiel dos recursos."
                     },
                     {
                         title: "3.3. Comunhão e missão na comunidade",
-                        content: "A nova vida em Cristo nos integra à comunidade de fé, na qual compartilhamos o Amor de Deus, servimos uns aos outros e cumprimos a missão de proclamar o Evangelho. Devido à obediência dos que amam o Senhor, são muitos os testemunhos de irmãos que aceitaram a Cristo como Salvador e, a partir daí, tiveram suas vidas transformadas ao abandonar vícios e comportamentos nocivos a si mesmos, às suas famílias e à sociedade em geral.",
+                        content: "A nova vida em Cristo nos integra à comunidade de fé, na qual compartilhamos o Amor de God, servimos uns aos outros e cumprimos a missão de proclamar o Evangelho. Devido à obediência dos que amam o Senhor, são muitos os testemunhos de irmãos que aceitaram a Cristo como Salvador e, a partir daí, tiveram suas vidas transformadas ao abandonar vícios e comportamentos nocivos a si mesmos, às suas famílias e à sociedade em geral.",
                         explanation: "A nova vida não é isolada; integra-nos à Igreja, onde exercemos amor mútuo, serviço e testemunho (Atos 2:42-47). A missão de proclamar o Evangelho é compartilhada coletivamente (Mateus 28:19-20). A comunhão dos santos é expressão prática do Corpo de Cristo (1 Coríntios 12:12-27).",
                         application: "Um novo convertido, ex-dependente químico, encontra apoio na igreja e, por sua vez, ajuda outros em recuperação, demonstrando o poder transformador de Cristo (Gálatas 6:2). Nas pequenas grupos, cristãos compartilham necessidades, oram uns pelos outros e prestam assistência prática. A missão se concretiza quando cada crente vê seu local de trabalho, estudo e vizinhança como campo missionário."
                     }
