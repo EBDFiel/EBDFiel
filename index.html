@@ -311,26 +311,6 @@
             flex-wrap: wrap;
         }
         
-        .download-btn {
-            background-color: var(--success);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-        
-        .download-btn:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-        }
-        
         .pdf-btn {
             background-color: var(--danger);
             color: white;
@@ -578,7 +558,7 @@
                 width: 100%;
             }
             
-            .view-btn, .download-btn, .pdf-btn {
+            .view-btn, .pdf-btn {
                 width: 100%;
                 justify-content: center;
             }
@@ -1302,9 +1282,6 @@
                             <button class="view-btn" data-lesson="${lesson.id}">
                                 <i class="fas fa-book-open"></i> Ver Lição
                             </button>
-                            <button class="download-btn" data-lesson="${lesson.id}">
-                                <i class="fas fa-download"></i> Baixar
-                            </button>
                             <button class="pdf-btn" data-lesson="${lesson.id}">
                                 <i class="fas fa-file-pdf"></i> PDF
                             </button>
@@ -1313,9 +1290,7 @@
                 } else {
                     buttonsHTML = `
                         <div class="lesson-buttons">
-                            <button class="download-btn" data-lesson="${lesson.id}">
-                                <i class="fas fa-download"></i> Baixar
-                            </button>
+                            <!-- Botão de download removido -->
                         </div>
                     `;
                 }
@@ -1340,14 +1315,6 @@
                     </div>
                 `;
                 container.appendChild(lessonCard);
-            });
-            
-            // Adicionar eventos aos botões de download
-            document.querySelectorAll('.download-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lessonId = this.getAttribute('data-lesson');
-                    downloadLesson(lessonId);
-                });
             });
             
             // Adicionar evento ao botão "Ver Lição" (apenas para lição 1)
@@ -1501,7 +1468,7 @@
                     },
                     {
                         title: "3.2. Caminhar em Santidade e Propósito",
-                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de Deus para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de Deus. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de Deus, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6).",
+                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de Deus para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de God. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de Deus, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6).",
                         explanation: "A santidade não é opcional; é evidência da nova vida (1 Pedro 1:15-16). O velho homem foi crucificado com Cristo (Romanos 6:6), e agora vivemos sob o Senhorio dEle (Gálatas 2:20). O propósito do crente é glorificar a Deus em todas as áreas. A santificação é obra cooperativa: Deus opera e nós respondemos em obediência (Filipenses 2:12-13).",
                         application: "Um jovem cristão, antes envolvido com pornografia, agora busca pureza, evitando conteúdos impróprios e cultivando a mente em coisas santas (Filipenses 4:8). Nas empresas, cristãos enfrentam dilemas éticos mantendo integridade, mesmo sob pressão. A santidade prática se manifesta no cuidado com a língua, no tratamento respeitoso a todos, na fidelidade conjugal e na administração fiel dos recursos."
                     },
@@ -1549,11 +1516,27 @@
                     const marginBottom = 25;
                     let yPos = marginTop;
                     
+                    // Logo da EBD Fiel
+                    const logoUrl = 'https://i.imgur.com/vsNu5IC.png';
+                    
                     // Função para verificar se precisa de nova página
                     const checkForNewPage = (requiredHeight) => {
                         if (yPos + requiredHeight > pageHeight - marginBottom) {
                             doc.addPage();
                             yPos = marginTop;
+                            
+                            // NÃO adicionar logo nas páginas subsequentes
+                            // Apenas um cabeçalho simples
+                            doc.setFontSize(10);
+                            doc.setTextColor(100, 100, 100);
+                            doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                            
+                            // Linha separadora simples
+                            doc.setDrawColor(200, 200, 200);
+                            doc.setLineWidth(0.5);
+                            doc.line(marginLeft, 25, pageWidth - marginRight, 25);
+                            
+                            yPos = 30;
                             return true;
                         }
                         return false;
@@ -1690,20 +1673,28 @@
                     };
                     
                     // ============= CABEÇALHO DO PDF =============
-                    // Cabeçalho colorido
-                    doc.setFillColor(26, 95, 180);
-                    doc.rect(0, 0, pageWidth, 30, 'F');
+                    // Adicionar logo no cabeçalho (APENAS NA PRIMEIRA PÁGINA)
+                    try {
+                        doc.addImage(logoUrl, 'PNG', 15, 10, 30, 30);
+                    } catch (e) {
+                        console.log("Logo não carregada, continuando sem ela");
+                    }
                     
-                    // Título do cabeçalho
-                    doc.setTextColor(255, 255, 255);
-                    doc.setFontSize(18);
+                    // Título ao lado da logo - APENAS "ESCOLA BÍBLICA DOMINICAL"
+                    doc.setTextColor(26, 95, 180);
+                    doc.setFontSize(16);
                     doc.setFont('helvetica', 'bold');
-                    doc.text("EBD FIEL - ESCOLA BÍBLICA DOMINICAL", pageWidth / 2, 15, { align: 'center' });
-                    
+                    doc.text("ESCOLA BÍBLICA DOMINICAL", 55, 20);
                     doc.setFontSize(11);
-                    doc.text("Fiel à Palavra - Lição Completa", pageWidth / 2, 22, { align: 'center' });
+                    doc.setFont('helvetica', 'normal');
+                    doc.text("EBD Fiel - Fiel à Palavra", 55, 27);
                     
-                    yPos = 40;
+                    // Linha separadora
+                    doc.setDrawColor(230, 179, 37);
+                    doc.setLineWidth(1);
+                    doc.line(15, 42, pageWidth - 15, 42);
+                    
+                    yPos = 48;
                     
                     // ============= TÍTULO DA LIÇÃO =============
                     addTitle(`LIÇÃO 1: ${lesson1Content.title}`, 18);
@@ -1744,6 +1735,18 @@
                     // Nova página para o conteúdo principal
                     doc.addPage();
                     yPos = marginTop;
+                    
+                    // Cabeçalho simples para páginas subsequentes
+                    doc.setFontSize(10);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                    
+                    // Linha separadora simples
+                    doc.setDrawColor(200, 200, 200);
+                    doc.setLineWidth(0.5);
+                    doc.line(marginLeft, 25, pageWidth - marginRight, 25);
+                    
+                    yPos = 30;
                     
                     // ============= INTRODUÇÃO =============
                     addTitle("INTRODUÇÃO");
@@ -1797,6 +1800,18 @@
                     if (yPos > pageHeight - 100) {
                         doc.addPage();
                         yPos = marginTop;
+                        
+                        // Cabeçalho simples para páginas subsequentes
+                        doc.setFontSize(10);
+                        doc.setTextColor(100, 100, 100);
+                        doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                        
+                        // Linha separadora simples
+                        doc.setDrawColor(200, 200, 200);
+                        doc.setLineWidth(0.5);
+                        doc.line(marginLeft, 25, pageWidth - marginRight, 25);
+                        
+                        yPos = 30;
                     }
                     
                     // ============= PONTO 2: EM CRISTO SOMOS NOVA CRIATURA =============
@@ -1840,6 +1855,18 @@
                     if (yPos > pageHeight - 150) {
                         doc.addPage();
                         yPos = marginTop;
+                        
+                        // Cabeçalho simples para páginas subsequentes
+                        doc.setFontSize(10);
+                        doc.setTextColor(100, 100, 100);
+                        doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                        
+                        // Linha separadora simples
+                        doc.setDrawColor(200, 200, 200);
+                        doc.setLineWidth(0.5);
+                        doc.line(marginLeft, 25, pageWidth - marginRight, 25);
+                        
+                        yPos = 30;
                     }
                     
                     // ============= PONTO 3: A NOVA VIDA EM CRISTO =============
@@ -1881,6 +1908,18 @@
                     // Nova página para Conclusão
                     doc.addPage();
                     yPos = marginTop;
+                    
+                    // Cabeçalho simples para páginas subsequentes
+                    doc.setFontSize(10);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                    
+                    // Linha separadora simples
+                    doc.setDrawColor(200, 200, 200);
+                    doc.setLineWidth(0.5);
+                    doc.line(marginLeft, 25, pageWidth - marginRight, 25);
+                    
+                    yPos = 30;
                     
                     // ============= CONCLUSÃO =============
                     addTitle("CONCLUSÃO");
