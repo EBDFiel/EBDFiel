@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBD Fiel - Lições Bíblicas 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5fb4;
+            --primary-dark: #0d4a94;
+            --secondary: #e6b325;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --success: #28a745;
+            --shadow: 0 4px 12px rgba(0,0,0,0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            background-color: var(--secondary);
+            color: var(--primary-dark);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.2rem;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--secondary);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(26, 95, 180, 0.9), rgba(13, 74, 148, 0.9)), url('https://images.unsplash.com/photo-1532012197267-da84d127e765?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--secondary);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--secondary);
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        /* Lessons Grid */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .lesson-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .lesson-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .lesson-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        
+        .lesson-quarter {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+        
+        .lesson-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+        
+        .lesson-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .lesson-body {
+            padding: 1.5rem;
+        }
+        
+        .lesson-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .lesson-description {
+            margin-bottom: 1.5rem;
+            height: 80px;
+            overflow: hidden;
+        }
+        
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lesson-tag {
+            background-color: #e8f4ff;
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .download-btn {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .download-btn:hover {
+            background-color: #218838;
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            margin-top: 3rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .about-text h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            background-color: #e8f4ff;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            nav {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-dark);
+                padding: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+                visibility: hidden;
+            }
+            
+            nav.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .filters {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+            
+            .filter-btn {
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bible"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>EBD Fiel</h1>
+                    <p>Escola Bíblica Dominical</p>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav id="mainNav">
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#lessons">Lições</a></li>
+                    <li><a href="#about">Sobre</a></li>
+                    <li><a href="#contact">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2>Lições Bíblicas 2026</h2>
+            <p>Estudos profundos e relevantes para o crescimento espiritual da igreja. Material fiel às Escrituras para professores e alunos da Escola Bíblica Dominical.</p>
+            <a href="#lessons" class="cta-button">Ver Lições <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section id="lessons">
+            <h2 class="section-title">Lições da EBD 2026</h2>
+            
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todas as Lições</button>
+                <button class="filter-btn" data-filter="trim1">1º Trimestre</button>
+                <button class="filter-btn" data-filter="trim2">2º Trimestre</button>
+                <button class="filter-btn" data-filter="trim3">3º Trimestre</button>
+                <button class="filter-btn" data-filter="trim4">4º Trimestre</button>
+            </div>
+            
+            <div class="lessons-grid" id="lessonsContainer">
+                <!-- Lições serão inseridas aqui via JavaScript -->
+            </div>
+        </section>
+        
+        <section class="about-section" id="about">
+            <h2 class="section-title">Sobre a EBD Fiel</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Compromisso com a Palavra de Deus</h3>
+                    <p>A EBD Fiel é um projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais de igrejas comprometidas com a sã doutrina e o ensino fiel das Escrituras.</p>
+                    <p>Nossas lições são cuidadosamente elaboradas por teólogos e professores com experiência ministerial, garantindo um conteúdo sólido, relevante e aplicável à vida cristã.</p>
+                    
+                    <div class="about-features">
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div>
+                                <h4>Estudo Exegético</h4>
+                                <p>Análise cuidadosa do texto original</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <h4>Para Todos</h4>
+                                <p>Material para crianças, jovens e adultos</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div>
+                                <h4>Planejamento Anual</h4>
+                                <p>Cronograma completo para todo o ano</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div>
+                                <h4>Download Gratuito</h4>
+                                <p>Todas as lições disponíveis gratuitamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <!-- Imagem ilustrativa -->
+                    <div style="background-color: #e8f4ff; border-radius: var(--radius); padding: 2rem; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center;">
+                        <i class="fas fa-bible" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h3 style="color: var(--primary); margin-bottom: 1rem;">"Examinai as Escrituras..."</h3>
+                        <p style="color: var(--gray);">João 5:39</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>EBD Fiel</h3>
+                <p>Material bíblico fiel para edificação da igreja. Recursos para professores e alunos da Escola Bíblica Dominical.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Links Rápidos</h3>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#lessons">Lições 2026</a></li>
+                    <li><a href="#about">Sobre Nós</a></li>
+                    <li><a href="#">Lições Anteriores</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> contato@ebdfiel.com</li>
+                    <li><i class="fas fa-phone"></i> (11) 99999-9999</li>
+                    <li><i class="fas fa-map-marker-alt"></i> São Paulo, SP</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2026 EBD Fiel - Todos os direitos reservados. Desenvolvido para o ensino da Palavra de Deus.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dados das lições
+        const lessons = [
+            {
+                id: 1,
+                quarter: "1º Trimestre",
+                quarterFilter: "trim1",
+                number: "Lição 1",
+                title: "A Criação: O Princípio de Todas as Coisas",
+                date: "04/01/2026",
+                description: "Estudo sobre Gênesis 1-2, abordando a criação do universo, da Terra e do homem à imagem e semelhança de Deus.",
+                tag: "Gênesis"
+            },
+            {
+                id: 2,
+                quarter: "1º Trimestre",
+                quarterFilter: "trim1",
+                number: "Lição 2",
+                title: "A Queda e as Suas Consequências",
+                date: "11/01/2026",
+                description: "Análise de Gênesis 3, tratando do pecado original, suas causas e efeitos na humanidade e na criação.",
+                tag: "Gênesis"
+            },
+            {
+                id: 3,
+                quarter: "1º Trimestre",
+                quarterFilter: "trim1",
+                number: "Lição 3",
+                title: "A Fé de Abraão: Chamado e Obediência",
+                date: "18/01/2026",
+                description: "Estudo da vida de Abraão, sua chamada, fé e relacionamento com Deus como pai da fé.",
+                tag: "Gênesis"
+            },
+            {
+                id: 4,
+                quarter: "1º Trimestre",
+                quarterFilter: "trim1",
+                number: "Lição 4",
+                title: "José: Fidelidade em Meio às Provações",
+                date: "25/01/2026",
+                description: "A trajetória de José do poço ao palácio, destacando sua fidelidade a Deus em todas as circunstâncias.",
+                tag: "Gênesis"
+            },
+            {
+                id: 5,
+                quarter: "2º Trimestre",
+                quarterFilter: "trim2",
+                number: "Lição 1",
+                title: "Êxodo: Libertação do Povo de Deus",
+                date: "05/04/2026",
+                description: "Estudo do livro de Êxodo, focando na libertação do povo de Israel da escravidão no Egito.",
+                tag: "Êxodo"
+            },
+            {
+                id: 6,
+                quarter: "2º Trimestre",
+                quarterFilter: "trim2",
+                number: "Lição 2",
+                title: "Os Dez Mandamentos: Lei e Graça",
+                date: "12/04/2026",
+                description: "Análise dos Dez Mandamentos e sua relevância para a vida cristã no contexto da nova aliança.",
+                tag: "Êxodo"
+            },
+            {
+                id: 7,
+                quarter: "3º Trimestre",
+                quarterFilter: "trim3",
+                number: "Lição 1",
+                title: "O Ministério de Jesus: Chamado e Missão",
+                date: "05/07/2026",
+                description: "Estudo sobre o início do ministério de Jesus, seu batismo, tentação e chamado dos discípulos.",
+                tag: "Evangelhos"
+            },
+            {
+                id: 8,
+                quarter: "3º Trimestre",
+                quarterFilter: "trim3",
+                number: "Lição 2",
+                title: "Os Milagres de Jesus: Sinais do Reino",
+                date: "12/07/2026",
+                description: "Análise dos milagres de Jesus como demonstração do poder do Reino de Deus e da sua identidade messiânica.",
+                tag: "Evangelhos"
+            },
+            {
+                id: 9,
+                quarter: "4º Trimestre",
+                quarterFilter: "trim4",
+                number: "Lição 1",
+                title: "A Igreja Primitiva: Modelo para Hoje",
+                date: "04/10/2026",
+                description: "Estudo sobre Atos dos Apóstolos, abordando os primeiros passos da igreja e seus princípios fundamentais.",
+                tag: "Atos"
+            },
+            {
+                id: 10,
+                quarter: "4º Trimestre",
+                quarterFilter: "trim4",
+                number: "Lição 2",
+                title: "A Vida no Espírito: Dons e Frutos",
+                date: "11/10/2026",
+                description: "Exploração do ensino paulino sobre os dons do Espírito e o fruto do Espírito na vida do crente.",
+                tag: "Epístolas"
+            }
+        ];
+
+        // Função para renderizar as lições
+        function renderLessons(filter = 'all') {
+            const container = document.getElementById('lessonsContainer');
+            container.innerHTML = '';
+            
+            const filteredLessons = filter === 'all' 
+                ? lessons 
+                : lessons.filter(lesson => lesson.quarterFilter === filter);
+            
+            filteredLessons.forEach(lesson => {
+                const lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card';
+                lessonCard.innerHTML = `
+                    <div class="lesson-header">
+                        <div class="lesson-quarter">${lesson.quarter}</div>
+                        <div class="lesson-number">${lesson.number}</div>
+                        <div class="lesson-title">${lesson.title}</div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-date">
+                            <i class="far fa-calendar-alt"></i> ${lesson.date}
+                        </div>
+                        <div class="lesson-description">
+                            ${lesson.description}
+                        </div>
+                        <div class="lesson-footer">
+                            <span class="lesson-tag">${lesson.tag}</span>
+                            <button class="download-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(lessonCard);
+            });
+            
+            // Adicionar eventos aos botões de download
+            document.querySelectorAll('.download-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lessonId = this.getAttribute('data-lesson');
+                    downloadLesson(lessonId);
+                });
+            });
+        }
+        
+        // Função para simular download
+        function downloadLesson(lessonId) {
+            const lesson = lessons.find(l => l.id == lessonId);
+            if (lesson) {
+                alert(`Iniciando download da ${lesson.number}: "${lesson.title}"\n\nEm uma implementação real, este botão faria o download do arquivo PDF da lição.`);
+                // Em uma implementação real, aqui seria o link para o arquivo PDF
+                // window.location.href = `licoes/licao-${lessonId}.pdf`;
+            }
+        }
+        
+        // Filtros
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remover classe active de todos os botões
+                document.querySelectorAll('.filter-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                
+                // Adicionar classe active ao botão clicado
+                this.classList.add('active');
+                
+                // Filtrar lições
+                const filter = this.getAttribute('data-filter');
+                renderLessons(filter);
+            });
+        });
+        
+        // Menu mobile
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            this.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // Fechar menu ao clicar em um link
+        document.querySelectorAll('#mainNav a').forEach(link => {
+            link.addEventListener('click', function() {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+            });
+        });
+        
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            renderLessons();
+            
+            // Smooth scroll para links internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
