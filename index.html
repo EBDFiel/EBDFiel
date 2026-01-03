@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Biblioteca jsPDF para geração de PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
         :root {
             --primary: #1a5fb4;
@@ -320,28 +319,6 @@
         
         .download-btn:hover {
             background-color: #218838;
-        }
-        
-        .pdf-download-btn {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-            width: 100%;
-            justify-content: center;
-        }
-        
-        .pdf-download-btn:hover {
-            background-color: #c82333;
-            transform: translateY(-2px);
         }
         
         /* About Section */
@@ -1317,11 +1294,6 @@
                                 </button>
                             </div>
                         </div>
-                        ${lesson.id === 1 ? `
-                            <button class="pdf-download-btn" data-lesson="${lesson.id}">
-                                <i class="fas fa-file-pdf"></i> Baixar PDF da Lição 1
-                            </button>
-                        ` : ''}
                     </div>
                 `;
                 container.appendChild(lessonCard);
@@ -1341,16 +1313,6 @@
                     const lessonId = this.getAttribute('data-lesson');
                     if (lessonId == 1) {
                         openLessonModal(1);
-                    }
-                });
-            });
-            
-            // Adicionar evento ao botão "Baixar PDF" (apenas para lição 1)
-            document.querySelectorAll('.pdf-download-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lessonId = this.getAttribute('data-lesson');
-                    if (lessonId == 1) {
-                        generateLessonPDF();
                     }
                 });
             });
@@ -1509,7 +1471,7 @@
             }
         };
 
-        // ============= FUNÇÃO PARA GERAR PDF DA LIÇÃO =============
+        // ============= FUNÇÃO CORRIGIDA PARA GERAR PDF DA LIÇÃO =============
         function generateLessonPDF() {
             // Mostrar loading
             document.getElementById('pdfLoading').style.display = 'flex';
@@ -1525,392 +1487,397 @@
                         format: 'a4'
                     });
                     
-                    // Configurações
+                    // Configurações melhoradas
                     const pageWidth = doc.internal.pageSize.getWidth();
                     const pageHeight = doc.internal.pageSize.getHeight();
-                    const margin = 15;
-                    let yPos = margin;
+                    const marginLeft = 20;
+                    const marginRight = 20;
+                    const marginTop = 25;
+                    const marginBottom = 25;
+                    let yPos = marginTop;
                     
-                    // Função para adicionar uma nova página se necessário
-                    const checkPageBreak = (requiredSpace) => {
-                        if (yPos + requiredSpace > pageHeight - margin) {
+                    // Função para verificar se precisa de nova página
+                    const checkForNewPage = (requiredHeight) => {
+                        if (yPos + requiredHeight > pageHeight - marginBottom) {
                             doc.addPage();
-                            yPos = margin;
+                            yPos = marginTop;
                             return true;
                         }
                         return false;
                     };
                     
-                    // Função para adicionar texto com quebra de linha
-                    const addText = (text, fontSize = 11, isBold = false, align = 'left') => {
-                        const lines = doc.splitTextToSize(text, pageWidth - 2 * margin);
-                        checkPageBreak(fontSize * lines.length / 3);
+                    // Função para adicionar texto com formatação
+                    const addFormattedText = (text, fontSize = 11, isBold = false, isItalic = false, align = 'left', lineHeight = 1.2) => {
+                        const currentFont = doc.getFont();
+                        const fontStyle = isBold && isItalic ? 'bolditalic' : 
+                                         isBold ? 'bold' : 
+                                         isItalic ? 'italic' : 'normal';
                         
+                        doc.setFont(currentFont.fontName, fontStyle);
                         doc.setFontSize(fontSize);
-                        doc.setFont('helvetica', isBold ? 'bold' : 'normal');
                         
-                        // Adicionar texto
-                        doc.text(lines, margin, yPos, { align: align });
-                        yPos += fontSize * lines.length / 3;
-                        yPos += 3; // Espaçamento
+                        // Calcular largura disponível
+                        const availableWidth = pageWidth - marginLeft - marginRight;
+                        
+                        // Dividir texto em linhas
+                        const lines = doc.splitTextToSize(text, availableWidth);
+                        
+                        // Verificar espaço necessário
+                        const lineHeightMM = fontSize * 0.3528 * lineHeight;
+                        const requiredHeight = lines.length * lineHeightMM;
+                        
+                        checkForNewPage(requiredHeight);
+                        
+                        // Adicionar cada linha
+                        lines.forEach((line, index) => {
+                            let xPos;
+                            switch(align) {
+                                case 'center':
+                                    xPos = pageWidth / 2;
+                                    break;
+                                case 'right':
+                                    xPos = pageWidth - marginRight;
+                                    break;
+                                default:
+                                    xPos = marginLeft;
+                            }
+                            
+                            doc.text(line, xPos, yPos, { align: align });
+                            yPos += lineHeightMM;
+                        });
+                        
+                        // Adicionar espaçamento após o bloco
+                        yPos += lineHeightMM * 0.5;
+                        
+                        return lines.length;
                     };
                     
                     // Função para adicionar título
                     const addTitle = (text, fontSize = 16) => {
-                        checkPageBreak(15);
+                        checkForNewPage(20);
                         doc.setFontSize(fontSize);
                         doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul primário
+                        doc.setTextColor(26, 95, 180);
                         doc.text(text, pageWidth / 2, yPos, { align: 'center' });
-                        yPos += 10;
-                        doc.setTextColor(0, 0, 0); // Voltar para preto
+                        yPos += 12;
+                        
+                        // Adicionar linha decorativa
+                        doc.setDrawColor(230, 179, 37);
+                        doc.setLineWidth(1);
+                        const lineWidth = 50;
+                        const lineX = (pageWidth - lineWidth) / 2;
+                        doc.line(lineX, yPos, lineX + lineWidth, yPos);
+                        yPos += 8;
+                        
+                        doc.setTextColor(0, 0, 0);
                     };
                     
                     // Função para adicionar subtítulo
                     const addSubtitle = (text, fontSize = 14) => {
-                        checkPageBreak(10);
+                        checkForNewPage(15);
                         doc.setFontSize(fontSize);
                         doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(230, 179, 37); // Amarelo secundário
-                        doc.text(text, margin, yPos);
-                        yPos += 8;
-                        doc.setTextColor(0, 0, 0); // Voltar para preto
+                        doc.setTextColor(26, 95, 180);
+                        doc.text(text, marginLeft, yPos);
+                        yPos += 10;
+                        doc.setTextColor(0, 0, 0);
                     };
                     
-                    // Função para adicionar linha divisória
-                    const addDivider = () => {
-                        checkPageBreak(5);
-                        doc.setDrawColor(230, 179, 37); // Amarelo secundário
+                    // Função para adicionar texto em destaque (como Texto Áureo)
+                    const addHighlightedText = (text, reference = '') => {
+                        checkForNewPage(25);
+                        
+                        // Caixa de fundo
+                        doc.setFillColor(240, 247, 255);
+                        const boxHeight = 25;
+                        const boxWidth = pageWidth - marginLeft - marginRight;
+                        doc.rect(marginLeft, yPos, boxWidth, boxHeight, 'F');
+                        
+                        // Borda
+                        doc.setDrawColor(26, 95, 180);
                         doc.setLineWidth(0.5);
-                        doc.line(margin, yPos, pageWidth - margin, yPos);
+                        doc.rect(marginLeft, yPos, boxWidth, boxHeight);
+                        
+                        // Texto principal
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'italic');
+                        const textLines = doc.splitTextToSize(`"${text}"`, boxWidth - 10);
+                        doc.text(textLines, marginLeft + 5, yPos + 8);
+                        
+                        // Referência
+                        if (reference) {
+                            doc.setFontSize(10);
+                            doc.setFont('helvetica', 'bold');
+                            doc.text(`(${reference})`, pageWidth - marginRight - 5, yPos + boxHeight - 5, { align: 'right' });
+                        }
+                        
+                        yPos += boxHeight + 10;
+                    };
+                    
+                    // Função para adicionar lista de objetivos
+                    const addObjectivesList = (objectives) => {
+                        checkForNewPage(objectives.length * 8 + 10);
+                        
+                        objectives.forEach((objective, index) => {
+                            doc.setFontSize(11);
+                            doc.setFont('helvetica', 'normal');
+                            
+                            // Marcador
+                            doc.setFillColor(40, 167, 69);
+                            doc.circle(marginLeft + 3, yPos - 2, 1.5, 'F');
+                            
+                            // Texto do objetivo
+                            const lines = doc.splitTextToSize(`  ${objective}`, pageWidth - marginLeft - marginRight - 10);
+                            doc.text(lines, marginLeft + 10, yPos);
+                            
+                            yPos += lines.length * 5 + 3;
+                        });
+                        
                         yPos += 5;
                     };
                     
-                    // Função para adicionar caixa de texto destacada
-                    const addHighlightBox = (text, bgColor = [240, 247, 255]) => {
-                        const lines = doc.splitTextToSize(text, pageWidth - 2 * margin - 10);
-                        const boxHeight = lines.length * 5 + 10;
-                        
-                        checkPageBreak(boxHeight);
-                        
-                        // Desenhar caixa de fundo
-                        doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
-                        doc.rect(margin, yPos, pageWidth - 2 * margin, boxHeight, 'F');
-                        
-                        // Adicionar texto
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'italic');
-                        doc.setTextColor(0, 0, 0);
-                        doc.text(lines, margin + 5, yPos + 8);
-                        
-                        yPos += boxHeight + 5;
-                    };
-                    
                     // ============= CABEÇALHO DO PDF =============
-                    // Logo e título
-                    doc.setFillColor(26, 95, 180); // Azul primário
+                    // Cabeçalho colorido
+                    doc.setFillColor(26, 95, 180);
                     doc.rect(0, 0, pageWidth, 30, 'F');
                     
+                    // Título do cabeçalho
                     doc.setTextColor(255, 255, 255);
-                    doc.setFontSize(20);
+                    doc.setFontSize(18);
                     doc.setFont('helvetica', 'bold');
                     doc.text("EBD FIEL - ESCOLA BÍBLICA DOMINICAL", pageWidth / 2, 15, { align: 'center' });
                     
-                    doc.setFontSize(12);
-                    doc.text("Fiel à Palavra", pageWidth / 2, 22, { align: 'center' });
+                    doc.setFontSize(11);
+                    doc.text("Fiel à Palavra - Lição Completa", pageWidth / 2, 22, { align: 'center' });
                     
                     yPos = 40;
                     
                     // ============= TÍTULO DA LIÇÃO =============
                     addTitle(`LIÇÃO 1: ${lesson1Content.title}`, 18);
-                    addDivider();
                     
                     // ============= TEXTO ÁUREO =============
                     addSubtitle("TEXTO ÁUREO");
-                    addText(`"${lesson1Content.textAureo.text}"`, 12, false, 'center');
-                    addText(`(${lesson1Content.textAureo.verse})`, 11, true, 'center');
-                    yPos += 5;
+                    addHighlightedText(lesson1Content.textAureo.text, lesson1Content.textAureo.verse);
                     
                     // ============= VERDADE APLICADA =============
                     addSubtitle("VERDADE APLICADA");
-                    addText(lesson1Content.appliedTruth, 12, true);
-                    yPos += 5;
+                    addFormattedText(lesson1Content.appliedTruth, 12, true, false, 'left', 1.3);
                     
                     // ============= OBJETIVOS DA LIÇÃO =============
                     addSubtitle("OBJETIVOS DA LIÇÃO");
-                    lesson1Content.objectives.forEach(obj => {
-                        addText(`• ${obj}`, 11, false);
-                    });
-                    yPos += 5;
+                    addObjectivesList(lesson1Content.objectives);
                     
                     // ============= TEXTOS DE REFERÊNCIA =============
                     addSubtitle("TEXTOS DE REFERÊNCIA");
-                    addText(lesson1Content.references.title, 12, true);
+                    addFormattedText(lesson1Content.references.title, 12, true);
+                    yPos += 3;
+                    
                     lesson1Content.references.verses.forEach(verse => {
-                        addText(verse, 11, false);
+                        addFormattedText(verse, 11, false, false, 'left', 1.3);
                     });
-                    yPos += 5;
                     
                     // ============= LEITURAS COMPLEMENTARES =============
                     addSubtitle("LEITURAS COMPLEMENTARES");
                     lesson1Content.readings.forEach(reading => {
-                        addText(`${reading.day} | ${reading.ref} - ${reading.title}`, 11, false);
+                        addFormattedText(`${reading.day} | ${reading.ref} - ${reading.title}`, 11);
                     });
-                    yPos += 5;
                     
-                    addText(`Hinos Sugeridos: ${lesson1Content.hymns.join(', ')}`, 11, false);
-                    yPos += 5;
+                    addFormattedText(`Hinos Sugeridos: ${lesson1Content.hymns.join(', ')}`, 11);
                     
                     // ============= MOTIVO DE ORAÇÃO =============
                     addSubtitle("MOTIVO DE ORAÇÃO");
-                    addText(lesson1Content.prayer, 11, false);
-                    yPos += 10;
+                    addFormattedText(lesson1Content.prayer, 11, false, false, 'left', 1.3);
+                    
+                    // Nova página para o conteúdo principal
+                    doc.addPage();
+                    yPos = marginTop;
                     
                     // ============= INTRODUÇÃO =============
                     addTitle("INTRODUÇÃO");
-                    addText(lesson1Content.introduction.text, 11, false);
+                    addFormattedText(lesson1Content.introduction.text, 11, false, false, 'justify', 1.3);
                     
-                    // Explicação Fundamentada
-                    checkPageBreak(10);
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(26, 95, 180); // Azul
-                    doc.text("EXPLICAÇÃO FUNDAMENTADA:", margin, yPos);
-                    yPos += 7;
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    addText(lesson1Content.introduction.explanation, 11, false);
+                    addSubtitle("Explicação Fundamentada");
+                    addFormattedText(lesson1Content.introduction.explanation, 11, false, false, 'justify', 1.3);
                     
-                    // Aplicação Prática
-                    checkPageBreak(10);
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(40, 167, 69); // Verde
-                    doc.text("APLICAÇÃO PRÁTICA:", margin, yPos);
-                    yPos += 7;
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    addText(lesson1Content.introduction.application, 11, false);
-                    yPos += 10;
+                    addSubtitle("Aplicação Prática");
+                    addFormattedText(lesson1Content.introduction.application, 11, false, false, 'justify', 1.3);
                     
                     // ============= PONTO 1: UMA NOVA DIMENSÃO DE VIDA =============
                     addTitle(lesson1Content.ponto1.title);
-                    addText(lesson1Content.ponto1.content, 11, false);
+                    addFormattedText(lesson1Content.ponto1.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 1
                     lesson1Content.ponto1.subpoints.forEach((subpoint, index) => {
-                        checkPageBreak(15);
-                        doc.setFontSize(13);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text(subpoint.title, margin, yPos);
-                        yPos += 8;
+                        addSubtitle(subpoint.title);
+                        addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.content, 11, false);
+                        addSubtitle("Explicação Fundamentada");
+                        addFormattedText(subpoint.explanation, 11, false, false, 'justify', 1.3);
                         
-                        // Explicação Fundamentada
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text("Explicação Fundamentada:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.explanation, 11, false);
+                        addSubtitle("Aplicação Prática");
+                        addFormattedText(subpoint.application, 11, false, false, 'justify', 1.3);
                         
-                        // Aplicação Prática
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(40, 167, 69); // Verde
-                        doc.text("Aplicação Prática:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.application, 11, false);
-                        
-                        yPos += 5;
+                        // Adicionar espaço entre subpontos
+                        yPos += 10;
                     });
                     
                     // "EU ENSINEI QUE" do Ponto 1
-                    checkPageBreak(10);
-                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto1.euEnsineiQue}`, [232, 245, 232]);
-                    yPos += 10;
+                    checkForNewPage(15);
+                    doc.setFillColor(232, 245, 232);
+                    const boxWidth = pageWidth - marginLeft - marginRight;
+                    doc.rect(marginLeft, yPos, boxWidth, 15, 'F');
+                    doc.setDrawColor(40, 167, 69);
+                    doc.setLineWidth(0.5);
+                    doc.rect(marginLeft, yPos, boxWidth, 15);
+                    
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
+                    doc.setFont('helvetica', 'normal');
+                    const lines = doc.splitTextToSize(lesson1Content.ponto1.euEnsineiQue, boxWidth - 15);
+                    doc.text(lines, marginLeft + 5, yPos + 12);
+                    
+                    yPos += 20;
+                    
+                    // Nova página para Ponto 2
+                    checkForNewPage(50);
+                    if (yPos > pageHeight - 100) {
+                        doc.addPage();
+                        yPos = marginTop;
+                    }
                     
                     // ============= PONTO 2: EM CRISTO SOMOS NOVA CRIATURA =============
                     addTitle(lesson1Content.ponto2.title);
-                    addText(lesson1Content.ponto2.content, 11, false);
+                    addFormattedText(lesson1Content.ponto2.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 2
                     lesson1Content.ponto2.subpoints.forEach((subpoint, index) => {
-                        checkPageBreak(15);
-                        doc.setFontSize(13);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text(subpoint.title, margin, yPos);
-                        yPos += 8;
+                        addSubtitle(subpoint.title);
+                        addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.content, 11, false);
+                        addSubtitle("Explicação Fundamentada");
+                        addFormattedText(subpoint.explanation, 11, false, false, 'justify', 1.3);
                         
-                        // Explicação Fundamentada
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text("Explicação Fundamentada:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.explanation, 11, false);
+                        addSubtitle("Aplicação Prática");
+                        addFormattedText(subpoint.application, 11, false, false, 'justify', 1.3);
                         
-                        // Aplicação Prática
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(40, 167, 69); // Verde
-                        doc.text("Aplicação Prática:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.application, 11, false);
-                        
-                        yPos += 5;
+                        // Adicionar espaço entre subpontos
+                        yPos += 10;
                     });
                     
                     // "EU ENSINEI QUE" do Ponto 2
-                    checkPageBreak(10);
-                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto2.euEnsineiQue}`, [232, 245, 232]);
-                    yPos += 10;
+                    checkForNewPage(15);
+                    doc.setFillColor(232, 245, 232);
+                    doc.rect(marginLeft, yPos, boxWidth, 15, 'F');
+                    doc.setDrawColor(40, 167, 69);
+                    doc.setLineWidth(0.5);
+                    doc.rect(marginLeft, yPos, boxWidth, 15);
+                    
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
+                    doc.setFont('helvetica', 'normal');
+                    const lines2 = doc.splitTextToSize(lesson1Content.ponto2.euEnsineiQue, boxWidth - 15);
+                    doc.text(lines2, marginLeft + 5, yPos + 12);
+                    
+                    yPos += 25;
+                    
+                    // Verificar se precisa de nova página para Ponto 3
+                    checkForNewPage(100);
+                    if (yPos > pageHeight - 150) {
+                        doc.addPage();
+                        yPos = marginTop;
+                    }
                     
                     // ============= PONTO 3: A NOVA VIDA EM CRISTO =============
                     addTitle(lesson1Content.ponto3.title);
-                    addText(lesson1Content.ponto3.content, 11, false);
+                    addFormattedText(lesson1Content.ponto3.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 3
                     lesson1Content.ponto3.subpoints.forEach((subpoint, index) => {
-                        checkPageBreak(15);
-                        doc.setFontSize(13);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text(subpoint.title, margin, yPos);
-                        yPos += 8;
+                        addSubtitle(subpoint.title);
+                        addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.content, 11, false);
+                        addSubtitle("Explicação Fundamentada");
+                        addFormattedText(subpoint.explanation, 11, false, false, 'justify', 1.3);
                         
-                        // Explicação Fundamentada
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180); // Azul
-                        doc.text("Explicação Fundamentada:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.explanation, 11, false);
+                        addSubtitle("Aplicação Prática");
+                        addFormattedText(subpoint.application, 11, false, false, 'justify', 1.3);
                         
-                        // Aplicação Prática
-                        checkPageBreak(10);
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(40, 167, 69); // Verde
-                        doc.text("Aplicação Prática:", margin, yPos);
-                        yPos += 7;
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(subpoint.application, 11, false);
-                        
-                        yPos += 5;
+                        // Adicionar espaço entre subpontos
+                        yPos += 10;
                     });
                     
                     // "EU ENSINEI QUE" do Ponto 3
-                    checkPageBreak(10);
-                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto3.euEnsineiQue}`, [232, 245, 232]);
-                    yPos += 10;
+                    checkForNewPage(15);
+                    doc.setFillColor(232, 245, 232);
+                    doc.rect(marginLeft, yPos, boxWidth, 15, 'F');
+                    doc.setDrawColor(40, 167, 69);
+                    doc.setLineWidth(0.5);
+                    doc.rect(marginLeft, yPos, boxWidth, 15);
+                    
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
+                    doc.setFont('helvetica', 'normal');
+                    const lines3 = doc.splitTextToSize(lesson1Content.ponto3.euEnsineiQue, boxWidth - 15);
+                    doc.text(lines3, marginLeft + 5, yPos + 12);
+                    
+                    yPos += 25;
+                    
+                    // Nova página para Conclusão
+                    doc.addPage();
+                    yPos = marginTop;
                     
                     // ============= CONCLUSÃO =============
                     addTitle("CONCLUSÃO");
-                    addText(lesson1Content.conclusion.text, 11, false);
+                    addFormattedText(lesson1Content.conclusion.text, 11, false, false, 'justify', 1.3);
                     
-                    // Explicação Fundamentada da Conclusão
-                    checkPageBreak(10);
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(26, 95, 180); // Azul
-                    doc.text("EXPLICAÇÃO FUNDAMENTADA:", margin, yPos);
-                    yPos += 7;
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    addText(lesson1Content.conclusion.explanation, 11, false);
+                    addSubtitle("Explicação Fundamentada");
+                    addFormattedText(lesson1Content.conclusion.explanation, 11, false, false, 'justify', 1.3);
                     
-                    // Aplicação Prática da Conclusão
-                    checkPageBreak(10);
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(40, 167, 69); // Verde
-                    doc.text("APLICAÇÃO PRÁTICA:", margin, yPos);
-                    yPos += 7;
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    addText(lesson1Content.conclusion.application, 11, false);
+                    addSubtitle("Aplicação Prática");
+                    addFormattedText(lesson1Content.conclusion.application, 11, false, false, 'justify', 1.3);
                     
-                    // Síntese Final
-                    checkPageBreak(10);
-                    doc.setFontSize(12);
-                    doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(230, 179, 37); // Amarelo
-                    doc.text("SÍNTESE FINAL:", margin, yPos);
-                    yPos += 7;
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    addText(lesson1Content.conclusion.synthesis, 11, false);
+                    addSubtitle("Síntese Final");
+                    addFormattedText(lesson1Content.conclusion.synthesis, 11, false, false, 'justify', 1.3);
                     
-                    // ============= RODAPÉ DO PDF =============
+                    // ============= RODAPÉ EM TODAS AS PÁGINAS =============
                     const totalPages = doc.internal.getNumberOfPages();
                     for (let i = 1; i <= totalPages; i++) {
                         doc.setPage(i);
-                        doc.setFontSize(10);
+                        
+                        // Rodapé
+                        doc.setFontSize(9);
+                        doc.setFont('helvetica', 'normal');
                         doc.setTextColor(100, 100, 100);
-                        doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
-                        doc.text("EBD Fiel - Escola Bíblica Dominical - Lição 1", margin, pageHeight - 10);
+                        
+                        // Linha do rodapé
+                        doc.setDrawColor(200, 200, 200);
+                        doc.setLineWidth(0.2);
+                        doc.line(marginLeft, pageHeight - 15, pageWidth - marginRight, pageHeight - 15);
+                        
+                        // Texto do rodapé
+                        doc.text(`EBD Fiel - Escola Bíblica Dominical`, marginLeft, pageHeight - 10);
+                        doc.text(`Página ${i} de ${totalPages}`, pageWidth - marginRight, pageHeight - 10, { align: 'right' });
                     }
                     
                     // ============= SALVAR O PDF =============
-                    const fileName = `EBD_Fiel_Licao_1_${lesson1Content.title.replace(/\s+/g, '_').substring(0, 30)}.pdf`;
+                    const fileName = `EBD_Fiel_Licao_1_${new Date().getFullYear()}_${(new Date().getMonth() + 1).toString().padStart(2, '0')}_${new Date().getDate().toString().padStart(2, '0')}.pdf`;
                     doc.save(fileName);
                     
                     // Esconder loading
                     document.getElementById('pdfLoading').style.display = 'none';
                     
                     // Mostrar mensagem de sucesso
-                    alert(`PDF "${fileName}" gerado com sucesso! O download começará automaticamente.`);
+                    alert(`PDF gerado com sucesso!\nArquivo: ${fileName}\nO download começará automaticamente.`);
                     
                 } catch (error) {
                     console.error("Erro ao gerar PDF:", error);
                     document.getElementById('pdfLoading').style.display = 'none';
                     alert("Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
                 }
-            }, 500); // Pequeno delay para garantir que o loading seja exibido
+            }, 500);
         }
         
         // ============= FUNÇÃO PARA ABRIR MODAL DA LIÇÃO =============
