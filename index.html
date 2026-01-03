@@ -16,6 +16,7 @@
             --dark: #343a40;
             --gray: #6c757d;
             --success: #28a745;
+            --danger: #dc3545;
             --shadow: 0 4px 12px rgba(0,0,0,0.1);
             --radius: 8px;
         }
@@ -292,6 +293,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 1rem;
         }
         
         .lesson-tag {
@@ -303,22 +305,70 @@
             font-weight: 500;
         }
         
+        .lesson-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
         .download-btn {
             background-color: var(--success);
             color: white;
             border: none;
-            padding: 0.5rem 1.2rem;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-size: 0.9rem;
         }
         
         .download-btn:hover {
             background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .pdf-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .pdf-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .view-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .view-btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
         }
         
         /* About Section */
@@ -521,6 +571,16 @@
             
             .logo-text p {
                 font-size: 0.8rem;
+            }
+            
+            .lesson-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .view-btn, .download-btn, .pdf-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
         
@@ -821,26 +881,6 @@
             margin-bottom: 0.5rem;
         }
         
-        /* Botão Ver Lição Completa */
-        .view-full-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .view-full-btn:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
         /* Botão de Download PDF no modal */
         .pdf-download-modal {
             background-color: #dc3545;
@@ -880,21 +920,6 @@
             
             .reading-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .lesson-footer {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-            
-            .lesson-footer > div {
-                width: 100%;
-            }
-            
-            .view-full-btn, .download-btn {
-                width: 100%;
-                justify-content: center;
             }
             
             .point-title {
@@ -1268,6 +1293,33 @@
             filteredLessons.forEach(lesson => {
                 const lessonCard = document.createElement('div');
                 lessonCard.className = 'lesson-card';
+                
+                // Botões específicos para Lição 1
+                let buttonsHTML = '';
+                if (lesson.id === 1) {
+                    buttonsHTML = `
+                        <div class="lesson-buttons">
+                            <button class="view-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-book-open"></i> Ver Lição
+                            </button>
+                            <button class="download-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                            <button class="pdf-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-file-pdf"></i> PDF
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    buttonsHTML = `
+                        <div class="lesson-buttons">
+                            <button class="download-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-download"></i> Baixar
+                            </button>
+                        </div>
+                    `;
+                }
+                
                 lessonCard.innerHTML = `
                     <div class="lesson-header">
                         <div class="lesson-quarter">${lesson.quarter}</div>
@@ -1283,16 +1335,7 @@
                         </div>
                         <div class="lesson-footer">
                             <span class="lesson-tag">${lesson.tag}</span>
-                            <div style="display: flex; gap: 0.5rem;">
-                                ${lesson.id === 1 ? `
-                                    <button class="view-full-btn" data-lesson="${lesson.id}">
-                                        <i class="fas fa-book-open"></i> Ver Lição
-                                    </button>
-                                ` : ''}
-                                <button class="download-btn" data-lesson="${lesson.id}">
-                                    <i class="fas fa-download"></i> Baixar
-                                </button>
-                            </div>
+                            ${buttonsHTML}
                         </div>
                     </div>
                 `;
@@ -1308,11 +1351,21 @@
             });
             
             // Adicionar evento ao botão "Ver Lição" (apenas para lição 1)
-            document.querySelectorAll('.view-full-btn').forEach(btn => {
+            document.querySelectorAll('.view-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const lessonId = this.getAttribute('data-lesson');
                     if (lessonId == 1) {
                         openLessonModal(1);
+                    }
+                });
+            });
+            
+            // Adicionar evento ao botão "PDF" (apenas para lição 1)
+            document.querySelectorAll('.pdf-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lessonId = this.getAttribute('data-lesson');
+                    if (lessonId == 1) {
+                        generateLessonPDF();
                     }
                 });
             });
@@ -1471,7 +1524,7 @@
             }
         };
 
-        // ============= FUNÇÃO CORRIGIDA PARA GERAR PDF DA LIÇÃO =============
+        // ============= FUNÇÃO PARA GERAR PDF DA LIÇÃO =============
         function generateLessonPDF() {
             // Mostrar loading
             document.getElementById('pdfLoading').style.display = 'flex';
