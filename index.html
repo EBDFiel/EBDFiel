@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EBD Fiel - Escola Bíblica Dominical</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Biblioteca jsPDF para geração de PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <style>
         :root {
             --primary: #1a5fb4;
@@ -319,6 +322,28 @@
             background-color: #218838;
         }
         
+        .pdf-download-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .pdf-download-btn:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
         /* About Section */
         .about-section {
             background-color: white;
@@ -543,13 +568,16 @@
         
         .modal-content {
             background-color: white;
-            margin: 5% auto;
+            margin: 2% auto;
             padding: 0;
-            width: 90%;
-            max-width: 1000px;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 95vh;
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: slideIn 0.3s;
+            display: flex;
+            flex-direction: column;
         }
         
         @keyframes slideIn {
@@ -565,6 +593,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
         
         .modal-header h2 {
@@ -594,46 +623,64 @@
         
         .modal-body {
             padding: 2rem;
-            max-height: 70vh;
             overflow-y: auto;
+            flex-grow: 1;
         }
         
         .lesson-section {
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             padding-bottom: 1.5rem;
             border-bottom: 1px solid #eee;
         }
         
         .lesson-section:last-child {
             border-bottom: none;
+            margin-bottom: 0;
         }
         
         .section-title {
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--secondary);
             font-size: 1.3rem;
+            text-align: left;
+        }
+        
+        .section-title::after {
+            display: none;
         }
         
         .verse-box {
             background-color: #f0f7ff;
             border-left: 4px solid var(--primary);
-            padding: 1rem;
-            margin: 1rem 0;
+            padding: 1.2rem;
+            margin: 1.2rem 0;
             border-radius: 0 5px 5px 0;
             font-style: italic;
+            font-size: 1.1rem;
+        }
+        
+        .verse-box strong {
+            color: var(--primary-dark);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
         }
         
         .objectives-list {
             list-style-type: none;
-            padding-left: 1.5rem;
+            padding-left: 0;
         }
         
         .objectives-list li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
             position: relative;
-            padding-left: 1.5rem;
+            padding-left: 2rem;
+            padding: 0.8rem 0 0.8rem 2.5rem;
+            background-color: #f8fafc;
+            border-radius: 5px;
+            border-left: 3px solid var(--secondary);
         }
         
         .objectives-list li:before {
@@ -641,16 +688,24 @@
             color: var(--success);
             font-weight: bold;
             position: absolute;
-            left: 0;
+            left: 1rem;
+            top: 0.8rem;
         }
         
         .reference-box {
             background-color: #f9f9f9;
             border: 1px solid #ddd;
-            padding: 1rem;
+            padding: 1.5rem;
             border-radius: 5px;
             font-family: 'Georgia', serif;
             line-height: 1.8;
+            font-size: 1.05rem;
+        }
+        
+        .reference-box h4 {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
         }
         
         .lesson-point {
@@ -659,15 +714,18 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            position: relative;
         }
         
         .point-title {
             color: var(--primary-dark);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
         }
         
         .point-title i {
@@ -676,29 +734,114 @@
         
         .reading-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 0.8rem;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
             margin-top: 1rem;
         }
         
         .reading-day {
             background-color: #e8f4ff;
-            padding: 0.8rem;
+            padding: 1rem;
             border-radius: 5px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: transform 0.2s;
+        }
+        
+        .reading-day:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         .reading-day strong {
             color: var(--primary);
             display: block;
             margin-bottom: 0.3rem;
+            font-size: 0.9rem;
+        }
+        
+        .reading-day small {
+            color: var(--gray);
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 0.3rem;
         }
         
         .conclusion-box {
             background: linear-gradient(to right, #e3f2fd, #f3e5f5);
-            padding: 1.5rem;
+            padding: 1.8rem;
             border-radius: 8px;
             border-left: 4px solid var(--secondary);
+            margin-top: 1.5rem;
+        }
+        
+        .explanation-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid #1a5fb4;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .application-box {
+            background-color: #f0fff4;
+            border-left: 4px solid #28a745;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .explanation-box h5, .application-box h5 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .explanation-box h5 i {
+            color: #1a5fb4;
+        }
+        
+        .application-box h5 i {
+            color: #28a745;
+        }
+        
+        .synthesis-box {
+            background-color: #fff8e1;
+            border-left: 4px solid #e6b325;
+            padding: 1.2rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .synthesis-box h5 {
+            color: #8a6d3b;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .synthesis-box h5 i {
+            color: #e6b325;
+        }
+        
+        .teaching-point {
+            background-color: #e8f5e8;
+            padding: 1.2rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            border-left: 4px solid #28a745;
+        }
+        
+        .teaching-point strong {
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
         }
         
         /* Botão Ver Lição Completa */
@@ -721,15 +864,41 @@
             transform: translateY(-2px);
         }
         
+        /* Botão de Download PDF no modal */
+        .pdf-download-modal {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+        
+        .pdf-download-modal:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .modal-header-buttons {
+            display: flex;
+            align-items: center;
+        }
+        
         @media (max-width: 768px) {
             .modal-content {
-                width: 95%;
-                margin: 2% auto;
+                width: 98%;
+                margin: 1% auto;
+                max-height: 98vh;
             }
             
             .modal-body {
                 padding: 1.5rem;
-                max-height: 80vh;
             }
             
             .reading-grid {
@@ -750,11 +919,103 @@
                 width: 100%;
                 justify-content: center;
             }
+            
+            .point-title {
+                font-size: 1.1rem;
+            }
+            
+            .verse-box {
+                font-size: 1rem;
+                padding: 1rem;
+            }
+            
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .modal-header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .pdf-download-modal {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .close-modal {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-header h2 {
+                font-size: 1.2rem;
+            }
+            
+            .modal-header {
+                padding: 1rem;
+            }
+            
+            .modal-body {
+                padding: 1rem;
+            }
+            
+            .lesson-point {
+                padding: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.1rem;
+            }
         }
         /* ============= FIM DO MODAL ============= */
+        
+        /* ============= LOADING PARA PDF ============= */
+        .pdf-loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .pdf-loading .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        /* ============= FIM LOADING ============= */
     </style>
 </head>
 <body>
+    <!-- Loading para geração de PDF -->
+    <div class="pdf-loading" id="pdfLoading">
+        <div class="spinner"></div>
+        <p>Gerando PDF, por favor aguarde...</p>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="header-container">
@@ -1056,6 +1317,11 @@
                                 </button>
                             </div>
                         </div>
+                        ${lesson.id === 1 ? `
+                            <button class="pdf-download-btn" data-lesson="${lesson.id}">
+                                <i class="fas fa-file-pdf"></i> Baixar PDF da Lição 1
+                            </button>
+                        ` : ''}
                     </div>
                 `;
                 container.appendChild(lessonCard);
@@ -1078,6 +1344,16 @@
                     }
                 });
             });
+            
+            // Adicionar evento ao botão "Baixar PDF" (apenas para lição 1)
+            document.querySelectorAll('.pdf-download-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const lessonId = this.getAttribute('data-lesson');
+                    if (lessonId == 1) {
+                        generateLessonPDF();
+                    }
+                });
+            });
         }
         
         // Função para simular download
@@ -1085,6 +1361,781 @@
             const lesson = lessons.find(l => l.id == lessonId);
             if (lesson) {
                 alert(`Iniciando download da ${lesson.number}: "${lesson.title}"\n\nEm uma implementação real, este botão faria o download do arquivo PDF da lição.`);
+            }
+        }
+        
+        // ============= CONTEÚDO ATUALIZADO DA LIÇÃO 1 =============
+        const lesson1Content = {
+            title: "OS DISCÍPULOS DE CRISTO SÃO NOVAS CRIATURAS",
+            
+            // 1. TEXTO ÁUREO
+            textAureo: {
+                verse: "Colossenses 3:10",
+                text: "E vos vestistes do novo, que se renova para o conhecimento, segundo a imagem daquele que o criou"
+            },
+            
+            // 2. VERDADE APLICADA
+            appliedTruth: "O discípulo de Cristo anda em novidade de vida, não mais dominado pela natureza pecaminosa.",
+            
+            // 3. OBJETIVOS DA LIÇÃO
+            objectives: [
+                "Reconhecer o valor do arrependimento para a vida cristã",
+                "Ressaltar que em Jesus somos nova criatura",
+                "Saber que Cristo nos oferece uma nova vida"
+            ],
+            
+            // 4. TEXTOS DE REFERÊNCIA
+            references: {
+                title: "ROMANOS 6:2-6",
+                verses: [
+                    "2 De modo nenhum. Nós, que estamos mortos para o pecado, como viveremos ainda nele?",
+                    "3 Ou não sabeis que todos quantos fomos batizados em Jesus Cristo, fomos batizados na sua morte?",
+                    "4 De sorte que fomos sepultados com ele pelo batismo na morte; para que, como Cristo ressuscitou dos mortos pela glória do Pai, assim andemos nós também em novidade de vida.",
+                    "5 Porque, se fomos plantados juntamente com ele na semelhança da sua morte, também seremos na sua ressurreição.",
+                    "6 Sabendo isto: que o nosso homem velho foi com ele crucificado, para que o corpo do pecado seja desfeito, para que não sirvamos mais ao pecado."
+                ]
+            },
+            
+            // 5. LEITURAS COMPLEMENTARES
+            readings: [
+                { day: "SEGUNDA", ref: "2 Co 5:17", title: "A nova criatura em Cristo" },
+                { day: "TERÇA", ref: "Fp 3:13,14", title: "Deixando o passado e avançando para o futuro" },
+                { day: "QUARTA", ref: "Rm 6:4", title: "A nova vida em Jesus" },
+                { day: "QUINTA", ref: "At 10:43", title: "O perdão dos pecados está disponível a todos" },
+                { day: "SEXTA", ref: "Tt 3:5", title: "O novo nascimento significa Regeneração" },
+                { day: "SÁBADO", ref: "Cl 3:8-10", title: "É preciso se despojar do velho homem" }
+            ],
+            
+            // 6. HINOS SUGERIDOS
+            hymns: [117, 169, 171],
+            
+            // 7. MOTIVO DE ORAÇÃO
+            prayer: "Ore para que mais vidas sejam transformadas pelo poder do Evangelho.",
+            
+            // 8. INTRODUÇÃO
+            introduction: {
+                text: "Nesta lição, veremos a necessidade de o ser humano se arrepender e crer em Jesus Cristo, a partir do anúncio do Evangelho e pela ação do Espírito Santo. Ao nos tornarmos discípulos de Cristo, passamos a viver como novas criaturas: não mais dominados pela natureza pecaminosa, mas andando segundo a Vontade de Deus e para a Glória de Deus.",
+                explanation: "A queda humana (Gênesis 3) introduziu uma natureza pecaminosa que separa o ser humano de Deus (Romanos 5:12). O Evangelho, porém, oferece restauração por meio do arrependimento e da fé em Jesus Cristo. Quando alguém se torna discípulo de Cristo, ocorre uma transformação radical: a velha natureza é substituída por uma nova, capacitando-o a viver segundo a vontade de Deus.",
+                application: "Um exemplo prático é o de uma pessoa que, antes dominada por vícios ou egoísmo, após encontrar Cristo, passa a buscar integridade e amor ao próximo. Essa mudança não é mera autoajuda, mas resultado da ação do Espírito Santo, que renova a mente e o coração (Romanos 12:2). O novo convertido experimenta libertação real, como testemunham muitos ex-dependentes químicos que, pela fé em Cristo, abandonam vícios que antes pareciam incuráveis."
+            },
+            
+            // 9. PONTO 1: UMA NOVA DIMENSÃO DE VIDA
+            ponto1: {
+                title: "1. UMA NOVA DIMENSÃO DE VIDA",
+                content: "Após a queda do primeiro casal, todos os seres humanos nascem com uma natureza pecaminosa e, como consequência, a morte atinge a todos (Rm 5.12). O pecado causa separação entre o ser humano e Deus (Rm 3.23). A restauração dessa comunhão ocorre quando o pecador atenta para o chamado de Deus e lhe obedece, como vemos por intermédio de João Batista e Jesus Cristo: 'Arrependei-vos!'. Essa necessidade de arrependimento continuou sendo enfatizada pelos Apóstolos após a Ascensão de Jesus (Mt 3.2; Mc 1.15; At 2.38; 3.19). Logo no início do Seu Ministério, Ele disse: 'Arrependei-vos, porque é chegado o reino dos céus', Mt 4.17.",
+                subpoints: [
+                    {
+                        title: "1.1. O arrependimento é uma ordenança",
+                        content: "No AT, os profetas tinham a incumbência de confrontar o povo e pregar a mensagem do arrependimento. Alguns deles falaram ao povo sobre a importância de voltarem-se para Deus mediante o arrependimento sincero (Is 30.15; Jr 8.6; Ez 14.6). A advertência dos profetas era para que os israelitas se arrependessem de suas iniquidades e se voltassem para Deus, abandonando a vida de pecado para fazer o bem (Cl 3.9,10).",
+                        explanation: "Desde o Antigo Testamento, Deus chama o ser humano ao arrependimento por meio de profetas (Isaías 30:15; Jeremias 8:6). No Novo Testamento, João Batista e Jesus iniciam seus ministérios com a mensagem: 'Arrependei-vos!' (Mateus 3:2; 4:17). O arrependimento não é opcional; é uma resposta necessária ao convite divino, produzida pela convicção do Espírito Santo através da Palavra (João 16:8; Hebreus 4:12). O arrependimento bíblico (metanoia) implica mudança de mente e direção, não apenas remorso temporário.",
+                        application: "Na vida cristã, o arrependimento se expressa quando reconhecemos pecados específicos (como mentiras ou mágoas) e os confessamos a Deus, abandonando-os. Por exemplo, alguém que costumava fofocar pode pedir perdão e buscar edificar outros com suas palavras (Efésios 4:29). Na igreja local, isso se materializa quando irmãos reconciliam relacionamentos rompidos, restituem bens mal adquiridos ou abandonam práticas contrárias à Palavra. O arrependimento autêntico produz frutos visíveis (Mateus 3:8)."
+                    },
+                    {
+                        title: "1.2. O arrependimento conduz à Salvação",
+                        content: "Paulo ressaltou que todos pecaram e, por isso, foram destituídos da Glória de Deus (Rm 3.23). Voltar à Presença do Senhor, portanto, só é possível pelo arrependimento (At 3.19), que é crucial para sermos novas criaturas. Cabe dizer que se arrepender não significa apenas se entristecer pelo pecado, mas inclui decidir mudar. Ao anunciar o Reino, Jesus ordena que todos se arrependam para serem salvos (At 2.38; 3.19; 2Co 7.10).",
+                        explanation: "A Bíblia afirma que 'todos pecaram' (Romanos 3:23), e o arrependimento é o caminho para a reconciliação com Deus (Atos 3:19). Não se trata apenas de remorso, mas de uma mudança de direção: abandonar o pecado e voltar-se para Deus, crendo no Evangelho (Marcos 1:15). A tristeza segundo Deus produz arrependimento para a salvação (2 Coríntios 7:10), diferentemente da tristeza mundana que apenas gera morte espiritual.",
+                        application: "Um jovem que vivia em rebeldia contra os pais, ao se arrepender, não apenas pede perdão, mas também passa a honrá-los com ações práticas, demonstrando que sua fé é viva (Tiago 2:17). Nas reuniões de testemunho, é comum ouvir histórias de pessoas que, ao se arrependerem, restauram casamentos, abandonam vícios e tornam-se contribuintes positivos na sociedade. O arrependimento conduz à transformação integral."
+                    },
+                    {
+                        title: "1.3. O arrependimento e a nova criatura",
+                        content: "Ser uma nova criatura em Cristo é resultado de um autêntico arrependimento. Quando proclamou as Boas-Novas, Jesus advertiu Seus seguidores a arrependerem-se e crer no Evangelho (Mc 1.15); portanto, o arrependimento e a fé caminham juntos. Podemos dizer, então, que o arrependimento e a fé são os dois aspectos essenciais à transformação de vida de quem deseja seguir a Cristo.",
+                        explanation: "Arrependimento e fé são indissociáveis: o primeiro implica deixar o pecado; o segundo, crer em Cristo para salvação. Juntos, eles resultam na transformação que Paulo descreve como 'nova criatura' (2 Coríntios 5:17). Essa mudança é operada pelo Espírito Santo, que nos justifica e nos une a Cristo (Gálatas 2:20). A regeneração é obra instantânea de Deus que produz mudança progressiva (santificação).",
+                        application: "Uma pessoa que era escrava do materialismo, ao se arrepender e crer, passa a valorizar mais as relações e a generosidade, usando seus recursos para ajudar necessitados (1 Timóteo 6:18). Na prática eclesial, isso se observa quando membros antes avarentos tornam-se dizimistas fiéis e ofertantes generosos, não por obrigação, mas por gratidão à graça recebida."
+                    }
+                ],
+                euEnsineiQue: "Jesus advertiu Seus seguidores a arrependerem-se e a crer no Evangelho."
+            },
+            
+            // 10. PONTO 2: EM CRISTO SOMOS NOVA CRIATURA
+            ponto2: {
+                title: "2. EM CRISTO SOMOS NOVA CRIATURA",
+                content: "Para o Apóstolo Paulo, aquele que está em Cristo é nova criatura, vive uma nova realidade e nova vida, que surgem ao abandonarmos a antiga vida (2Co 5.17).",
+                subpoints: [
+                    {
+                        title: "2.1. A transformação espiritual em Cristo",
+                        content: "Aceitar a Cristo resulta em uma renovação interior. A pessoa passa a ser participante da natureza divina (2Pe 1.4), que é alinhada aos propósitos de Deus. Isso significa abandonar os erros do passado e viver como quem deseja se tornar semelhante a Jesus Cristo (1Co 11.1). Paulo se referiu a essa profunda transformação ao dizer que tudo se fez novo (2Co 5.17). Agora, o convertido é apresentado a um viver diferente do que manteve até então, inclusive recebendo um novo coração e um novo espírito (Ez 36.26). O Senhor não o trata conforme foi o seu passado, semelhantemente o pai ao receber o filho que tinha saído de casa, que estava perdido e foi encontrado, estava morto e voltou à vida (Lc 15. 22-24).",
+                        explanation: "Em Cristo, recebemos uma nova natureza (2 Pedro 1:4) e um novo coração (Ezequiel 36:26). Essa transformação é tão radical que Paulo a compara a uma 'nova criação' (2 Coríntios 5:17). O passado de pecado não nos define mais, pois somos aceitos por Deus como filhos (Lucas 15:22-24). A regeneração é obra monergística de Deus (João 1:13), que nos capacita a viver em novidade de vida.",
+                        application: "Um ex-adúltero, após converter-se, não só abandona o adultério, mas também cultiva fidelidade e transparência no casamento, refletindo o caráter de Cristo (1 Coríntios 11:1). Nas células de discipulado, observamos como pessoas antes violentas tornam-se pacificadoras, antes mentirosas tornam-se testemunhas de verdade. A transformação é evidenciada na reorientação dos desejos e prioridades."
+                    },
+                    {
+                        title: "2.2. A conversão e a fé",
+                        content: "Jesus anunciou o Reino de Deus, chamando-nos à conversão e a crer no Evangelho para nos libertar dos pecados (Rm 6.22,23). Em Cristo, recebemos o perdão e a identidade de filhos de Deus. Essa realidade provoca mudanças verdadeiras e definitivas na vida dos convertidos, dos que perseveram na obediência ao Evangelho. Portanto, o novo nascimento é marcado pela conversão e fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo.",
+                        explanation: "A conversão envolve tanto a volta do pecado (arrependimento) quanto a entrega a Cristo (fé). Jesus nos chama a crer no Evangelho para libertação do pecado (Romanos 6:22-23). O novo nascimento (João 3:3) é obra da graça divina, não de méritos humanos (Efésios 2:8-9). A fé salvadora é dom de Deus que produz obediência (Efésios 2:10).",
+                        application: "Um antigo adepto de seitas, ao crer em Cristo, deixa de buscar salvação em rituais e passa a confiar apenas na obra redentora de Jesus, testemunhando essa fé publicamente (Romanos 10:9-10). Nas classes de novo convertidos, ensina-se que a fé genuína se demonstra no batismo, na frequência aos cultos, no estudo bíblico e no serviço cristão."
+                    },
+                    {
+                        title: "2.3. Viver no mundo como nova criatura",
+                        content: "A transformação em Cristo impacta o dia a dia, refletindo-se em ações, escolhas e relacionamentos que glorificam a Deus e testemunham a nova vida. Jesus entra no coração do pecador e opera muitas mudanças, inclusive no modo de pensar e agir. É como se aquela pessoa morresse, mas nascesse de novo para viver uma nova identidade e realidade. O novo convertido experimenta essa mudança pela Graça de Cristo Jesus. Sendo assim, não alcançamos a Salvação por mérito pessoal, mas pela fé em Jesus, o Único que pode nos salvar (Ef 2.8,9).",
+                        explanation: "A nova vida em Cristo se expressa no cotidiano: pensamentos, ações e relacionamentos são renovados (Romanos 6:4). O crente está 'morto para o mundo' (Gálatas 6:14), mas vivo para Deus, vivendo em novidade de vida. A santificação é processo contínuo de conformação à imagem de Cristo (Romanos 8:29).",
+                        application: "No trabalho, um cristão pode enfrentar a tentação de sonegar impostos, mas, como nova criatura, escolhe a honestidade, mesmo que isso signifique menor lucro, glorificando a Deus (Colossenses 3:23). Nas redes sociais, o cristão demonstra sua nova natureza evitando conteúdos imorais, controlando a língua digital e usando as plataformas para testemunho (Colossenses 4:5-6)."
+                    }
+                ],
+                euEnsineiQue: "O novo nascimento é marcado pela conversão e pela fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo."
+            },
+            
+            // 11. PONTO 3: A NOVA VIDA EM CRISTO
+            ponto3: {
+                title: "3. A NOVA VIDA EM CRISTO",
+                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de Deus (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a Deus, como resultado do novo nascimento, a partir da ação da Palavra de Deus e do Espírito Santo (Jo 3.3).",
+                subpoints: [
+                    {
+                        title: "3.1. A nova identidade em Cristo",
+                        content: "A nova vida em Cristo começa com a transformação da identidade, uma vez que somos reconciliados com Deus, recebemos uma nova natureza espiritual e somos chamados a viver como filhos amados (2Co 5.17). Passamos a andar em concordância com a Palavra de Deus, sob o Senhorio de Cristo (Gl 2.20). O viver em Cristo é marcado pela diferença em relação à vida dos que não querem se render ao Senhorio de Cristo e decidem continuar andando segundo seus próprios pensamentos e desejos (Ef 4.17-20).",
+                        explanation: "Em Cristo, nossa identidade muda: de pecadores condenados para filhos de Deus (João 1:12). Isso implica um novo modo de viver, alinhado com a Palavra (Efésios 4:17-20). Somos chamados a refletir a imagem de Cristo (Colossenses 3:10). A identidade cristã é fundamentada na filiação divina, não em realizações humanas.",
+                        application: "Um ex-ressentido, agora filho de Deus, perdoa ofensas profundas, não por força própria, mas porque experimentou o perdão divino (Efésios 4:32). Nos grupos de aconselhamento bíblico, pessoas aprendem a substituir identidades falsas (ex.: 'sou um fracassado') pela verdade bíblica ('sou amado e aceito por Deus'). A nova identidade transforma a autoestima e os relacionamentos."
+                    },
+                    {
+                        title: "3.2. Caminhar em Santidade e Propósito",
+                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de Deus para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de Deus. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de Deus, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6).",
+                        explanation: "A santidade não é opcional; é evidência da nova vida (1 Pedro 1:15-16). O velho homem foi crucificado com Cristo (Romanos 6:6), e agora vivemos sob o Senhorio dEle (Gálatas 2:20). O propósito do crente é glorificar a Deus em todas as áreas. A santificação é obra cooperativa: Deus opera e nós respondemos em obediência (Filipenses 2:12-13).",
+                        application: "Um jovem cristão, antes envolvido com pornografia, agora busca pureza, evitando conteúdos impróprios e cultivando a mente em coisas santas (Filipenses 4:8). Nas empresas, cristãos enfrentam dilemas éticos mantendo integridade, mesmo sob pressão. A santidade prática se manifesta no cuidado com a língua, no tratamento respeitoso a todos, na fidelidade conjugal e na administração fiel dos recursos."
+                    },
+                    {
+                        title: "3.3. Comunhão e missão na comunidade",
+                        content: "A nova vida em Cristo nos integra à comunidade de fé, na qual compartilhamos o Amor de Deus, servimos uns aos outros e cumprimos a missão de proclamar o Evangelho. Devido à obediência dos que amam o Senhor, são muitos os testemunhos de irmãos que aceitaram a Cristo como Salvador e, a partir daí, tiveram suas vidas transformadas ao abandonar vícios e comportamentos nocivos a si mesmos, às suas famílias e à sociedade em geral.",
+                        explanation: "A nova vida não é isolada; integra-nos à Igreja, onde exercemos amor mútuo, serviço e testemunho (Atos 2:42-47). A missão de proclamar o Evangelho é compartilhada coletivamente (Mateus 28:19-20). A comunhão dos santos é expressão prática do Corpo de Cristo (1 Coríntios 12:12-27).",
+                        application: "Um novo convertido, ex-dependente químico, encontra apoio na igreja e, por sua vez, ajuda outros em recuperação, demonstrando o poder transformador de Cristo (Gálatas 6:2). Nas pequenas grupos, cristãos compartilham necessidades, oram uns pelos outros e prestam assistência prática. A missão se concretiza quando cada crente vê seu local de trabalho, estudo e vizinhança como campo missionário."
+                    }
+                ],
+                euEnsineiQue: "É a experiência de conversão que gera a identidade da nova criatura."
+            },
+            
+            // 12. CONCLUSÃO
+            conclusion: {
+                text: "Ser uma nova criatura em Cristo nos liberta do passado, nos dá uma nova identidade e nos leva a viver em santidade. Esse novo viver nos capacita a refletir o Caráter de Cristo e a glorificar Seu Nome em tudo que fazemos.",
+                explanation: "Ser nova criatura em Cristo significa libertação do passado, nova identidade em Deus e um viver santo que reflete Seu caráter. Essa transformação é obra divina, mas exige nossa cooperação contínua (Filipenses 2:12-13). A nova criação já é realidade espiritual, mas aguarda plena consumação na redenção do corpo (Romanos 8:23).",
+                application: "O discípulo de Cristo é chamado a avaliar constantemente sua vida: 'Meus hábitos, palavras e atitudes têm glorificado a Deus?' A jornada cristã é de renovação diária (Colossenses 3:10), até que Cristo seja plenamente formado em nós (Gálatas 4:19). A igreja local deve proporcionar ambiente de discipulado onde novas criaturas sejam instruídas, corrigidas e encorajadas a crescer na graça.",
+                synthesis: "A lição ensina que o arrependimento e a fé em Cristo geram uma transformação radical, que se expressa em santidade prática, integração na comunidade da fé e testemunho ao mundo. A nova criatura não é uma mera reforma, mas uma recriação espiritual que impacta todas as dimensões da vida. Como escreveu Matthew Henry: 'A conversão é a virada de toda a alma a Deus'. Que cada discípulo de Cristo viva de forma coerente com esta realidade transformadora, sendo luz em meio às trevas e sal na terra, para glória de Deus Pai."
+            }
+        };
+
+        // ============= FUNÇÃO PARA GERAR PDF DA LIÇÃO =============
+        function generateLessonPDF() {
+            // Mostrar loading
+            document.getElementById('pdfLoading').style.display = 'flex';
+            
+            // Usar setTimeout para permitir que a interface atualize o loading
+            setTimeout(() => {
+                try {
+                    // Inicializar jsPDF
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'mm',
+                        format: 'a4'
+                    });
+                    
+                    // Configurações
+                    const pageWidth = doc.internal.pageSize.getWidth();
+                    const pageHeight = doc.internal.pageSize.getHeight();
+                    const margin = 15;
+                    let yPos = margin;
+                    
+                    // Função para adicionar uma nova página se necessário
+                    const checkPageBreak = (requiredSpace) => {
+                        if (yPos + requiredSpace > pageHeight - margin) {
+                            doc.addPage();
+                            yPos = margin;
+                            return true;
+                        }
+                        return false;
+                    };
+                    
+                    // Função para adicionar texto com quebra de linha
+                    const addText = (text, fontSize = 11, isBold = false, align = 'left') => {
+                        const lines = doc.splitTextToSize(text, pageWidth - 2 * margin);
+                        checkPageBreak(fontSize * lines.length / 3);
+                        
+                        doc.setFontSize(fontSize);
+                        doc.setFont('helvetica', isBold ? 'bold' : 'normal');
+                        
+                        // Adicionar texto
+                        doc.text(lines, margin, yPos, { align: align });
+                        yPos += fontSize * lines.length / 3;
+                        yPos += 3; // Espaçamento
+                    };
+                    
+                    // Função para adicionar título
+                    const addTitle = (text, fontSize = 16) => {
+                        checkPageBreak(15);
+                        doc.setFontSize(fontSize);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul primário
+                        doc.text(text, pageWidth / 2, yPos, { align: 'center' });
+                        yPos += 10;
+                        doc.setTextColor(0, 0, 0); // Voltar para preto
+                    };
+                    
+                    // Função para adicionar subtítulo
+                    const addSubtitle = (text, fontSize = 14) => {
+                        checkPageBreak(10);
+                        doc.setFontSize(fontSize);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(230, 179, 37); // Amarelo secundário
+                        doc.text(text, margin, yPos);
+                        yPos += 8;
+                        doc.setTextColor(0, 0, 0); // Voltar para preto
+                    };
+                    
+                    // Função para adicionar linha divisória
+                    const addDivider = () => {
+                        checkPageBreak(5);
+                        doc.setDrawColor(230, 179, 37); // Amarelo secundário
+                        doc.setLineWidth(0.5);
+                        doc.line(margin, yPos, pageWidth - margin, yPos);
+                        yPos += 5;
+                    };
+                    
+                    // Função para adicionar caixa de texto destacada
+                    const addHighlightBox = (text, bgColor = [240, 247, 255]) => {
+                        const lines = doc.splitTextToSize(text, pageWidth - 2 * margin - 10);
+                        const boxHeight = lines.length * 5 + 10;
+                        
+                        checkPageBreak(boxHeight);
+                        
+                        // Desenhar caixa de fundo
+                        doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+                        doc.rect(margin, yPos, pageWidth - 2 * margin, boxHeight, 'F');
+                        
+                        // Adicionar texto
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'italic');
+                        doc.setTextColor(0, 0, 0);
+                        doc.text(lines, margin + 5, yPos + 8);
+                        
+                        yPos += boxHeight + 5;
+                    };
+                    
+                    // ============= CABEÇALHO DO PDF =============
+                    // Logo e título
+                    doc.setFillColor(26, 95, 180); // Azul primário
+                    doc.rect(0, 0, pageWidth, 30, 'F');
+                    
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFontSize(20);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text("EBD FIEL - ESCOLA BÍBLICA DOMINICAL", pageWidth / 2, 15, { align: 'center' });
+                    
+                    doc.setFontSize(12);
+                    doc.text("Fiel à Palavra", pageWidth / 2, 22, { align: 'center' });
+                    
+                    yPos = 40;
+                    
+                    // ============= TÍTULO DA LIÇÃO =============
+                    addTitle(`LIÇÃO 1: ${lesson1Content.title}`, 18);
+                    addDivider();
+                    
+                    // ============= TEXTO ÁUREO =============
+                    addSubtitle("TEXTO ÁUREO");
+                    addText(`"${lesson1Content.textAureo.text}"`, 12, false, 'center');
+                    addText(`(${lesson1Content.textAureo.verse})`, 11, true, 'center');
+                    yPos += 5;
+                    
+                    // ============= VERDADE APLICADA =============
+                    addSubtitle("VERDADE APLICADA");
+                    addText(lesson1Content.appliedTruth, 12, true);
+                    yPos += 5;
+                    
+                    // ============= OBJETIVOS DA LIÇÃO =============
+                    addSubtitle("OBJETIVOS DA LIÇÃO");
+                    lesson1Content.objectives.forEach(obj => {
+                        addText(`• ${obj}`, 11, false);
+                    });
+                    yPos += 5;
+                    
+                    // ============= TEXTOS DE REFERÊNCIA =============
+                    addSubtitle("TEXTOS DE REFERÊNCIA");
+                    addText(lesson1Content.references.title, 12, true);
+                    lesson1Content.references.verses.forEach(verse => {
+                        addText(verse, 11, false);
+                    });
+                    yPos += 5;
+                    
+                    // ============= LEITURAS COMPLEMENTARES =============
+                    addSubtitle("LEITURAS COMPLEMENTARES");
+                    lesson1Content.readings.forEach(reading => {
+                        addText(`${reading.day} | ${reading.ref} - ${reading.title}`, 11, false);
+                    });
+                    yPos += 5;
+                    
+                    addText(`Hinos Sugeridos: ${lesson1Content.hymns.join(', ')}`, 11, false);
+                    yPos += 5;
+                    
+                    // ============= MOTIVO DE ORAÇÃO =============
+                    addSubtitle("MOTIVO DE ORAÇÃO");
+                    addText(lesson1Content.prayer, 11, false);
+                    yPos += 10;
+                    
+                    // ============= INTRODUÇÃO =============
+                    addTitle("INTRODUÇÃO");
+                    addText(lesson1Content.introduction.text, 11, false);
+                    
+                    // Explicação Fundamentada
+                    checkPageBreak(10);
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(26, 95, 180); // Azul
+                    doc.text("EXPLICAÇÃO FUNDAMENTADA:", margin, yPos);
+                    yPos += 7;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(lesson1Content.introduction.explanation, 11, false);
+                    
+                    // Aplicação Prática
+                    checkPageBreak(10);
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(40, 167, 69); // Verde
+                    doc.text("APLICAÇÃO PRÁTICA:", margin, yPos);
+                    yPos += 7;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(lesson1Content.introduction.application, 11, false);
+                    yPos += 10;
+                    
+                    // ============= PONTO 1: UMA NOVA DIMENSÃO DE VIDA =============
+                    addTitle(lesson1Content.ponto1.title);
+                    addText(lesson1Content.ponto1.content, 11, false);
+                    
+                    // Subpontos do Ponto 1
+                    lesson1Content.ponto1.subpoints.forEach((subpoint, index) => {
+                        checkPageBreak(15);
+                        doc.setFontSize(13);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text(subpoint.title, margin, yPos);
+                        yPos += 8;
+                        
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.content, 11, false);
+                        
+                        // Explicação Fundamentada
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text("Explicação Fundamentada:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.explanation, 11, false);
+                        
+                        // Aplicação Prática
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(40, 167, 69); // Verde
+                        doc.text("Aplicação Prática:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.application, 11, false);
+                        
+                        yPos += 5;
+                    });
+                    
+                    // "EU ENSINEI QUE" do Ponto 1
+                    checkPageBreak(10);
+                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto1.euEnsineiQue}`, [232, 245, 232]);
+                    yPos += 10;
+                    
+                    // ============= PONTO 2: EM CRISTO SOMOS NOVA CRIATURA =============
+                    addTitle(lesson1Content.ponto2.title);
+                    addText(lesson1Content.ponto2.content, 11, false);
+                    
+                    // Subpontos do Ponto 2
+                    lesson1Content.ponto2.subpoints.forEach((subpoint, index) => {
+                        checkPageBreak(15);
+                        doc.setFontSize(13);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text(subpoint.title, margin, yPos);
+                        yPos += 8;
+                        
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.content, 11, false);
+                        
+                        // Explicação Fundamentada
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text("Explicação Fundamentada:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.explanation, 11, false);
+                        
+                        // Aplicação Prática
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(40, 167, 69); // Verde
+                        doc.text("Aplicação Prática:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.application, 11, false);
+                        
+                        yPos += 5;
+                    });
+                    
+                    // "EU ENSINEI QUE" do Ponto 2
+                    checkPageBreak(10);
+                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto2.euEnsineiQue}`, [232, 245, 232]);
+                    yPos += 10;
+                    
+                    // ============= PONTO 3: A NOVA VIDA EM CRISTO =============
+                    addTitle(lesson1Content.ponto3.title);
+                    addText(lesson1Content.ponto3.content, 11, false);
+                    
+                    // Subpontos do Ponto 3
+                    lesson1Content.ponto3.subpoints.forEach((subpoint, index) => {
+                        checkPageBreak(15);
+                        doc.setFontSize(13);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text(subpoint.title, margin, yPos);
+                        yPos += 8;
+                        
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.content, 11, false);
+                        
+                        // Explicação Fundamentada
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180); // Azul
+                        doc.text("Explicação Fundamentada:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.explanation, 11, false);
+                        
+                        // Aplicação Prática
+                        checkPageBreak(10);
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(40, 167, 69); // Verde
+                        doc.text("Aplicação Prática:", margin, yPos);
+                        yPos += 7;
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(subpoint.application, 11, false);
+                        
+                        yPos += 5;
+                    });
+                    
+                    // "EU ENSINEI QUE" do Ponto 3
+                    checkPageBreak(10);
+                    addHighlightBox(`EU ENSINEI QUE: ${lesson1Content.ponto3.euEnsineiQue}`, [232, 245, 232]);
+                    yPos += 10;
+                    
+                    // ============= CONCLUSÃO =============
+                    addTitle("CONCLUSÃO");
+                    addText(lesson1Content.conclusion.text, 11, false);
+                    
+                    // Explicação Fundamentada da Conclusão
+                    checkPageBreak(10);
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(26, 95, 180); // Azul
+                    doc.text("EXPLICAÇÃO FUNDAMENTADA:", margin, yPos);
+                    yPos += 7;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(lesson1Content.conclusion.explanation, 11, false);
+                    
+                    // Aplicação Prática da Conclusão
+                    checkPageBreak(10);
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(40, 167, 69); // Verde
+                    doc.text("APLICAÇÃO PRÁTICA:", margin, yPos);
+                    yPos += 7;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(lesson1Content.conclusion.application, 11, false);
+                    
+                    // Síntese Final
+                    checkPageBreak(10);
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(230, 179, 37); // Amarelo
+                    doc.text("SÍNTESE FINAL:", margin, yPos);
+                    yPos += 7;
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(lesson1Content.conclusion.synthesis, 11, false);
+                    
+                    // ============= RODAPÉ DO PDF =============
+                    const totalPages = doc.internal.getNumberOfPages();
+                    for (let i = 1; i <= totalPages; i++) {
+                        doc.setPage(i);
+                        doc.setFontSize(10);
+                        doc.setTextColor(100, 100, 100);
+                        doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+                        doc.text("EBD Fiel - Escola Bíblica Dominical - Lição 1", margin, pageHeight - 10);
+                    }
+                    
+                    // ============= SALVAR O PDF =============
+                    const fileName = `EBD_Fiel_Licao_1_${lesson1Content.title.replace(/\s+/g, '_').substring(0, 30)}.pdf`;
+                    doc.save(fileName);
+                    
+                    // Esconder loading
+                    document.getElementById('pdfLoading').style.display = 'none';
+                    
+                    // Mostrar mensagem de sucesso
+                    alert(`PDF "${fileName}" gerado com sucesso! O download começará automaticamente.`);
+                    
+                } catch (error) {
+                    console.error("Erro ao gerar PDF:", error);
+                    document.getElementById('pdfLoading').style.display = 'none';
+                    alert("Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
+                }
+            }, 500); // Pequeno delay para garantir que o loading seja exibido
+        }
+        
+        // ============= FUNÇÃO PARA ABRIR MODAL DA LIÇÃO =============
+        function openLessonModal(lessonNumber) {
+            if (lessonNumber === 1) {
+                const modal = document.createElement('div');
+                modal.className = 'modal';
+                modal.id = 'lessonModal';
+                modal.innerHTML = `
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Lição 1: ${lesson1Content.title}</h2>
+                            <div class="modal-header-buttons">
+                                <button class="pdf-download-modal" id="pdfDownloadModal">
+                                    <i class="fas fa-file-pdf"></i> Baixar em PDF
+                                </button>
+                                <button class="close-modal">&times;</button>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <!-- 1. TEXTO ÁUREO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-book-bible"></i> TEXTO ÁUREO</h3>
+                                <div class="verse-box">
+                                    <strong>${lesson1Content.textAureo.verse}</strong>
+                                    <p>"${lesson1Content.textAureo.text}"</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 2. VERDADE APLICADA -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-bullseye"></i> VERDADE APLICADA</h3>
+                                <p style="font-size: 1.1rem; font-weight: 500; color: var(--primary-dark);">${lesson1Content.appliedTruth}</p>
+                            </div>
+                            
+                            <!-- 3. OBJETIVOS DA LIÇÃO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-tasks"></i> OBJETIVOS DA LIÇÃO</h3>
+                                <ul class="objectives-list">
+                                    ${lesson1Content.objectives.map(obj => `<li>${obj}</li>`).join('')}
+                                </ul>
+                            </div>
+                            
+                            <!-- 4. TEXTOS DE REFERÊNCIA -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-bible"></i> TEXTOS DE REFERÊNCIA</h3>
+                                <div class="reference-box">
+                                    <h4>${lesson1Content.references.title}</h4>
+                                    ${lesson1Content.references.verses.map(verse => `<p>${verse}</p>`).join('')}
+                                </div>
+                            </div>
+                            
+                            <!-- 5. LEITURAS COMPLEMENTARES -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-calendar-day"></i> LEITURAS COMPLEMENTARES</h3>
+                                <div class="reading-grid">
+                                    ${lesson1Content.readings.map(reading => `
+                                        <div class="reading-day">
+                                            <strong>${reading.day}</strong>
+                                            <div>${reading.ref}</div>
+                                            <small>${reading.title}</small>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <p style="margin-top: 1.5rem;"><strong>Hinos Sugeridos:</strong> ${lesson1Content.hymns.join(', ')}</p>
+                            </div>
+                            
+                            <!-- 6. MOTIVO DE ORAÇÃO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-hands-praying"></i> MOTIVO DE ORAÇÃO</h3>
+                                <p>${lesson1Content.prayer}</p>
+                            </div>
+                            
+                            <!-- 7. INTRODUÇÃO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
+                                <p>${lesson1Content.introduction.text}</p>
+                                <div class="explanation-box">
+                                    <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                    <p>${lesson1Content.introduction.explanation}</p>
+                                </div>
+                                <div class="application-box">
+                                    <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                    <p>${lesson1Content.introduction.application}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 8. PONTO 1: UMA NOVA DIMENSÃO DE VIDA -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto1.title}</h3>
+                                <p>${lesson1Content.ponto1.content}</p>
+                                
+                                ${lesson1Content.ponto1.subpoints.map(subpoint => `
+                                    <div class="lesson-point">
+                                        <h4 class="point-title">
+                                            <i class="fas fa-circle"></i> ${subpoint.title}
+                                        </h4>
+                                        <p>${subpoint.content}</p>
+                                        <div class="explanation-box">
+                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                            <p>${subpoint.explanation}</p>
+                                        </div>
+                                        <div class="application-box">
+                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                            <p>${subpoint.application}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                
+                                <div class="teaching-point">
+                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                    <p>${lesson1Content.ponto1.euEnsineiQue}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 9. PONTO 2: EM CRISTO SOMOS NOVA CRIATURA -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto2.title}</h3>
+                                <p>${lesson1Content.ponto2.content}</p>
+                                
+                                ${lesson1Content.ponto2.subpoints.map(subpoint => `
+                                    <div class="lesson-point">
+                                        <h4 class="point-title">
+                                            <i class="fas fa-circle"></i> ${subpoint.title}
+                                        </h4>
+                                        <p>${subpoint.content}</p>
+                                        <div class="explanation-box">
+                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                            <p>${subpoint.explanation}</p>
+                                        </div>
+                                        <div class="application-box">
+                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                            <p>${subpoint.application}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                
+                                <div class="teaching-point">
+                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                    <p>${lesson1Content.ponto2.euEnsineiQue}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 10. PONTO 3: A NOVA VIDA EM CRISTO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto3.title}</h3>
+                                <p>${lesson1Content.ponto3.content}</p>
+                                
+                                ${lesson1Content.ponto3.subpoints.map(subpoint => `
+                                    <div class="lesson-point">
+                                        <h4 class="point-title">
+                                            <i class="fas fa-circle"></i> ${subpoint.title}
+                                        </h4>
+                                        <p>${subpoint.content}</p>
+                                        <div class="explanation-box">
+                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                            <p>${subpoint.explanation}</p>
+                                        </div>
+                                        <div class="application-box">
+                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                            <p>${subpoint.application}</p>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                                
+                                <div class="teaching-point">
+                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                    <p>${lesson1Content.ponto3.euEnsineiQue}</p>
+                                </div>
+                            </div>
+                            
+                            <!-- 11. CONCLUSÃO -->
+                            <div class="lesson-section">
+                                <h3 class="section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
+                                <div class="conclusion-box">
+                                    <p>${lesson1Content.conclusion.text}</p>
+                                </div>
+                                <div class="explanation-box">
+                                    <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                    <p>${lesson1Content.conclusion.explanation}</p>
+                                </div>
+                                <div class="application-box">
+                                    <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                    <p>${lesson1Content.conclusion.application}</p>
+                                </div>
+                                <div class="synthesis-box">
+                                    <h5><i class="fas fa-scroll"></i> Síntese Final</h5>
+                                    <p>${lesson1Content.conclusion.synthesis}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Mostrar o modal
+                modal.style.display = 'block';
+                
+                // Adicionar evento ao botão de download PDF no modal
+                document.getElementById('pdfDownloadModal').addEventListener('click', generateLessonPDF);
+                
+                // Fechar o modal
+                const closeBtn = modal.querySelector('.close-modal');
+                const closeModal = () => {
+                    modal.style.display = 'none';
+                    document.body.removeChild(modal);
+                };
+                
+                closeBtn.addEventListener('click', closeModal);
+                
+                // Fechar ao clicar fora do conteúdo
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal();
+                    }
+                });
+                
+                // Fechar com ESC
+                document.addEventListener('keydown', function handleEsc(e) {
+                    if (e.key === 'Escape') {
+                        closeModal();
+                        document.removeEventListener('keydown', handleEsc);
+                    }
+                });
             }
         }
         
@@ -1123,298 +2174,6 @@
                 mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
             });
         });
-        
-        // ============= CONTEÚDO DA LIÇÃO 1 =============
-        const lesson1Content = {
-            title: "OS DISCÍPULOS DE CRISTO SÃO NOVAS CRIATURAS",
-            
-            // 1. TEXTO ÁUREO
-            textAureo: {
-                verse: "Colossenses 3:10",
-                text: "E vos vestistes do novo, que se renova para o conhecimento, segundo a imagem daquele que o criou"
-            },
-            
-            // 2. VERDADE APLICADA
-            appliedTruth: "O discípulo de Cristo anda em novidade de vida, não mais dominado pela natureza pecaminosa.",
-            
-            // 3. OBJETIVOS DA LIÇÃO
-            objectives: [
-                "Reconhecer o valor do arrependimento para a vida cristã",
-                "Ressaltar que em Jesus somos nova criatura",
-                "Saber que Cristo nos oferece uma nova vida"
-            ],
-            
-            // 4. TEXTOS DE REFERÊNCIA
-            references: {
-                title: "ROMANOS 6",
-                verses: [
-                    "2. De modo nenhum. Nós, que estamos mortos para o pecado, como viveremos ainda nele?",
-                    "3. Ou não sabeis que todos quantos fomos batizados em Jesus Cristo, fomos batizados na sua morte?",
-                    "4. De sorte que fomos sepultados com ele pelo batismo na morte; para que, como Cristo ressuscitou dos mortos pela glória do Pai, assim andemos nós também em novidade de vida.",
-                    "5. Porque, se fomos plantados juntamente com ele na semelhança da sua morte, também seremos na sua ressurreição.",
-                    "6. Sabendo isto: que o nosso homem velho foi com ele crucificado, para que o corpo do pecado seja desfeito, para que não sirvamos mais ao pecado."
-                ]
-            },
-            
-            // 5. LEITURAS COMPLEMENTARES
-            readings: [
-                { day: "SEGUNDA", ref: "2 Co 5.17", title: "A nova criatura em Cristo" },
-                { day: "TERÇA", ref: "Fp 3.13,14", title: "Deixando o passado e avançando para o futuro" },
-                { day: "QUARTA", ref: "Rm 6.4", title: "A nova vida em Jesus" },
-                { day: "QUINTA", ref: "At 10.43", title: "O perdão dos pecados está disponível a todos" },
-                { day: "SEXTA", ref: "Tt 3.5", title: "O novo nascimento significa Regeneração" },
-                { day: "SÁBADO", ref: "Cl 3.8-10", title: "É preciso se despojar do velho homem" }
-            ],
-            
-            // 6. HINOS SUGERIDOS
-            hymns: [117, 169, 171],
-            
-            // 7. MOTIVO DE ORAÇÃO
-            prayer: "Ore para que mais vidas sejam transformadas pelo poder do Evangelho.",
-            
-            // 8. INTRODUÇÃO
-            introduction: "Nesta lição, veremos a necessidade de o ser humano se arrepender e crer em Jesus Cristo, a partir do anúncio do Evangelho e pela ação do Espírito Santo. Ao nos tornarmos discípulos de Cristo, passamos a viver como novas criaturas: não mais dominados pela natureza pecaminosa, mas andando segundo a Vontade de Deus e para a Glória de Deus.",
-            
-            // 9. PONTO 1: UMA NOVA DIMENSÃO DE VIDA
-            ponto1: {
-                title: "1. UMA NOVA DIMENSÃO DE VIDA",
-                content: "Após a queda do primeiro casal, todos os seres humanos nascem com uma natureza pecaminosa e, como consequência, a morte atinge a todos (Rm 5.12). O pecado causa separação entre o ser humano e Deus (Rm 3.23). A restauração dessa comunhão ocorre quando o pecador atenta para o chamado de Deus e lhe obedece, como vemos por intermédio de João Batista e Jesus Cristo: 'Arrependei-vos!'. Essa necessidade de arrependimento continuou sendo enfatizada pelos Apóstolos após a Ascensão de Jesus (Mt 3.2; Mc 1.15; At 2.38; 3.19). Logo no início do Seu Ministério, Ele disse: 'Arrependei-vos, porque é chegado o reino dos céus', Mt 4.17.",
-                subpoints: [
-                    {
-                        title: "1.1. O arrependimento é uma ordenança",
-                        content: "No AT, os profetas tinham a incumbência de confrontar o povo e pregar a mensagem do arrependimento. Alguns deles falaram ao povo sobre a importância de voltarem-se para Deus mediante o arrependimento sincero (Is 30.15; Jr 8.6; Ez 14.6). A advertência dos profetas era para que os israelitas se arrependessem de suas iniquidades e se voltassem para Deus, abandonando a vida de pecado para fazer o bem (Cl 3.9,10)."
-                    },
-                    {
-                        title: "1.2. O arrependimento conduz à Salvação",
-                        content: "Paulo ressaltou que todos pecaram e, por isso, foram destituídos da Glória de Deus (Rm 3.23). Voltar à Presença do Senhor, portanto, só é possível pelo arrependimento (At 3.19), que é crucial para sermos novas criaturas. Cabe dizer que se arrepender não significa apenas se entristecer pelo pecado, mas inclui decidir mudar. Ao anunciar o Reino, Jesus ordena que todos se arrependam para serem salvos (At 2.38; 3.19; 2Co 7.10)."
-                    },
-                    {
-                        title: "1.3. O arrependimento e a nova criatura",
-                        content: "Ser uma nova criatura em Cristo é resultado de um autêntico arrependimento. Quando proclamou as Boas-Novas, Jesus advertiu Seus seguidores a arrependerem-se e crer no Evangelho (Mc 1.15); portanto, o arrependimento e a fé caminham juntos. Podemos dizer, então, que o arrependimento e a fé são os dois aspectos essenciais à transformação de vida de quem deseja seguir a Cristo."
-                    }
-                ],
-                euEnsineiQue: "Jesus advertiu Seus seguidores a arrependerem-se e a crer no Evangelho."
-            },
-            
-            // 10. PONTO 2: EM CRISTO SOMOS NOVA CRIATURA
-            ponto2: {
-                title: "2. EM CRISTO SOMOS NOVA CRIATURA",
-                content: "Para o Apóstolo Paulo, aquele que está em Cristo é nova criatura, vive uma nova realidade e nova vida, que surgem ao abandonarmos a antiga vida (2Co 5.17).",
-                subpoints: [
-                    {
-                        title: "2.1. A transformação espiritual em Cristo",
-                        content: "Aceitar a Cristo resulta em uma renovação interior. A pessoa passa a ser participante da natureza divina (2Pe 1.4), que é alinhada aos propósitos de Deus. Isso significa abandonar os erros do passado e viver como quem deseja se tornar semelhante a Jesus Cristo (1Co 11.1). Paulo se referiu a essa profunda transformação ao dizer que tudo se fez novo (2Co 5.17). Agora, o convertido é apresentado a um viver diferente do que manteve até então, inclusive recebendo um novo coração e um novo espírito (Ez 36.26). O Senhor não o trata conforme foi o seu passado, semelhantemente o pai ao receber o filho que tinha saído de casa, que estava perdido e foi encontrado, estava morto e voltou à vida (Lc 15. 22-24)."
-                    },
-                    {
-                        title: "2.2. A conversão e a fé",
-                        content: "Jesus anunciou o Reino de Deus, chamando-nos à conversão e a crer no Evangelho para nos libertar dos pecados (Rm 6.22,23). Em Cristo, recebemos o perdão e a identidade de filhos de Deus. Essa realidade provoca mudanças verdadeiras e definitivas na vida dos convertidos, dos que perseveram na obediência ao Evangelho. Portanto, o novo nascimento é marcado pela conversão e fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo."
-                    },
-                    {
-                        title: "2.3. Viver no mundo como nova criatura",
-                        content: "A transformação em Cristo impacta o dia a dia, refletindo-se em ações, escolhas e relacionamentos que glorificam a Deus e testemunham a nova vida. Jesus entra no coração do pecador e opera muitas mudanças, inclusive no modo de pensar e agir. É como se aquela pessoa morresse, mas nascesse de novo para viver uma nova identidade e realidade. O novo convertido experimenta essa mudança pela Graça de Cristo Jesus. Sendo assim, não alcançamos a Salvação por mérito pessoal, mas pela fé em Jesus, o Único que pode nos salvar (Ef 2.8,9)."
-                    }
-                ],
-                euEnsineiQue: "O novo nascimento é marcado pela conversão e pela fé em Cristo, que se entregou na cruz para que pudéssemos nascer de novo."
-            },
-            
-            // 11. PONTO 3: A NOVA VIDA EM CRISTO
-            ponto3: {
-                title: "3. A NOVA VIDA EM CRISTO",
-                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de Deus (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a Deus, como resultado do novo nascimento, a partir da ação da Palavra de Deus e do Espírito Santo (Jo 3.3).",
-                subpoints: [
-                    {
-                        title: "3.1. A nova identidade em Cristo",
-                        content: "A nova vida em Cristo começa com a transformação da identidade, uma vez que somos reconciliados com Deus, recebemos uma nova natureza espiritual e somos chamados a viver como filhos amados (2Co 5.17). Passamos a andar em concordância com a Palavra de Deus, sob o Senhorio de Cristo (Gl 2.20). O viver em Cristo é marcado pela diferença em relação à vida dos que não querem se render ao Senhorio de Cristo e decidem continuar andando segundo seus próprios pensamentos e desejos (Ef 4.17-20)."
-                    },
-                    {
-                        title: "3.2. Caminhar em Santidade e Propósito",
-                        content: "Viver em Cristo significa buscar uma vida de santidade, guiada pelo Espírito Santo, alinhando nossas ações e escolhas aos propósitos de Deus para refletir Sua glória no mundo. Abandonar o pecado, portanto, é a evidência de uma vida transformada pelo poder de Deus. Com isso, passamos a caminhar em santidade e propósito, segundo a vontade de Deus, como disse o Apóstolo Paulo: 'Já estou crucificado com Cristo; e vivo, não mais eu, mas Cristo vive em mim', Gl 2.20. Portanto, o velho homem foi crucificado com Cristo para que o corpo do pecado seja extinto e não mais sejamos escravos do pecado (Rm 6.6)."
-                    },
-                    {
-                        title: "3.3. Comunhão e missão na comunidade",
-                        content: "A nova vida em Cristo nos integra à comunidade de fé, na qual compartilhamos o Amor de Deus, servimos uns aos outros e cumprimos a missão de proclamar o Evangelho. Devido à obediência dos que amam o Senhor, são muitos os testemunhos de irmãos que aceitaram a Cristo como Salvador e, a partir daí, tiveram suas vidas transformadas ao abandonar vícios e comportamentos nocivos a si mesmos, às suas famílias e à sociedade em geral."
-                    }
-                ],
-                euEnsineiQue: "É a experiência de conversão que gera a identidade da nova criatura."
-            },
-            
-            // 12. CONCLUSÃO
-            conclusion: "Ser uma nova criatura em Cristo nos liberta do passado, nos dá uma nova identidade e nos leva a viver em santidade. Esse novo viver nos capacita a refletir o Caráter de Cristo e a glorificar Seu Nome em tudo que fazemos."
-        };
-
-        // Função para abrir o modal da lição
-        function openLessonModal(lessonNumber) {
-            if (lessonNumber === 1) {
-                const modal = document.createElement('div');
-                modal.className = 'modal';
-                modal.id = 'lessonModal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Lição 1: ${lesson1Content.title}</h2>
-                            <button class="close-modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- 1. TEXTO ÁUREO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-book-bible"></i> TEXTO ÁUREO</h3>
-                                <div class="verse-box">
-                                    <p><strong>${lesson1Content.textAureo.verse}</strong></p>
-                                    <p>"${lesson1Content.textAureo.text}"</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 2. VERDADE APLICADA -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-bullseye"></i> VERDADE APLICADA</h3>
-                                <p>${lesson1Content.appliedTruth}</p>
-                            </div>
-                            
-                            <!-- 3. OBJETIVOS DA LIÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-tasks"></i> OBJETIVOS DA LIÇÃO</h3>
-                                <ul class="objectives-list">
-                                    ${lesson1Content.objectives.map(obj => `<li>${obj}</li>`).join('')}
-                                </ul>
-                            </div>
-                            
-                            <!-- 4. TEXTOS DE REFERÊNCIA -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-bible"></i> TEXTOS DE REFERÊNCIA</h3>
-                                <div class="reference-box">
-                                    <h4>${lesson1Content.references.title}</h4>
-                                    ${lesson1Content.references.verses.map(verse => `<p>${verse}</p>`).join('')}
-                                </div>
-                            </div>
-                            
-                            <!-- 5. LEITURAS COMPLEMENTARES -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-calendar-day"></i> LEITURAS COMPLEMENTARES</h3>
-                                <div class="reading-grid">
-                                    ${lesson1Content.readings.map(reading => `
-                                        <div class="reading-day">
-                                            <strong>${reading.day}</strong>
-                                            <div>${reading.ref}</div>
-                                            <small>${reading.title}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <p><strong>Hinos Sugeridos:</strong> ${lesson1Content.hymns.join(', ')}</p>
-                            </div>
-                            
-                            <!-- 6. MOTIVO DE ORAÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-hands-praying"></i> MOTIVO DE ORAÇÃO</h3>
-                                <p>${lesson1Content.prayer}</p>
-                            </div>
-                            
-                            <!-- 7. INTRODUÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
-                                <p>${lesson1Content.introduction}</p>
-                            </div>
-                            
-                            <!-- 8. PONTO 1: UMA NOVA DIMENSÃO DE VIDA -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto1.title}</h3>
-                                <p>${lesson1Content.ponto1.content}</p>
-                                
-                                ${lesson1Content.ponto1.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                                
-                                <div style="background-color: #e8f5e8; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto1.euEnsineiQue}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 9. PONTO 2: EM CRISTO SOMOS NOVA CRIATURA -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto2.title}</h3>
-                                <p>${lesson1Content.ponto2.content}</p>
-                                
-                                ${lesson1Content.ponto2.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                                
-                                <div style="background-color: #e8f5e8; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto2.euEnsineiQue}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 10. PONTO 3: A NOVA VIDA EM CRISTO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto3.title}</h3>
-                                <p>${lesson1Content.ponto3.content}</p>
-                                
-                                ${lesson1Content.ponto3.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                                
-                                <div style="background-color: #e8f5e8; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto3.euEnsineiQue}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 11. CONCLUSÃO -->
-                            <div class="lesson-section">
-                                <h3 class="section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
-                                <div class="conclusion-box">
-                                    <p>${lesson1Content.conclusion}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Mostrar o modal
-                modal.style.display = 'block';
-                
-                // Fechar o modal
-                const closeBtn = modal.querySelector('.close-modal');
-                const closeModal = () => {
-                    modal.style.display = 'none';
-                    document.body.removeChild(modal);
-                };
-                
-                closeBtn.addEventListener('click', closeModal);
-                
-                // Fechar ao clicar fora do conteúdo
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-                
-                // Fechar com ESC
-                document.addEventListener('keydown', function handleEsc(e) {
-                    if (e.key === 'Escape') {
-                        closeModal();
-                        document.removeEventListener('keydown', handleEsc);
-                    }
-                });
-            }
-        }
         
         // Inicializar a página
         document.addEventListener('DOMContentLoaded', function() {
