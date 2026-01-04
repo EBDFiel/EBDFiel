@@ -229,6 +229,50 @@
             background-color: var(--secondary);
         }
         
+        /* Quiz Sections Container */
+        .quiz-sections-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .quiz-section-box {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        
+        .quiz-section-box h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .quiz-section-box p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+            flex-grow: 1;
+        }
+        
+        .quiz-note {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
         /* Lessons Grid */
         .filters {
             display: flex;
@@ -556,6 +600,10 @@
             .hero h2 {
                 font-size: 1.8rem;
             }
+            
+            .quiz-sections-container {
+                grid-template-columns: 1fr;
+            }
         }
         
         @media (max-width: 480px) {
@@ -589,6 +637,14 @@
             .view-btn, .pdf-btn {
                 width: 100%;
                 justify-content: center;
+            }
+            
+            .quiz-section-box {
+                padding: 1.5rem;
+            }
+            
+            .quiz-section-box h3 {
+                font-size: 1.4rem;
             }
         }
         
@@ -1068,24 +1124,33 @@
         <section id="lessons">
             <h2 class="section-title">Lições da EBD Betel</h2>
             
-            <!-- NOVA SEÇÃO: QUIZ DAS LIÇÕES -->
-            <div class="quiz-section" style="text-align: center; margin-bottom: 3rem;">
-                <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 2.5rem; border-radius: var(--radius); box-shadow: var(--shadow); color: white; max-width: 800px; margin: 0 auto 2rem;">
-                    <h3 style="font-size: 1.8rem; margin-bottom: 1rem; color: white;">
-                        <i class="fas fa-question-circle"></i> Teste seu Conhecimento
-                    </h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9;">
-                        Aprimore seu aprendizado com nossos quizzes interativos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras.
-                    </p>
-                    <a href="https://ebdfiel.github.io/ebd-licoes-2026/" target="_blank" class="quiz-button" style="display: inline-block; background-color: var(--secondary); color: var(--dark); padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.2rem; transition: all 0.3s; border: 2px solid var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-                        <i class="fas fa-brain"></i> Quiz das Lições
+            <!-- SEÇÃO DE QUIZZES ATUALIZADA -->
+            <div class="quiz-sections-container">
+                <!-- QUIZ CLASSE ADULTOS -->
+                <div class="quiz-section-box">
+                    <h3><i class="fas fa-brain"></i> Quiz Classe Adultos</h3>
+                    <p>Teste seu conhecimento sobre as lições da classe de adultos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras.</p>
+                    <a href="https://ebdfiel.github.io/ebd-licoes-2026/" target="_blank" class="quiz-button">
+                        <i class="fas fa-question-circle"></i> Acessar Quiz
                     </a>
-                    <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                    <p class="quiz-note">
+                        <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
+                    </p>
+                </div>
+                
+                <!-- NOVA SEÇÃO: QUIZ CLASSE JOVENS -->
+                <div class="quiz-section-box">
+                    <h3><i class="fas fa-users"></i> Quiz Classe Jovens</h3>
+                    <p>Quizzes específicos para a classe de jovens! Teste seu conhecimento sobre as lições com perguntas direcionadas ao público jovem.</p>
+                    <a href="https://ebdfiel.github.io/ebd-jovens-2026/" target="_blank" class="quiz-button">
+                        <i class="fas fa-question-circle"></i> Acessar Quiz
+                    </a>
+                    <p class="quiz-note">
                         <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
                     </p>
                 </div>
             </div>
-            <!-- FIM DA SEÇÃO QUIZ -->
+            <!-- FIM DA SEÇÃO DE QUIZZES -->
             
             <div class="filters">
                 <button class="filter-btn active" data-filter="all">Todas as Lições</button>
