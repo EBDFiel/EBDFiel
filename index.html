@@ -51,6 +51,61 @@
             line-height: 1.3;
         }
         
+        /* Barra de Redes Sociais */
+        .social-topbar {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            padding: 0.6rem 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .social-topbar-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .social-text {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .social-text i {
+            color: var(--secondary);
+        }
+        
+        .social-icons-top {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-icons-top a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        
+        .social-icons-top a:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+        
         /* Header Moderno */
         header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
@@ -877,6 +932,12 @@
         }
         
         @media (max-width: 768px) {
+            .social-topbar-container {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.5rem 1rem;
+            }
+            
             .header-container {
                 padding: 0 1.5rem;
             }
@@ -1012,6 +1073,16 @@
                 font-size: 1rem;
                 width: 100%;
                 max-width: 300px;
+            }
+            
+            .social-text {
+                font-size: 0.8rem;
+            }
+            
+            .social-icons-top a {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8rem;
             }
         }
         
@@ -1529,6 +1600,29 @@
         <p>Gerando PDF, por favor aguarde...</p>
     </div>
 
+    <!-- Barra de Redes Sociais -->
+    <div class="social-topbar">
+        <div class="social-topbar-container">
+            <div class="social-text">
+                <i class="fas fa-hashtag"></i> Siga-nos nas redes sociais:
+            </div>
+            <div class="social-icons-top">
+                <a href="https://www.instagram.com/ebdfiel/" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.facebook.com/EBDFiel/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.youtube.com/@EBDFiel" target="_blank" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.tiktok.com/@ebdfiel" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="header-container">
@@ -1695,10 +1789,10 @@
                 <h3>EBD Fiel</h3>
                 <p>Material bíblico fiel para edificação da igreja. Recursos para professores e alunos da Escola Bíblica Dominical comprometidos com a verdade das Escrituras.</p>
                 <div class="social-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i></a>
                 </div>
             </div>
             
