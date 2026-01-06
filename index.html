@@ -508,6 +508,7 @@
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             background: #000;
+            transition: all 0.3s ease;
         }
         
         /* Container responsivo para vídeo */
@@ -516,6 +517,7 @@
             padding-bottom: 56.25%; /* Proporção 16:9 */
             height: 0;
             overflow: hidden;
+            transition: all 0.3s ease;
         }
         
         .video-responsive-wrapper iframe {
@@ -606,6 +608,7 @@
             text-decoration: none;
             font-weight: bold;
             margin-top: 15px;
+            margin-left: 10px;
             transition: all 0.3s ease;
         }
         
@@ -620,6 +623,72 @@
         
         .video-jovem-section .video-direct-link:hover {
             background: #5a0db3;
+        }
+        
+        /* Botões de controle de vídeo */
+        .video-control-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .video-control-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .video-jovem-section .video-control-btn {
+            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
+        }
+        
+        .video-jovem-section .video-control-btn:hover {
+            background: linear-gradient(135deg, var(--youth-secondary) 0%, var(--youth-primary) 100%);
+        }
+        
+        /* Para vídeo em modo retrato (9:16) */
+        .video-universal-container.portrait-mode {
+            max-width: 315px !important;
+            margin: 0 auto;
+        }
+        
+        /* Botão de play na página */
+        .play-inline-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--success) 0%, #1e7e34 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .play-inline-btn:hover {
+            background: linear-gradient(135deg, #1e7e34 0%, var(--success) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .video-jovem-section .play-inline-btn {
+            background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
+        }
+        
+        .video-jovem-section .play-inline-btn:hover {
+            background: linear-gradient(135deg, #ff5252 0%, var(--youth-accent) 100%);
         }
         
         /* ============= SEÇÃO REVISTA CONECTAR JOVENS ============= */
@@ -1716,6 +1785,33 @@
             .video-universal-container {
                 max-width: 100%;
             }
+            
+            .video-control-btn, .play-inline-btn {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 0.85rem;
+            }
+            
+            .video-info .play-inline-btn {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .video-info .video-control-btn {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            .video-info .video-direct-link {
+                display: block;
+                margin: 10px auto;
+                width: 100%;
+                max-width: 200px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1800,6 +1896,14 @@
             
             .video-trimestre-section, .video-jovem-section {
                 padding: 15px;
+            }
+            
+            .video-info .play-inline-btn,
+            .video-info .video-control-btn,
+            .video-info .video-direct-link {
+                margin: 5px auto;
+                padding: 10px;
+                font-size: 0.8rem;
             }
         }
         
@@ -2007,8 +2111,19 @@
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
                     
+                    <!-- Botão para Play Direto na Página -->
+                    <button class="play-inline-btn" id="trimestrePlayInline">
+                        <i class="fas fa-play-circle"></i> Play na Página
+                    </button>
+                    
+                    <!-- Botão para Alternar 9:16 -->
+                    <button class="video-control-btn" data-video="trimestrePcVideoContainer" id="trimestreAspectToggle">
+                        <i class="fas fa-mobile-alt"></i> Modo 9:16
+                    </button>
+                    
+                    <!-- Link para YouTube -->
                     <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
-                        <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
+                        <i class="fab fa-youtube"></i> Assistir no YouTube
                     </a>
                 </div>
             </div>
@@ -2048,8 +2163,19 @@
                     <p><strong>Vídeo especial para a classe de jovens:</strong> Conteúdo adicional e direcionado para o público jovem, abordando temas relevantes e atuais.</p>
                     <p>Este vídeo complementa os estudos da Revista Conectar Jovens, proporcionando uma visão mais dinâmica e aplicada das lições.</p>
                     
+                    <!-- Botão para Play Direto na Página -->
+                    <button class="play-inline-btn" id="classeJovemPlayInline">
+                        <i class="fas fa-play-circle"></i> Play na Página
+                    </button>
+                    
+                    <!-- Botão para Alternar 9:16 -->
+                    <button class="video-control-btn" data-video="classeJovemPcVideoContainer" id="classeJovemAspectToggle">
+                        <i class="fas fa-mobile-alt"></i> Modo 9:16
+                    </button>
+                    
+                    <!-- Link para YouTube -->
                     <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
-                        <i class="fab fa-youtube"></i> Assistir Vídeo da Classe Jovem no YouTube
+                        <i class="fab fa-youtube"></i> Assistir no YouTube
                     </a>
                 </div>
             </div>
@@ -2214,7 +2340,7 @@
                 quarter: "1º Trimestre",
                 quarterFilter: "trim1",
                 number: "Lição 3",
-                title: "Os compromissos dos discípulos de Cristo",
+                title: "Os compromissos os discípulos de Cristo",
                 date: "18/01/2026",
                 description: "Análise dos compromissos e responsabilidades dos seguidores de Cristo na caminhada cristã.",
                 tag: "Compromissos",
@@ -2400,7 +2526,7 @@
             introduction: {
                 text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fato nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
             },
-            pointKey: "Todos somos pecadores e incapazes de nos justificar perante Deus, mas a justiça divina é oferecida gratuitamente pela fé em Jesus Cristo.",
+            pointKey: "Todos somos pecadores e incapazes de nos justificar perante Deus, mais a justiça divina é oferecida gratuitamente pela fé em Jesus Cristo.",
             ponto1: {
                 title: "AS BEM-AVENTURANÇAS SÃO TRANSFORMADORAS",
                 content: "As Bem-Aventuranças são transformadoras porque redefinem o conceito de felicidade e sucesso à luz do Reino de Deus.",
@@ -3232,6 +3358,63 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
         
+        // Função para alternar entre 16:9 e 9:16
+        function toggleVideoAspectRatio(videoContainerId) {
+            const videoContainer = document.getElementById(videoContainerId);
+            const videoWrapper = videoContainer.querySelector('.video-responsive-wrapper');
+            const btn = document.querySelector(`[data-video="${videoContainerId}"]`);
+            
+            if (videoContainer.classList.contains('portrait-mode')) {
+                // Voltar para 16:9
+                videoContainer.classList.remove('portrait-mode');
+                videoWrapper.style.paddingBottom = '56.25%'; // 16:9
+                videoContainer.style.maxWidth = '560px';
+                
+                // Atualizar botão
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-mobile-alt"></i> Modo 9:16';
+                    btn.title = "Mudar para modo retrato (9:16)";
+                }
+            } else {
+                // Mudar para 9:16
+                videoContainer.classList.add('portrait-mode');
+                videoWrapper.style.paddingBottom = '177.78%'; // 9:16
+                videoContainer.style.maxWidth = '315px'; // Largura para vídeo vertical
+                
+                // Atualizar botão
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-desktop"></i> Modo 16:9';
+                    btn.title = "Mudar para modo paisagem (16:9)";
+                }
+            }
+        }
+        
+        // Função para tocar vídeo inline
+        function playVideoInline(videoId, iframeElement) {
+            // Adicionar autoplay à URL do iframe
+            const currentSrc = iframeElement.src;
+            if (!currentSrc.includes('autoplay=1')) {
+                const separator = currentSrc.includes('?') ? '&' : '?';
+                const newSrc = `${currentSrc}${separator}autoplay=1`;
+                iframeElement.src = newSrc;
+                
+                // Mostrar mensagem de feedback
+                const videoContainer = iframeElement.closest('.video-universal-container');
+                if (videoContainer) {
+                    const tempMsg = document.createElement('div');
+                    tempMsg.style.cssText = 'position: absolute; top: 10px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.8); color: white; padding: 5px 10px; border-radius: 5px; font-size: 12px; z-index: 10;';
+                    tempMsg.textContent = 'Reproduzindo...';
+                    videoContainer.appendChild(tempMsg);
+                    
+                    setTimeout(() => {
+                        if (tempMsg.parentNode) {
+                            tempMsg.parentNode.removeChild(tempMsg);
+                        }
+                    }, 2000);
+                }
+            }
+        }
+        
         // Inicializar vídeos
         function initVideos() {
             const isMobile = isMobileDevice();
@@ -3239,10 +3422,12 @@
             // Elementos do vídeo do trimestre
             const trimestrePcContainer = document.getElementById('trimestrePcVideoContainer');
             const trimestreMobileFallback = document.getElementById('trimestreMobileVideoFallback');
+            const trimestreIframe = document.getElementById('trimestreYoutubeIframe');
             
             // Elementos do vídeo da classe jovem
             const classeJovemPcContainer = document.getElementById('classeJovemPcVideoContainer');
             const classeJovemMobileFallback = document.getElementById('classeJovemMobileVideoFallback');
+            const classeJovemIframe = document.getElementById('classeJovemYoutubeIframe');
             
             if (isMobile) {
                 // Esconder iframes e mostrar thumbnails no mobile
@@ -3271,6 +3456,36 @@
                 
                 if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'block';
                 if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'none';
+                
+                // Adicionar eventos para botões de play inline
+                const trimestrePlayBtn = document.getElementById('trimestrePlayInline');
+                if (trimestrePlayBtn && trimestreIframe) {
+                    trimestrePlayBtn.addEventListener('click', function() {
+                        playVideoInline('te9eFEEVqKQ', trimestreIframe);
+                    });
+                }
+                
+                const classeJovemPlayBtn = document.getElementById('classeJovemPlayInline');
+                if (classeJovemPlayBtn && classeJovemIframe) {
+                    classeJovemPlayBtn.addEventListener('click', function() {
+                        playVideoInline('kIB-BtFmb-Y', classeJovemIframe);
+                    });
+                }
+                
+                // Adicionar eventos para botões de alternar aspecto
+                const trimestreAspectBtn = document.getElementById('trimestreAspectToggle');
+                if (trimestreAspectBtn) {
+                    trimestreAspectBtn.addEventListener('click', function() {
+                        toggleVideoAspectRatio('trimestrePcVideoContainer');
+                    });
+                }
+                
+                const classeJovemAspectBtn = document.getElementById('classeJovemAspectToggle');
+                if (classeJovemAspectBtn) {
+                    classeJovemAspectBtn.addEventListener('click', function() {
+                        toggleVideoAspectRatio('classeJovemPcVideoContainer');
+                    });
+                }
             }
         }
         
