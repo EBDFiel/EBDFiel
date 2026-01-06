@@ -2024,7 +2024,7 @@
                 date: "11/01/2026",
                 description: "Estudo sobre os princípios fundamentais da Bíblia para a vida dos seguidores de Cristo.",
                 tag: "Princípios Bíblicos",
-                available: false
+                available: true
             },
             {
                 id: 3,
@@ -2229,9 +2229,9 @@
                 lessonCard.className = 'lesson-card fade-in';
                 lessonCard.style.animationDelay = `${index * 0.05}s`;
                 
-                // Botões específicos para Lição 1
+                // Botões específicos para Lições 1 e 2
                 let buttonsHTML = '';
-                if (lesson.id === 1) {
+                if (lesson.id === 1 || lesson.id === 2) {
                     buttonsHTML = `
                         <div class="lesson-buttons">
                             <button class="view-btn glow-effect" data-lesson="${lesson.id}">
@@ -2286,24 +2286,28 @@
                 container.appendChild(lessonCard);
             });
             
-            // Adicionar evento ao botão "Ver Lição" (apenas para lição 1)
+            // Adicionar evento ao botão "Ver Lição" (apenas para lições 1 e 2)
             document.querySelectorAll('.view-btn').forEach(btn => {
                 if (!btn.disabled) {
                     btn.addEventListener('click', function() {
                         const lessonId = this.getAttribute('data-lesson');
                         if (lessonId == 1) {
                             openLessonModal(1);
+                        } else if (lessonId == 2) {
+                            openLessonModal(2);
                         }
                     });
                 }
             });
             
-            // Adicionar evento ao botão "PDF" (apenas para lição 1)
+            // Adicionar evento ao botão "PDF" (apenas para lições 1 e 2)
             document.querySelectorAll('.pdf-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const lessonId = this.getAttribute('data-lesson');
                     if (lessonId == 1) {
-                        generateLessonPDF();
+                        generateLessonPDF(1);
+                    } else if (lessonId == 2) {
+                        generateLessonPDF(2);
                     }
                 });
             });
@@ -2429,7 +2433,7 @@
             // 11. PONTO 3: A NOVA VIDA EM CRISTO
             ponto3: {
                 title: "3. A NOVA VIDA EM CRISTO",
-                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de Deus (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a God, como resultado do novo nascimento, a partir da ação da Palavra de God e do Espírito Santo (Jo 3.3).",
+                content: "A mensagem do Evangelho proporciona a oportunidade de um encontro real com o Filho de God (Mc 1.15). Assim, quem vivia em pecado agora experimenta uma vida de consagração a God, como resultado do novo nascimento, a partir da ação da Palavra de God e do Espírito Santo (Jo 3.3).",
                 subpoints: [
                     {
                         title: "3.1. A nova identidade em Cristo",
@@ -2462,14 +2466,162 @@
             }
         };
 
+        // ============= CONTEÚDO DA LIÇÃO 2 =============
+        const lesson2Content = {
+            title: "Princípios bíblicos para a vida dos discípulos de Cristo",
+            
+            // 1. TEXTO ÁUREO
+            textAureo: {
+                verse: "Colossenses 3:23",
+                text: "E tudo quanto fizerdes, fazei-o de todo o coração, como ao Senhor, e não aos homens"
+            },
+            
+            // 2. VERDADE APLICADA
+            appliedTruth: "A vida do discípulo de Cristo, em todas as áreas, é norteada pelos princípios bíblicos e pela indispensável ajuda do Espírito Santo.",
+            
+            // 3. OBJETIVOS DA LIÇÃO
+            objectives: [
+                "Compreender como aplicar os princípios cristãos na vida diária",
+                "Reconhecer a relevância dos padrões bíblicos na vida cotidiana",
+                "Enfatizar que viver os valores cristãos conduz a um caminho de paz"
+            ],
+            
+            // 4. TEXTOS DE REFERÊNCIA
+            references: {
+                title: "FILIPENSES 4:5-9",
+                verses: [
+                    "5 Seja a vossa moderação conhecida de todos os homens. Perto está o Senhor.",
+                    "6 Não estejais inquietos por coisa alguma; antes as vossas petições sejam em tudo conhecidas diante de Deus pela oração e súplica, com ação de graças.",
+                    "7 E a paz de Deus, que excede todo o entendimento, guardará os vossos corações e os vossos pensamentos em Cristo Jesus.",
+                    "8 Quanto ao mais, irmãos, tudo o que é verdadeiro, tudo o que é honesto, tudo o que é justo, tudo o que é puro, tudo o que é amável, tudo o que é de boa fama, se há alguma virtude, e se há algum louvor, nisso pensai.",
+                    "9 O que também aprendestes, e recebestes, e ouvistes, e vistes em mim, isso fazei; e o Deus de paz será convosco."
+                ]
+            },
+            
+            // 5. LEITURAS COMPLEMENTARES
+            readings: [
+                { day: "SEGUNDA", ref: "Sl 119:105", title: "A Palavra como lâmpada para os pés" },
+                { day: "TERÇA", ref: "Mt 22:39", title: "O mandamento do amor ao próximo" },
+                { day: "QUARTA", ref: "Rm 12:2", title: "Transformação pela renovação da mente" },
+                { day: "QUINTA", ref: "Hb 12:14", title: "A busca pela santificação" },
+                { day: "SEXTA", ref: "1Co 10:13", title: "Deus não permite tentação acima do que podemos suportar" },
+                { day: "SÁBADO", ref: "Jo 14:27", title: "A paz que Jesus dá" }
+            ],
+            
+            // 6. HINOS SUGERIDOS
+            hymns: [118, 170, 172],
+            
+            // 7. MOTIVO DE ORAÇÃO
+            prayer: "Ore para que os discípulos de Cristo possam aplicar os princípios bíblicos em todas as áreas da vida, sendo testemunhas fiéis da transformação que o Evangelho opera.",
+            
+            // 8. INTRODUÇÃO
+            introduction: {
+                text: "Esta lição nos conduzirá a uma importante reflexão sobre o viver diário do discípulo de Cristo. Analisaremos a necessidade fundamental de recorrer às Escrituras para encontrar os princípios que norteiam todas as áreas da nossa vida. Compreenderemos que o conhecimento teórico é insuficiente sem a indispensável ajuda do Espírito Santo para aplicar esses princípios, visando nossa contínua edificação e a glória de Deus.",
+                explanation: "A vida cristã é um chamado à coerência entre fé e prática, onde os princípios bíblicos não são apenas conhecidos intelectualmente, mas aplicados diariamente através do poder do Espírito Santo. As Escrituras fornecem os fundamentos para todas as áreas da vida, desde os relacionamentos até as decisões éticas e morais. A transformação genuína ocorre quando a verdade bíblica é internalizada e vivida sob a orientação do Espírito.",
+                application: "Um exemplo prático é o cristão que, ao enfrentar um conflito no trabalho, aplica os princípios bíblicos de humildade, perdão e busca pela paz (Filipenses 4:5-9), ao invés de reagir com ira ou vingança. Na igreja, isso se manifesta quando membros resolvem divergências através do diálogo amoroso e da submissão mútua, demonstrando que os valores do Reino são praticáveis no cotidiano."
+            },
+            
+            // 9. PONTO 1: PRINCÍPIOS BÍBLICOS PARA UM VIVER COERENTE
+            ponto1: {
+                title: "1. PRINCÍPIOS BÍBLICOS PARA UM VIVER COERENTE",
+                content: "A vida cristã é, em sua essência, um chamado à coerência entre fé e prática. Viver os valores do Evangelho transcende a mera concordância intelectual; é um compromisso do discípulo que se manifesta em ações diárias que refletem o caráter de Jesus. Essa coerência é nutrida por uma vida interior transformada, fundamentada no estudo da Palavra, na prática do amor e na submissão ao Espírito Santo.",
+                subpoints: [
+                    {
+                        title: "1.1. Estudar a Palavra e meditar nela",
+                        content: "Ao analisarmos o papel das Escrituras, compreendemos que ela não é um mero livro de regras, mas a própria revelação de Deus e a fonte de alimento indispensável para o nosso crescimento espiritual. O estudo e a meditação na Palavra guiam o discípulo, servindo como lâmpada para os pés e luz para o caminho (Sl 119.105). Conforme destaca o Bispo Abner Ferreira, a Bíblia é o 'alimento da vida diária. Da mesma forma que o corpo não pode subsistir sem alimento, a alma também não pode viver sem a Palavra de Deus'.",
+                        explanation: "As Escrituras são vivas e eficazes (Hebreus 4:12), capazes de transformar mentes e corações. A meditação diária na Palavra não é um ritual religioso, mas um encontro vital com Deus que molda nossa cosmovisão. Como observou o reformador Martinho Lutero: 'A Bíblia é o berço onde encontramos Cristo'. O estudo sistemático das Escrituras nos protege do erro doutrinário e nos equipa para toda boa obra (2 Timóteo 3:16-17).",
+                        application: "Implementar um plano diário de leitura bíblica, usando métodos como leitura cronológica ou por temas. Participar de grupos de estudo onde a Palavra é examinada em comunidade. Aplicar princípios específicos das Escrituras em decisões práticas, como o uso do tempo e dos recursos financeiros."
+                    },
+                    {
+                        title: "1.2. Amar o próximo",
+                        content: "Fundamentado no ensino de Jesus em Mateus 22.39, o amor ao próximo não é apenas um princípio central da vida cristã, mas a própria 'essência de uma nova vida em Cristo'. Esse mandamento reflete o caráter de Deus e evidencia a transformação do crente. Na prática, esse amor se traduz em ações concretas e altruístas: oferecer ajuda a quem precisa, perdoar ofensas, ouvir com empatia e compartilhar recursos com generosidade.",
+                        explanation: "O amor ágape (amor sacrificial) é a marca distintiva do discípulo de Cristo (João 13:35). Diferente do amor sentimental ou interesseiro, o amor cristão é uma decisão de buscar o bem do outro, mesmo quando custoso. Como escreveu C.S. Lewis: 'O amor cristão, seja para com Deus ou para com o homem, é uma questão de vontade'. Esse amor se expressa em ações práticas que atendem necessidades físicas, emocionais e espirituais.",
+                        application: "Participar ativamente de ministérios de serviço na igreja local, como visitas a enfermos ou assistência a famílias carentes. Praticar a hospitalidade, abrindo o lar para comunhão e acolhimento. Interceder regularmente por amigos, familiares e até por 'inimigos', seguindo o exemplo de Jesus (Lucas 6:27-28)."
+                    },
+                    {
+                        title: "1.3. A transformação pelo Espírito Santo",
+                        content: "O crescimento espiritual não é produto do mero esforço humano, mas uma obra sobrenatural do Espírito Santo, que nos transforma progressivamente à imagem de Cristo (Rm 12.2). É o Espírito quem guia nossos pensamentos e ações, capacitando-nos a viver de forma que agrade a Deus. Viver sob Seu controle (Gl 5.25) é fundamental.",
+                        explanation: "A santificação é obra cooperativa: o Espírito Santo opera em nós tanto o querer quanto o efetuar (Filipenses 2:13). Os frutos do Espírito (Gálatas 5:22-23) não são virtudes cultivadas por autoajuda, mas manifestações do caráter de Cristo formado em nós. Como ensinou o teólogo John Stott: 'O Espírito Santo é o agente divino que torna real em nossa experiência o que Cristo realizou por nós na cruz'.",
+                        application: "Cultivar sensibilidade à voz do Espírito através da oração e da obediência imediata às Suas convicções. Desenvolver os dons espirituais para a edificação da igreja (1 Coríntios 12:7). Permitir que o Espírito revele áreas que precisam de transformação, cooperando com Sua obra através do arrependimento e da fé."
+                    }
+                ],
+                euEnsineiQue: "A coerência entre fé e prática é sustentada pelo estudo da Palavra, pelo amor prático ao próximo e pela contínua transformação operada pelo Espírito Santo."
+            },
+            
+            // 10. PONTO 2: O PADRÃO BÍBLICO PARA A VIDA DO CRISTÃO
+            ponto2: {
+                title: "2. O PADRÃO BÍBLICO PARA A VIDA DO CRISTÃO",
+                content: "O padrão bíblico para a vida do discípulo é a manifestação externa da transformação interna. Consiste em viver em santidade, amor e obediência, conforme revelado nas Escrituras (Mq 6.8). Esse padrão não é uma lista de regras arbitrárias, mas um caminho que envolve alinhar pensamentos, palavras e ações aos ensinamentos bíblicos, com o propósito de glorificar a Deus em todas as esferas da vida.",
+                subpoints: [
+                    {
+                        title: "2.1. Cultivando um caráter puro",
+                        content: "Manter um caráter puro é essencial na vida cristã, pois sem santificação ninguém verá o Senhor (Hb 12.14; 1Tm 5.22). A impureza nos separa da comunhão com Deus (Is 59.2); portanto, somos chamados a nos afastar de tudo que nos contamina e a viver como templos dignos para o culto a Deus (2Co 7.1).",
+                        explanation: "A pureza bíblica abrange integridade moral, transparência nos relacionamentos e motivações corretas. Não se limita à abstinência de pecados óbvios, mas inclui a renovação da mente (Romanos 12:2) e a guarda do coração (Provérbios 4:23). Como observou o puritano John Owen: 'Mate o pecado, ou ele o matará'. A busca pela pureza é resposta à graça recebida, não tentativa de merecer salvação.",
+                        application: "Estabelecer accountability (prestação de contas) com irmãos maduros na fé. Implementar filtros e limites no uso da internet e mídias sociais. Examinar regularmente motivações e atitudes à luz das bem-aventuranças (Mateus 5:3-12)."
+                    },
+                    {
+                        title: "2.2. Resistindo às tentações",
+                        content: "O Espírito Santo capacita o cristão a resistir ao pecado e às tentações (1Co 10.13), mas essa capacitação divina exige nossa vigilância espiritual. É preciso fortalecer a fé para evitar os riscos da vida carnal, como a prostituição, a impureza e a idolatria (Gl 5.19-21).",
+                        explanation: "A tentação segue um padrão descrito em Tiago 1:14-15: atração, concepção e nascimento do pecado. A vitória começa com a fuga (1 Coríntios 6:18; 10:14) e continua com a substituição (Colossenses 3:1-17). Como ensinou Agostinho: 'Deus ordena o que não podemos fazer, para que saibamos o que devemos pedir a Ele'. A armadura de Deus (Efésios 6:10-18) é essencial para resistir às investidas do mal.",
+                        application: "Identificar situações, relacionamentos ou ambientes que são portas de entrada para a tentação e estabelecer limites claros. Memorizar Escrituras específicas para momentos de fraqueza. Desenvolver hábitos espirituais que fortaleçam a resistência, como o jejum e a oração em línguas."
+                    },
+                    {
+                        title: "2.3. Cultivando o amor fraternal",
+                        content: "O amor fraternal é um pilar da vida cristã, definido como o amor que busca os interesses dos outros em vez dos próprios (1Pe 3.8). Ele se manifesta em ações concretas, como a prática da hospitalidade sem murmuração (Hb 13.1-2).",
+                        explanation: "O amor fraternal (philadelphia) na igreja primitiva era tão marcante que os pagãos exclamavam: 'Vejam como eles se amam!'. Esse amor transcende afinidades naturais, unindo pessoas de diferentes origens em uma nova família espiritual. Como escreveu Francis Schaeffer: 'O amor fraternal é a credencial que o mundo tem o direito de exigir da igreja'.",
+                        application: "Participar ativamente de pequenos grupos onde relacionamentos profundos podem ser cultivados. Praticar a reconciliação bíblica (Mateus 18:15-17) quando surgem conflitos. Celebrar as vitórias e compartilhar as cargas dos irmãos (Romanos 12:15; Gálatas 6:2)."
+                    }
+                ],
+                euEnsineiQue: "O padrão bíblico para o discípulo inclui a busca pela pureza, a resistência às tentações e a prática constante do amor fraternal na comunidade da fé."
+            },
+            
+            // 11. PONTO 3: A VIDA CRISTÃ
+            ponto3: {
+                title: "3. A VIDA CRISTÃ",
+                content: "A vida cristã é a expressão tangível e pública da transformação interna e da adesão aos padrões bíblicos. Ela se manifesta como um caminho de paz nos relacionamentos, de vitória sobre as adversidades e de adoração exclusiva a Cristo, testemunhando de forma prática o poder do Evangelho.",
+                subpoints: [
+                    {
+                        title: "3.1. A vida em paz com todos",
+                        content: "Jesus nos oferece uma paz que excede o entendimento humano, radicalmente diferente da paz circunstancial que o mundo oferece (Jo 14.27). Como Seus discípulos, somos chamados a buscar ativamente a paz com todos (Hb 12.14), sendo esta uma ordenança bíblica (Rm 12.18).",
+                        explanation: "A paz (shalom) bíblica é mais que ausência de conflito; é plenitude, bem-estar integral e relacionamentos restaurados. Cristo é nossa paz (Efésios 2:14), tendo derrubado a parede de separação entre judeus e gentios. O pacificador (Mateus 5:9) não é meramente passivo, mas ativamente promove reconciliação, imitando o ministério de Cristo (2 Coríntios 5:18-19).",
+                        application: "Tomar a iniciativa na reconciliação quando relacionamentos são rompidos. Desenvolver habilidades de comunicação não-violenta e escuta ativa. Orar por perseguidores e abençoar os que maltratam (Romanos 12:14)."
+                    },
+                    {
+                        title: "3.2. A vida vitoriosa",
+                        content: "A vida vitoriosa, na perspectiva bíblica, não é a ausência de dificuldades, mas uma jornada marcada pela fé inabalável, confiança na Graça Divina e esperança na soberania de Deus (Lc 18.27). Em Cristo, o crente encontra propósito e força para perseverar.",
+                        explanation: "A vitória cristã é paradoxal: ganhamos quando perdemos (Mateus 10:39), somos fortes quando somos fracos (2 Coríntios 12:10), vivemos quando morremos (Gálatas 2:20). Como observou Joni Eareckson Tada, tetraplégica: 'A vitória de Deus é mais evidente não na eliminação do sofrimento, mas em Sua presença e graça no meio dele'. A esperança escatológica sustenta na tribulação (Romanos 8:18).",
+                        application: "Manter um diário de gratidão registrando as fidelidades de Deus em tempos difíceis. Desenvolver uma perspectiva eterna que valorize o caráter formado nas provações mais que o alívio imediato. Compartilhar testemunhos de superação para encorajar outros."
+                    },
+                    {
+                        title: "3.3. A vida de adorador",
+                        content: "A adoração é o princípio fundamental que orienta toda a vida cristã. Fomos criados para adorar a Deus em espírito e em verdade (Jo 4.24), o que envolve louvor, oração e obediência em todas as circunstâncias.",
+                        explanation: "A adoração verdadeira transcende momentos específicos; é uma vida inteira oferecida como sacrifício vivo (Romanos 12:1). Como escreveu A.W. Tozer: 'O que vem à nossa mente quando pensamos sobre Deus é a coisa mais importante sobre nós'. A adoração em espírito refere-se à participação do homem interior; em verdade, à conformidade com a revelação bíblica.",
+                        application: "Cultivar uma atitude de gratidão contínua, encontrando razões para louvar mesmo em circunstâncias difíceis. Integrar a adoração nas tarefas diárias, transformando o trabalho comum em ato de culto. Participar regularmente dos cultos corporativos, valorizando a expressão coletiva de adoração."
+                    }
+                ],
+                euEnsineiQue: "A vida cristã autêntica se expressa na busca pela paz, na vitória sobre as adversidades através da fé e em uma vida inteiramente dedicada à adoração a Deus."
+            },
+            
+            // 12. CONCLUSÃO
+            conclusion: {
+                text: "Concluímos que viver de maneira coerente como discípulo de Cristo é resultado da ação divina, mas requer do crente, em total dependência do Espírito Santo, perseverança na oração, discernimento e aplicação prática dos princípios bíblicos em todos os aspectos da vida.",
+                explanation: "A vida cristã é uma jornada de aplicação progressiva dos princípios bíblicos sob a capacitação do Espírito Santo. Não é perfeição instantânea, mas crescimento contínuo (2 Pedro 3:18). A graça de Deus nos aceita como somos, mas não nos deixa como estamos. Como observou John Newton: 'Não sou o que deveria ser, não sou o que espero ser, mas graças a Deus, não sou mais o que era'.",
+                application: "Implementar um plano de discipulado pessoal que inclua leitura bíblica sistemática, oração específica por áreas de crescimento e accountability com irmãos maduros. Avaliar regularmente diferentes esferas da vida (família, trabalho, igreja, sociedade) à luz dos princípios estudados, fazendo ajustes necessários.",
+                synthesis: "A lição ensina que os princípios bíblicos não são ideais inatingíveis, mas verdades práticas para serem aplicadas diariamente através do poder do Espírito Santo. A vida do discípulo é um testemunho vivo da transformação que ocorre quando a Palavra de Deus é recebida não apenas como informação, mas como orientação para todas as áreas da existência. Como escreveu Dietrich Bonhoeffer: 'A obediência sem a Palavra é cegueira; a Palavra sem a obediência é vazio'. Que cada discípulo de Cristo possa viver os princípios bíblicos de forma tão visível que muitos, vendo suas boas obras, glorifiquem ao Pai celestial (Mateus 5:16)."
+            }
+        };
+
         // ============= FUNÇÃO PARA GERAR PDF DA LIÇÃO =============
-        function generateLessonPDF() {
+        function generateLessonPDF(lessonNumber) {
             // Mostrar loading
             document.getElementById('pdfLoading').style.display = 'flex';
             
             // Usar setTimeout para permitir que a interface atualize o loading
             setTimeout(() => {
                 try {
+                    // Selecionar conteúdo da lição correta
+                    const lessonContent = lessonNumber === 1 ? lesson1Content : lesson2Content;
+                    
                     // Inicializar jsPDF
                     const { jsPDF } = window.jspdf;
                     const doc = new jsPDF({
@@ -2500,7 +2652,7 @@
                             // Apenas um cabeçalho simples
                             doc.setFontSize(10);
                             doc.setTextColor(100, 100, 100);
-                            doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                            doc.text(`EBD Fiel - Lição ${lessonNumber}`, pageWidth - marginRight, 20, { align: 'right' });
                             
                             // Linha separadora simples
                             doc.setDrawColor(200, 200, 200);
@@ -2668,40 +2820,40 @@
                     yPos = 48;
                     
                     // ============= TÍTULO DA LIÇÃO =============
-                    addTitle(`LIÇÃO 1: ${lesson1Content.title}`, 18);
+                    addTitle(`LIÇÃO ${lessonNumber}: ${lessonContent.title}`, 18);
                     
                     // ============= TEXTO ÁUREO =============
                     addSubtitle("TEXTO ÁUREO");
-                    addHighlightedText(lesson1Content.textAureo.text, lesson1Content.textAureo.verse);
+                    addHighlightedText(lessonContent.textAureo.text, lessonContent.textAureo.verse);
                     
                     // ============= VERDADE APLICADA =============
                     addSubtitle("VERDADE APLICADA");
-                    addFormattedText(lesson1Content.appliedTruth, 12, true, false, 'left', 1.3);
+                    addFormattedText(lessonContent.appliedTruth, 12, true, false, 'left', 1.3);
                     
                     // ============= OBJETIVOS DA LIÇÃO =============
                     addSubtitle("OBJETIVOS DA LIÇÃO");
-                    addObjectivesList(lesson1Content.objectives);
+                    addObjectivesList(lessonContent.objectives);
                     
                     // ============= TEXTOS DE REFERÊNCIA =============
                     addSubtitle("TEXTOS DE REFERÊNCIA");
-                    addFormattedText(lesson1Content.references.title, 12, true);
+                    addFormattedText(lessonContent.references.title, 12, true);
                     yPos += 3;
                     
-                    lesson1Content.references.verses.forEach(verse => {
+                    lessonContent.references.verses.forEach(verse => {
                         addFormattedText(verse, 11, false, false, 'left', 1.3);
                     });
                     
                     // ============= LEITURAS COMPLEMENTARES =============
                     addSubtitle("LEITURAS COMPLEMENTARES");
-                    lesson1Content.readings.forEach(reading => {
+                    lessonContent.readings.forEach(reading => {
                         addFormattedText(`${reading.day} | ${reading.ref} - ${reading.title}`, 11);
                     });
                     
-                    addFormattedText(`Hinos Sugeridos: ${lesson1Content.hymns.join(', ')}`, 11);
+                    addFormattedText(`Hinos Sugeridos: ${lessonContent.hymns.join(', ')}`, 11);
                     
                     // ============= MOTIVO DE ORAÇÃO =============
                     addSubtitle("MOTIVO DE ORAÇÃO");
-                    addFormattedText(lesson1Content.prayer, 11, false, false, 'left', 1.3);
+                    addFormattedText(lessonContent.prayer, 11, false, false, 'left', 1.3);
                     
                     // Nova página para o conteúdo principal
                     doc.addPage();
@@ -2710,7 +2862,7 @@
                     // Cabeçalho simples para páginas subsequentes
                     doc.setFontSize(10);
                     doc.setTextColor(100, 100, 100);
-                    doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                    doc.text(`EBD Fiel - Lição ${lessonNumber}`, pageWidth - marginRight, 20, { align: 'right' });
                     
                     // Linha separadora simples
                     doc.setDrawColor(200, 200, 200);
@@ -2721,20 +2873,20 @@
                     
                     // ============= INTRODUÇÃO =============
                     addTitle("INTRODUÇÃO");
-                    addFormattedText(lesson1Content.introduction.text, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.introduction.text, 11, false, false, 'justify', 1.3);
                     
                     addSubtitle("Explicação Fundamentada");
-                    addFormattedText(lesson1Content.introduction.explanation, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.introduction.explanation, 11, false, false, 'justify', 1.3);
                     
                     addSubtitle("Aplicação Prática");
-                    addFormattedText(lesson1Content.introduction.application, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.introduction.application, 11, false, false, 'justify', 1.3);
                     
-                    // ============= PONTO 1: UMA NOVA DIMENSÃO DE VIDA =============
-                    addTitle(lesson1Content.ponto1.title);
-                    addFormattedText(lesson1Content.ponto1.content, 11, false, false, 'justify', 1.3);
+                    // ============= PONTO 1 =============
+                    addTitle(lessonContent.ponto1.title);
+                    addFormattedText(lessonContent.ponto1.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 1
-                    lesson1Content.ponto1.subpoints.forEach((subpoint, index) => {
+                    lessonContent.ponto1.subpoints.forEach((subpoint, index) => {
                         addSubtitle(subpoint.title);
                         addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
@@ -2761,7 +2913,7 @@
                     doc.setFont('helvetica', 'bold');
                     doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
                     doc.setFont('helvetica', 'normal');
-                    const lines = doc.splitTextToSize(lesson1Content.ponto1.euEnsineiQue, boxWidth - 15);
+                    const lines = doc.splitTextToSize(lessonContent.ponto1.euEnsineiQue, boxWidth - 15);
                     doc.text(lines, marginLeft + 5, yPos + 12);
                     
                     yPos += 20;
@@ -2775,7 +2927,7 @@
                         // Cabeçalho simples para páginas subsequentes
                         doc.setFontSize(10);
                         doc.setTextColor(100, 100, 100);
-                        doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                        doc.text(`EBD Fiel - Lição ${lessonNumber}`, pageWidth - marginRight, 20, { align: 'right' });
                         
                         // Linha separadora simples
                         doc.setDrawColor(200, 200, 200);
@@ -2785,12 +2937,12 @@
                         yPos = 30;
                     }
                     
-                    // ============= PONTO 2: EM CRISTO SOMOS NOVA CRIATURA =============
-                    addTitle(lesson1Content.ponto2.title);
-                    addFormattedText(lesson1Content.ponto2.content, 11, false, false, 'justify', 1.3);
+                    // ============= PONTO 2 =============
+                    addTitle(lessonContent.ponto2.title);
+                    addFormattedText(lessonContent.ponto2.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 2
-                    lesson1Content.ponto2.subpoints.forEach((subpoint, index) => {
+                    lessonContent.ponto2.subpoints.forEach((subpoint, index) => {
                         addSubtitle(subpoint.title);
                         addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
@@ -2816,7 +2968,7 @@
                     doc.setFont('helvetica', 'bold');
                     doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
                     doc.setFont('helvetica', 'normal');
-                    const lines2 = doc.splitTextToSize(lesson1Content.ponto2.euEnsineiQue, boxWidth - 15);
+                    const lines2 = doc.splitTextToSize(lessonContent.ponto2.euEnsineiQue, boxWidth - 15);
                     doc.text(lines2, marginLeft + 5, yPos + 12);
                     
                     yPos += 25;
@@ -2830,7 +2982,7 @@
                         // Cabeçalho simples para páginas subsequentes
                         doc.setFontSize(10);
                         doc.setTextColor(100, 100, 100);
-                        doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                        doc.text(`EBD Fiel - Lição ${lessonNumber}`, pageWidth - marginRight, 20, { align: 'right' });
                         
                         // Linha separadora simples
                         doc.setDrawColor(200, 200, 200);
@@ -2840,12 +2992,12 @@
                         yPos = 30;
                     }
                     
-                    // ============= PONTO 3: A NOVA VIDA EM CRISTO =============
-                    addTitle(lesson1Content.ponto3.title);
-                    addFormattedText(lesson1Content.ponto3.content, 11, false, false, 'justify', 1.3);
+                    // ============= PONTO 3 =============
+                    addTitle(lessonContent.ponto3.title);
+                    addFormattedText(lessonContent.ponto3.content, 11, false, false, 'justify', 1.3);
                     
                     // Subpontos do Ponto 3
-                    lesson1Content.ponto3.subpoints.forEach((subpoint, index) => {
+                    lessonContent.ponto3.subpoints.forEach((subpoint, index) => {
                         addSubtitle(subpoint.title);
                         addFormattedText(subpoint.content, 11, false, false, 'justify', 1.3);
                         
@@ -2871,7 +3023,7 @@
                     doc.setFont('helvetica', 'bold');
                     doc.text("EU ENSINEI QUE:", marginLeft + 5, yPos + 7);
                     doc.setFont('helvetica', 'normal');
-                    const lines3 = doc.splitTextToSize(lesson1Content.ponto3.euEnsineiQue, boxWidth - 15);
+                    const lines3 = doc.splitTextToSize(lessonContent.ponto3.euEnsineiQue, boxWidth - 15);
                     doc.text(lines3, marginLeft + 5, yPos + 12);
                     
                     yPos += 25;
@@ -2883,7 +3035,7 @@
                     // Cabeçalho simples para páginas subsequentes
                     doc.setFontSize(10);
                     doc.setTextColor(100, 100, 100);
-                    doc.text(`EBD Fiel - Lição 1`, pageWidth - marginRight, 20, { align: 'right' });
+                    doc.text(`EBD Fiel - Lição ${lessonNumber}`, pageWidth - marginRight, 20, { align: 'right' });
                     
                     // Linha separadora simples
                     doc.setDrawColor(200, 200, 200);
@@ -2894,16 +3046,16 @@
                     
                     // ============= CONCLUSÃO =============
                     addTitle("CONCLUSÃO");
-                    addFormattedText(lesson1Content.conclusion.text, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.conclusion.text, 11, false, false, 'justify', 1.3);
                     
                     addSubtitle("Explicação Fundamentada");
-                    addFormattedText(lesson1Content.conclusion.explanation, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.conclusion.explanation, 11, false, false, 'justify', 1.3);
                     
                     addSubtitle("Aplicação Prática");
-                    addFormattedText(lesson1Content.conclusion.application, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.conclusion.application, 11, false, false, 'justify', 1.3);
                     
                     addSubtitle("Síntese Final");
-                    addFormattedText(lesson1Content.conclusion.synthesis, 11, false, false, 'justify', 1.3);
+                    addFormattedText(lessonContent.conclusion.synthesis, 11, false, false, 'justify', 1.3);
                     
                     // ============= RODAPÉ EM TODAS AS PÁGINAS =============
                     const totalPages = doc.internal.getNumberOfPages();
@@ -2926,7 +3078,7 @@
                     }
                     
                     // ============= SALVAR O PDF =============
-                    const fileName = `EBD_Fiel_Licao_1_${new Date().getFullYear()}_${(new Date().getMonth() + 1).toString().padStart(2, '0')}_${new Date().getDate().toString().padStart(2, '0')}.pdf`;
+                    const fileName = `EBD_Fiel_Licao_${lessonNumber}_${new Date().getFullYear()}_${(new Date().getMonth() + 1).toString().padStart(2, '0')}_${new Date().getDate().toString().padStart(2, '0')}.pdf`;
                     doc.save(fileName);
                     
                     // Esconder loading
@@ -2945,230 +3097,232 @@
         
         // ============= FUNÇÃO PARA ABRIR MODAL DA LIÇÃO =============
         function openLessonModal(lessonNumber) {
-            if (lessonNumber === 1) {
-                const modal = document.createElement('div');
-                modal.className = 'modal';
-                modal.id = 'lessonModal';
-                modal.innerHTML = `
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h2>Lição 1: ${lesson1Content.title}</h2>
-                            <div class="modal-header-buttons">
-                                <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
-                                    <i class="fas fa-file-pdf"></i> Baixar em PDF
-                                </button>
-                                <button class="close-modal">&times;</button>
+            const lessonContent = lessonNumber === 1 ? lesson1Content : lesson2Content;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.id = 'lessonModal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Lição ${lessonNumber}: ${lessonContent.title}</h2>
+                        <div class="modal-header-buttons">
+                            <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
+                                <i class="fas fa-file-pdf"></i> Baixar em PDF
+                            </button>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <!-- 1. TEXTO ÁUREO -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-book-bible"></i> TEXTO ÁUREO</h3>
+                            <div class="verse-box">
+                                <strong>${lessonContent.textAureo.verse}</strong>
+                                <p>"${lessonContent.textAureo.text}"</p>
                             </div>
                         </div>
-                        <div class="modal-body">
-                            <!-- 1. TEXTO ÁUREO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-book-bible"></i> TEXTO ÁUREO</h3>
-                                <div class="verse-box">
-                                    <strong>${lesson1Content.textAureo.verse}</strong>
-                                    <p>"${lesson1Content.textAureo.text}"</p>
-                                </div>
+                        
+                        <!-- 2. VERDADE APLICADA -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-bullseye"></i> VERDADE APLICADA</h3>
+                            <p style="font-size: 1.2rem; font-weight: 500; color: var(--primary-dark); padding: 1rem; background: linear-gradient(135deg, #f0fff4 0%, #e6ffe6 100%); border-radius: 10px; border-left: 5px solid var(--secondary);">${lessonContent.appliedTruth}</p>
+                        </div>
+                        
+                        <!-- 3. OBJETIVOS DA LIÇÃO -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-tasks"></i> OBJETIVOS DA LIÇÃO</h3>
+                            <ul class="objectives-list">
+                                ${lessonContent.objectives.map(obj => `<li>${obj}</li>`).join('')}
+                            </ul>
+                        </div>
+                        
+                        <!-- 4. TEXTOS DE REFERÊNCIA -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-bible"></i> TEXTOS DE REFERÊNCIA</h3>
+                            <div class="reference-box">
+                                <h4>${lessonContent.references.title}</h4>
+                                ${lessonContent.references.verses.map(verse => `<p>${verse}</p>`).join('')}
                             </div>
-                            
-                            <!-- 2. VERDADE APLICADA -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-bullseye"></i> VERDADE APLICADA</h3>
-                                <p style="font-size: 1.2rem; font-weight: 500; color: var(--primary-dark); padding: 1rem; background: linear-gradient(135deg, #f0fff4 0%, #e6ffe6 100%); border-radius: 10px; border-left: 5px solid var(--secondary);">${lesson1Content.appliedTruth}</p>
-                            </div>
-                            
-                            <!-- 3. OBJETIVOS DA LIÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-tasks"></i> OBJETIVOS DA LIÇÃO</h3>
-                                <ul class="objectives-list">
-                                    ${lesson1Content.objectives.map(obj => `<li>${obj}</li>`).join('')}
-                                </ul>
-                            </div>
-                            
-                            <!-- 4. TEXTOS DE REFERÊNCIA -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-bible"></i> TEXTOS DE REFERÊNCIA</h3>
-                                <div class="reference-box">
-                                    <h4>${lesson1Content.references.title}</h4>
-                                    ${lesson1Content.references.verses.map(verse => `<p>${verse}</p>`).join('')}
-                                </div>
-                            </div>
-                            
-                            <!-- 5. LEITURAS COMPLEMENTARES -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-calendar-day"></i> LEITURAS COMPLEMENTARES</h3>
-                                <div class="reading-grid">
-                                    ${lesson1Content.readings.map(reading => `
-                                        <div class="reading-day">
-                                            <strong>${reading.day}</strong>
-                                            <div>${reading.ref}</div>
-                                            <small>${reading.title}</small>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <p style="margin-top: 1.5rem; padding: 1rem; background-color: #f8f9fa; border-radius: 10px;"><strong>Hinos Sugeridos:</strong> ${lesson1Content.hymns.join(', ')}</p>
-                            </div>
-                            
-                            <!-- 6. MOTIVO DE ORAÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-hands-praying"></i> MOTIVO DE ORAÇÃO</h3>
-                                <div style="padding: 1.5rem; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 10px;">
-                                    <p>${lesson1Content.prayer}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 7. INTRODUÇÃO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
-                                <p>${lesson1Content.introduction.text}</p>
-                                <div class="explanation-box">
-                                    <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
-                                    <p>${lesson1Content.introduction.explanation}</p>
-                                </div>
-                                <div class="application-box">
-                                    <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
-                                    <p>${lesson1Content.introduction.application}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 8. PONTO 1: UMA NOVA DIMENSÃO DE VIDA -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto1.title}</h3>
-                                <p>${lesson1Content.ponto1.content}</p>
-                                
-                                ${lesson1Content.ponto1.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                        <div class="explanation-box">
-                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
-                                            <p>${subpoint.explanation}</p>
-                                        </div>
-                                        <div class="application-box">
-                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
-                                            <p>${subpoint.application}</p>
-                                        </div>
+                        </div>
+                        
+                        <!-- 5. LEITURAS COMPLEMENTARES -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-calendar-day"></i> LEITURAS COMPLEMENTARES</h3>
+                            <div class="reading-grid">
+                                ${lessonContent.readings.map(reading => `
+                                    <div class="reading-day">
+                                        <strong>${reading.day}</strong>
+                                        <div>${reading.ref}</div>
+                                        <small>${reading.title}</small>
                                     </div>
                                 `).join('')}
-                                
-                                <div class="teaching-point">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto1.euEnsineiQue}</p>
-                                </div>
                             </div>
+                            <p style="margin-top: 1.5rem; padding: 1rem; background-color: #f8f9fa; border-radius: 10px;"><strong>Hinos Sugeridos:</strong> ${lessonContent.hymns.join(', ')}</p>
+                        </div>
+                        
+                        <!-- 6. MOTIVO DE ORAÇÃO -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-hands-praying"></i> MOTIVO DE ORAÇÃO</h3>
+                            <div style="padding: 1.5rem; background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); border-radius: 10px;">
+                                <p>${lessonContent.prayer}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 7. INTRODUÇÃO -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
+                            <p>${lessonContent.introduction.text}</p>
+                            <div class="explanation-box">
+                                <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                <p>${lessonContent.introduction.explanation}</p>
+                            </div>
+                            <div class="application-box">
+                                <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                <p>${lessonContent.introduction.application}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 8. PONTO 1 -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto1.title}</h3>
+                            <p>${lessonContent.ponto1.content}</p>
                             
-                            <!-- 9. PONTO 2: EM CRISTO SOMOS NOVA CRIATURA -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto2.title}</h3>
-                                <p>${lesson1Content.ponto2.content}</p>
-                                
-                                ${lesson1Content.ponto2.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                        <div class="explanation-box">
-                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
-                                            <p>${subpoint.explanation}</p>
-                                        </div>
-                                        <div class="application-box">
-                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
-                                            <p>${subpoint.application}</p>
-                                        </div>
+                            ${lessonContent.ponto1.subpoints.map(subpoint => `
+                                <div class="lesson-point">
+                                    <h4 class="point-title">
+                                        <i class="fas fa-circle"></i> ${subpoint.title}
+                                    </h4>
+                                    <p>${subpoint.content}</p>
+                                    <div class="explanation-box">
+                                        <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                        <p>${subpoint.explanation}</p>
                                     </div>
-                                `).join('')}
-                                
-                                <div class="teaching-point">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto2.euEnsineiQue}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- 10. PONTO 3: A NOVA VIDA EM CRISTO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lesson1Content.ponto3.title}</h3>
-                                <p>${lesson1Content.ponto3.content}</p>
-                                
-                                ${lesson1Content.ponto3.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
-                                        <p>${subpoint.content}</p>
-                                        <div class="explanation-box">
-                                            <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
-                                            <p>${subpoint.explanation}</p>
-                                        </div>
-                                        <div class="application-box">
-                                            <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
-                                            <p>${subpoint.application}</p>
-                                        </div>
+                                    <div class="application-box">
+                                        <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                        <p>${subpoint.application}</p>
                                     </div>
-                                `).join('')}
-                                
-                                <div class="teaching-point">
-                                    <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
-                                    <p>${lesson1Content.ponto3.euEnsineiQue}</p>
                                 </div>
-                            </div>
+                            `).join('')}
                             
-                            <!-- 11. CONCLUSÃO -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
-                                <div class="conclusion-box">
-                                    <p>${lesson1Content.conclusion.text}</p>
+                            <div class="teaching-point">
+                                <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                <p>${lessonContent.ponto1.euEnsineiQue}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 9. PONTO 2 -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto2.title}</h3>
+                            <p>${lessonContent.ponto2.content}</p>
+                            
+                            ${lessonContent.ponto2.subpoints.map(subpoint => `
+                                <div class="lesson-point">
+                                    <h4 class="point-title">
+                                        <i class="fas fa-circle"></i> ${subpoint.title}
+                                    </h4>
+                                    <p>${subpoint.content}</p>
+                                    <div class="explanation-box">
+                                        <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                        <p>${subpoint.explanation}</p>
+                                    </div>
+                                    <div class="application-box">
+                                        <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                        <p>${subpoint.application}</p>
+                                    </div>
                                 </div>
-                                <div class="explanation-box">
-                                    <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
-                                    <p>${lesson1Content.conclusion.explanation}</p>
+                            `).join('')}
+                            
+                            <div class="teaching-point">
+                                <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                <p>${lessonContent.ponto2.euEnsineiQue}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 10. PONTO 3 -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto3.title}</h3>
+                            <p>${lessonContent.ponto3.content}</p>
+                            
+                            ${lessonContent.ponto3.subpoints.map(subpoint => `
+                                <div class="lesson-point">
+                                    <h4 class="point-title">
+                                        <i class="fas fa-circle"></i> ${subpoint.title}
+                                    </h4>
+                                    <p>${subpoint.content}</p>
+                                    <div class="explanation-box">
+                                        <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                        <p>${subpoint.explanation}</p>
+                                    </div>
+                                    <div class="application-box">
+                                        <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                        <p>${subpoint.application}</p>
+                                    </div>
                                 </div>
-                                <div class="application-box">
-                                    <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
-                                    <p>${lesson1Content.conclusion.application}</p>
-                                </div>
-                                <div class="synthesis-box">
-                                    <h5><i class="fas fa-scroll"></i> Síntese Final</h5>
-                                    <p>${lesson1Content.conclusion.synthesis}</p>
-                                </div>
+                            `).join('')}
+                            
+                            <div class="teaching-point">
+                                <strong><i class="fas fa-graduation-cap"></i> EU ENSINEI QUE:</strong>
+                                <p>${lessonContent.ponto3.euEnsineiQue}</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 11. CONCLUSÃO -->
+                        <div class="lesson-section">
+                            <h3 class="modal-section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
+                            <div class="conclusion-box">
+                                <p>${lessonContent.conclusion.text}</p>
+                            </div>
+                            <div class="explanation-box">
+                                <h5><i class="fas fa-graduation-cap"></i> Explicação Fundamentada</h5>
+                                <p>${lessonContent.conclusion.explanation}</p>
+                            </div>
+                            <div class="application-box">
+                                <h5><i class="fas fa-hands-helping"></i> Aplicação Prática</h5>
+                                <p>${lessonContent.conclusion.application}</p>
+                            </div>
+                            <div class="synthesis-box">
+                                <h5><i class="fas fa-scroll"></i> Síntese Final</h5>
+                                <p>${lessonContent.conclusion.synthesis}</p>
                             </div>
                         </div>
                     </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Mostrar o modal
-                modal.style.display = 'block';
-                
-                // Adicionar evento ao botão de download PDF no modal
-                document.getElementById('pdfDownloadModal').addEventListener('click', generateLessonPDF);
-                
-                // Fechar o modal
-                const closeBtn = modal.querySelector('.close-modal');
-                const closeModal = () => {
-                    modal.style.display = 'none';
-                    document.body.removeChild(modal);
-                };
-                
-                closeBtn.addEventListener('click', closeModal);
-                
-                // Fechar ao clicar fora do conteúdo
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-                
-                // Fechar com ESC
-                document.addEventListener('keydown', function handleEsc(e) {
-                    if (e.key === 'Escape') {
-                        closeModal();
-                        document.removeEventListener('keydown', handleEsc);
-                    }
-                });
-            }
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Mostrar o modal
+            modal.style.display = 'block';
+            
+            // Adicionar evento ao botão de download PDF no modal
+            document.getElementById('pdfDownloadModal').addEventListener('click', function() {
+                generateLessonPDF(lessonNumber);
+            });
+            
+            // Fechar o modal
+            const closeBtn = modal.querySelector('.close-modal');
+            const closeModal = () => {
+                modal.style.display = 'none';
+                document.body.removeChild(modal);
+            };
+            
+            closeBtn.addEventListener('click', closeModal);
+            
+            // Fechar ao clicar fora do conteúdo
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Fechar com ESC
+            document.addEventListener('keydown', function handleEsc(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', handleEsc);
+                }
+            });
         }
         
         // ============= FUNÇÃO PARA INICIALIZAR O VÍDEO DO TRIMESTRE =============
