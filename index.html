@@ -527,6 +527,63 @@
             border: none;
         }
         
+        /* Thumbnail com link para mobile */
+        .video-mobile-fallback {
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            position: relative;
+            display: none; /* Inicialmente escondido */
+        }
+        
+        .video-mobile-fallback img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-mobile-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .play-icon-large {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 0, 0, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .mobile-video-text {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-video-subtext {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
         .video-info {
             text-align: center;
             color: #555;
@@ -1919,9 +1976,11 @@
             <div class="video-trimestre-section fade-in">
                 <h3><i class="fas fa-play-circle"></i> Vídeo sobre o Tema do Trimestre</h3>
                 
-                <div class="video-universal-container">
+                <!-- Container para Desktop -->
+                <div class="video-universal-container" id="trimestrePcVideoContainer">
                     <div class="video-responsive-wrapper">
                         <iframe 
+                            id="trimestreYoutubeIframe"
                             src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1" 
                             title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
                             frameborder="0" 
@@ -1932,11 +1991,23 @@
                     </div>
                 </div>
                 
+                <!-- Thumbnail para Mobile -->
+                <div class="video-mobile-fallback" id="trimestreMobileVideoFallback">
+                    <img src="https://img.youtube.com/vi/te9eFEEVqKQ/maxresdefault.jpg" alt="Thumbnail do vídeo do trimestre">
+                    <div class="video-mobile-overlay">
+                        <div class="play-icon-large">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="mobile-video-text">Clique para assistir no YouTube</div>
+                        <div class="mobile-video-subtext">Vídeo sobre o tema do trimestre</div>
+                    </div>
+                </div>
+                
                 <div class="video-info">
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
                     
-                    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link">
+                    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
                         <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
                     </a>
                 </div>
@@ -1946,9 +2017,11 @@
             <div class="video-jovem-section fade-in">
                 <h3><i class="fas fa-fire-alt"></i> Vídeo da Classe Jovem</h3>
                 
-                <div class="video-universal-container">
+                <!-- Container para Desktop -->
+                <div class="video-universal-container" id="classeJovemPcVideoContainer">
                     <div class="video-responsive-wrapper">
                         <iframe 
+                            id="classeJovemYoutubeIframe"
                             src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1" 
                             title="Vídeo da Classe Jovem" 
                             frameborder="0" 
@@ -1959,11 +2032,23 @@
                     </div>
                 </div>
                 
+                <!-- Thumbnail para Mobile -->
+                <div class="video-mobile-fallback" id="classeJovemMobileVideoFallback">
+                    <img src="https://img.youtube.com/vi/kIB-BtFmb-Y/maxresdefault.jpg" alt="Thumbnail do vídeo da classe jovem">
+                    <div class="video-mobile-overlay">
+                        <div class="play-icon-large">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="mobile-video-text">Clique para assistir no YouTube</div>
+                        <div class="mobile-video-subtext">Vídeo da Classe Jovem</div>
+                    </div>
+                </div>
+                
                 <div class="video-info">
                     <p><strong>Vídeo especial para a classe de jovens:</strong> Conteúdo adicional e direcionado para o público jovem, abordando temas relevantes e atuais.</p>
                     <p>Este vídeo complementa os estudos da Revista Conectar Jovens, proporcionando uma visão mais dinâmica e aplicada das lições.</p>
                     
-                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link">
+                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
                         <i class="fab fa-youtube"></i> Assistir Vídeo da Classe Jovem no YouTube
                     </a>
                 </div>
@@ -3142,6 +3227,53 @@
             }, 500);
         }
         
+        // Função para detectar dispositivos móveis
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+        
+        // Inicializar vídeos
+        function initVideos() {
+            const isMobile = isMobileDevice();
+            
+            // Elementos do vídeo do trimestre
+            const trimestrePcContainer = document.getElementById('trimestrePcVideoContainer');
+            const trimestreMobileFallback = document.getElementById('trimestreMobileVideoFallback');
+            
+            // Elementos do vídeo da classe jovem
+            const classeJovemPcContainer = document.getElementById('classeJovemPcVideoContainer');
+            const classeJovemMobileFallback = document.getElementById('classeJovemMobileVideoFallback');
+            
+            if (isMobile) {
+                // Esconder iframes e mostrar thumbnails no mobile
+                if (trimestrePcContainer) trimestrePcContainer.style.display = 'none';
+                if (trimestreMobileFallback) trimestreMobileFallback.style.display = 'block';
+                
+                if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'none';
+                if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'block';
+                
+                // Adicionar eventos de clique nas thumbnails
+                if (trimestreMobileFallback) {
+                    trimestreMobileFallback.addEventListener('click', function() {
+                        window.open('https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF', '_blank');
+                    });
+                }
+                
+                if (classeJovemMobileFallback) {
+                    classeJovemMobileFallback.addEventListener('click', function() {
+                        window.open('https://youtube.com/shorts/kIB-BtFmb-Y?feature=share', '_blank');
+                    });
+                }
+            } else {
+                // Mostrar iframes e esconder thumbnails no desktop
+                if (trimestrePcContainer) trimestrePcContainer.style.display = 'block';
+                if (trimestreMobileFallback) trimestreMobileFallback.style.display = 'none';
+                
+                if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'block';
+                if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'none';
+            }
+        }
+        
         // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -3178,6 +3310,7 @@
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             renderLessons();
+            initVideos();
             
             // Animações
             const fadeElements = document.querySelectorAll('.fade-in');
