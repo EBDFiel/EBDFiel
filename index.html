@@ -475,7 +475,17 @@
             text-align: center;
         }
         
-        .video-trimestre-section h3 {
+        /* SEÇÃO DO VÍDEO DA CLASSE JOVEM */
+        .video-jovem-section {
+            background: rgba(106, 17, 203, 0.08);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--youth-primary);
+            text-align: center;
+        }
+        
+        .video-trimestre-section h3, .video-jovem-section h3 {
             color: #2c3e50;
             font-size: 1.3rem;
             margin-bottom: 20px;
@@ -483,6 +493,10 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+        }
+        
+        .video-jovem-section h3 {
+            color: var(--youth-primary);
         }
         
         /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
@@ -598,6 +612,14 @@
         .video-direct-link:hover {
             background: #cc0000;
             transform: translateY(-2px);
+        }
+        
+        .video-jovem-section .video-direct-link {
+            background: var(--youth-primary);
+        }
+        
+        .video-jovem-section .video-direct-link:hover {
+            background: #5a0db3;
         }
         
         /* ============= SEÇÃO REVISTA CONECTAR JOVENS ============= */
@@ -1980,6 +2002,44 @@
                 </div>
             </div>
             
+            <!-- SEÇÃO DO VÍDEO DA CLASSE JOVEM -->
+            <div class="video-jovem-section fade-in">
+                <h3><i class="fas fa-fire-alt"></i> Vídeo da Classe Jovem</h3>
+                
+                <div class="video-universal-container" id="classeJovemPcVideoContainer">
+                    <div class="video-responsive-wrapper">
+                        <iframe 
+                            id="classeJovemYoutubeIframe"
+                            src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
+                            title="Vídeo da Classe Jovem" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            referrerpolicy="strict-origin-when-cross-origin">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <div class="video-mobile-fallback" id="classeJovemMobileVideoFallback">
+                    <div class="video-mobile-overlay">
+                        <div class="play-icon-large">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="mobile-video-text">Clique para assistir no YouTube</div>
+                        <div class="mobile-video-subtext">Vídeo da Classe Jovem</div>
+                    </div>
+                </div>
+                
+                <div class="video-info">
+                    <p><strong>Vídeo especial para a classe de jovens:</strong> Conteúdo adicional e direcionado para o público jovem, abordando temas relevantes e atuais.</p>
+                    <p>Este vídeo complementa os estudos da Revista Conectar Jovens, proporcionando uma visão mais dinâmica e aplicada das lições.</p>
+                    
+                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
+                        <i class="fab fa-youtube"></i> Assistir Vídeo da Classe Jovem no YouTube
+                    </a>
+                </div>
+            </div>
+            
             <!-- SEÇÃO REVISTA CONECTAR JOVENS -->
             <div class="youth-section fade-in">
                 <div class="youth-header">
@@ -2324,7 +2384,7 @@
                 { day: "SÁBADO", ref: "Mt 5:8", text: "Bem-aventurados os limpos de coração." }
             ],
             introduction: {
-                text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fato nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
+                text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fact nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
             },
             pointKey: "Todos somos pecadores e incapazes de nos justificar perante Deus, mas a justiça divina é oferecida gratuitamente pela fé em Jesus Cristo.",
             ponto1: {
@@ -3153,7 +3213,7 @@
             }, 500);
         }
         
-        // Inicializar vídeo
+        // Inicializar vídeo do trimestre
         function initTrimestreVideo() {
             // Detectar dispositivo móvel
             function isMobileDevice() {
@@ -3165,15 +3225,43 @@
             const mobileVideoFallback = document.getElementById('trimestreMobileVideoFallback');
             
             if (isMobile) {
-                pcVideoContainer.style.display = 'none';
-                mobileVideoFallback.style.display = 'block';
+                if (pcVideoContainer) pcVideoContainer.style.display = 'none';
+                if (mobileVideoFallback) mobileVideoFallback.style.display = 'block';
                 
-                mobileVideoFallback.addEventListener('click', function() {
-                    window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
-                });
+                if (mobileVideoFallback) {
+                    mobileVideoFallback.addEventListener('click', function() {
+                        window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
+                    });
+                }
             } else {
-                pcVideoContainer.style.display = 'block';
-                mobileVideoFallback.style.display = 'none';
+                if (pcVideoContainer) pcVideoContainer.style.display = 'block';
+                if (mobileVideoFallback) mobileVideoFallback.style.display = 'none';
+            }
+        }
+        
+        // Inicializar vídeo da classe jovem
+        function initClasseJovemVideo() {
+            // Detectar dispositivo móvel
+            function isMobileDevice() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            }
+            
+            const isMobile = isMobileDevice();
+            const pcVideoContainer = document.getElementById('classeJovemPcVideoContainer');
+            const mobileVideoFallback = document.getElementById('classeJovemMobileVideoFallback');
+            
+            if (isMobile) {
+                if (pcVideoContainer) pcVideoContainer.style.display = 'none';
+                if (mobileVideoFallback) mobileVideoFallback.style.display = 'block';
+                
+                if (mobileVideoFallback) {
+                    mobileVideoFallback.addEventListener('click', function() {
+                        window.open('https://youtube.com/shorts/kIB-BtFmb-Y?feature=share', '_blank');
+                    });
+                }
+            } else {
+                if (pcVideoContainer) pcVideoContainer.style.display = 'block';
+                if (mobileVideoFallback) mobileVideoFallback.style.display = 'none';
             }
         }
         
@@ -3214,6 +3302,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderLessons();
             initTrimestreVideo();
+            initClasseJovemVideo();
             
             // Animações
             const fadeElements = document.querySelectorAll('.fade-in');
