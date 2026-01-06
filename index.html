@@ -502,7 +502,7 @@
         /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
         .video-universal-container {
             width: 100%;
-            max-width: 315px;
+            max-width: 560px;
             margin: 0 auto;
             border-radius: 10px;
             overflow: hidden;
@@ -513,7 +513,7 @@
         /* Container responsivo para vídeo */
         .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 177.78%;
+            padding-bottom: 56.25%; /* Proporção 16:9 */
             height: 0;
             overflow: hidden;
         }
@@ -525,63 +525,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-        
-        /* Thumbnail com link para mobile */
-        .video-mobile-fallback {
-            display: none;
-            width: 100%;
-            max-width: 315px;
-            margin: 0 auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .video-mobile-fallback img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-        
-        .video-mobile-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .play-icon-large {
-            width: 70px;
-            height: 70px;
-            background: rgba(255, 0, 0, 0.9);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-        
-        .mobile-video-text {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-        }
-        
-        .mobile-video-subtext {
-            font-size: 0.9rem;
-            opacity: 0.9;
         }
         
         .video-info {
@@ -1712,6 +1655,10 @@
                 top: 1.5rem;
                 right: 1.5rem;
             }
+            
+            .video-universal-container {
+                max-width: 100%;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1792,6 +1739,10 @@
             
             .modal-body {
                 padding: 1.5rem;
+            }
+            
+            .video-trimestre-section, .video-jovem-section {
+                padding: 15px;
             }
         }
         
@@ -1968,11 +1919,10 @@
             <div class="video-trimestre-section fade-in">
                 <h3><i class="fas fa-play-circle"></i> Vídeo sobre o Tema do Trimestre</h3>
                 
-                <div class="video-universal-container" id="trimestrePcVideoContainer">
+                <div class="video-universal-container">
                     <div class="video-responsive-wrapper">
                         <iframe 
-                            id="trimestreYoutubeIframe"
-                            src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
+                            src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1" 
                             title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -1982,21 +1932,11 @@
                     </div>
                 </div>
                 
-                <div class="video-mobile-fallback" id="trimestreMobileVideoFallback">
-                    <div class="video-mobile-overlay">
-                        <div class="play-icon-large">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="mobile-video-text">Clique para assistir no YouTube</div>
-                        <div class="mobile-video-subtext">Vídeo sobre o tema do trimestre</div>
-                    </div>
-                </div>
-                
                 <div class="video-info">
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
                     
-                    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
+                    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link">
                         <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
                     </a>
                 </div>
@@ -2006,11 +1946,10 @@
             <div class="video-jovem-section fade-in">
                 <h3><i class="fas fa-fire-alt"></i> Vídeo da Classe Jovem</h3>
                 
-                <div class="video-universal-container" id="classeJovemPcVideoContainer">
+                <div class="video-universal-container">
                     <div class="video-responsive-wrapper">
                         <iframe 
-                            id="classeJovemYoutubeIframe"
-                            src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=https://yourdomain.com" 
+                            src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1" 
                             title="Vídeo da Classe Jovem" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
@@ -2020,21 +1959,11 @@
                     </div>
                 </div>
                 
-                <div class="video-mobile-fallback" id="classeJovemMobileVideoFallback">
-                    <div class="video-mobile-overlay">
-                        <div class="play-icon-large">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <div class="mobile-video-text">Clique para assistir no YouTube</div>
-                        <div class="mobile-video-subtext">Vídeo da Classe Jovem</div>
-                    </div>
-                </div>
-                
                 <div class="video-info">
                     <p><strong>Vídeo especial para a classe de jovens:</strong> Conteúdo adicional e direcionado para o público jovem, abordando temas relevantes e atuais.</p>
                     <p>Este vídeo complementa os estudos da Revista Conectar Jovens, proporcionando uma visão mais dinâmica e aplicada das lições.</p>
                     
-                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
+                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link">
                         <i class="fab fa-youtube"></i> Assistir Vídeo da Classe Jovem no YouTube
                     </a>
                 </div>
@@ -2384,7 +2313,7 @@
                 { day: "SÁBADO", ref: "Mt 5:8", text: "Bem-aventurados os limpos de coração." }
             ],
             introduction: {
-                text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fact nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
+                text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fato nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
             },
             pointKey: "Todos somos pecadores e incapazes de nos justificar perante Deus, mas a justiça divina é oferecida gratuitamente pela fé em Jesus Cristo.",
             ponto1: {
@@ -3213,58 +3142,6 @@
             }, 500);
         }
         
-        // Inicializar vídeo do trimestre
-        function initTrimestreVideo() {
-            // Detectar dispositivo móvel
-            function isMobileDevice() {
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
-            
-            const isMobile = isMobileDevice();
-            const pcVideoContainer = document.getElementById('trimestrePcVideoContainer');
-            const mobileVideoFallback = document.getElementById('trimestreMobileVideoFallback');
-            
-            if (isMobile) {
-                if (pcVideoContainer) pcVideoContainer.style.display = 'none';
-                if (mobileVideoFallback) mobileVideoFallback.style.display = 'block';
-                
-                if (mobileVideoFallback) {
-                    mobileVideoFallback.addEventListener('click', function() {
-                        window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
-                    });
-                }
-            } else {
-                if (pcVideoContainer) pcVideoContainer.style.display = 'block';
-                if (mobileVideoFallback) mobileVideoFallback.style.display = 'none';
-            }
-        }
-        
-        // Inicializar vídeo da classe jovem
-        function initClasseJovemVideo() {
-            // Detectar dispositivo móvel
-            function isMobileDevice() {
-                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            }
-            
-            const isMobile = isMobileDevice();
-            const pcVideoContainer = document.getElementById('classeJovemPcVideoContainer');
-            const mobileVideoFallback = document.getElementById('classeJovemMobileVideoFallback');
-            
-            if (isMobile) {
-                if (pcVideoContainer) pcVideoContainer.style.display = 'none';
-                if (mobileVideoFallback) mobileVideoFallback.style.display = 'block';
-                
-                if (mobileVideoFallback) {
-                    mobileVideoFallback.addEventListener('click', function() {
-                        window.open('https://youtube.com/shorts/kIB-BtFmb-Y?feature=share', '_blank');
-                    });
-                }
-            } else {
-                if (pcVideoContainer) pcVideoContainer.style.display = 'block';
-                if (mobileVideoFallback) mobileVideoFallback.style.display = 'none';
-            }
-        }
-        
         // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -3301,8 +3178,6 @@
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             renderLessons();
-            initTrimestreVideo();
-            initClasseJovemVideo();
             
             // Animações
             const fadeElements = document.querySelectorAll('.fade-in');
