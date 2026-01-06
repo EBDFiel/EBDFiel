@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EBD Fiel - Escola Bíblica Dominical</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Biblioteca jsPDF para geração de PDFs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -501,7 +499,7 @@
         /* Container responsivo para vídeo */
         .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 177.78%; /* Proporção 9:16 para Shorts vertical */
+            padding-bottom: 177.78%;
             height: 0;
             overflow: hidden;
         }
@@ -633,7 +631,7 @@
             margin: 0 auto;
         }
         
-        /* ============= FILTROS ATUALIZADOS ============= */
+        /* ============= FILTROS ============= */
         .filters {
             display: flex;
             justify-content: center;
@@ -668,7 +666,6 @@
             box-shadow: 0 6px 15px rgba(26, 95, 180, 0.2);
         }
         
-        /* Botão de filtro especial para Jovens */
         .filter-btn.youth {
             border-color: var(--youth-secondary);
             color: var(--youth-primary);
@@ -686,7 +683,7 @@
             box-shadow: 0 6px 15px rgba(106, 17, 203, 0.2);
         }
         
-        /* ============= CARDS DE LIÇÕES JOVENS ============= */
+        /* ============= CARDS DE LIÇÕES ============= */
         .lessons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -711,7 +708,6 @@
             box-shadow: var(--shadow-hover);
         }
         
-        /* Header para lições normais */
         .lesson-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
@@ -721,7 +717,6 @@
             overflow: hidden;
         }
         
-        /* Header especial para lições JOVENS */
         .lesson-card.youth .lesson-header {
             background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
         }
@@ -787,7 +782,6 @@
             margin-top: auto;
         }
         
-        /* Tag para lições normais */
         .lesson-tag {
             background: linear-gradient(135deg, #e8f4ff 0%, #d4e7ff 100%);
             color: var(--primary);
@@ -798,7 +792,6 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
-        /* Tag especial para lições JOVENS */
         .lesson-card.youth .lesson-tag {
             background: linear-gradient(135deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
             color: var(--youth-primary);
@@ -848,7 +841,6 @@
             box-shadow: 0 6px 15px rgba(26, 95, 180, 0.3);
         }
         
-        /* Botões especiais para lições JOVENS */
         .lesson-card.youth .view-btn {
             background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
             box-shadow: 0 4px 10px rgba(106, 17, 203, 0.2);
@@ -858,7 +850,6 @@
             box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
         }
         
-        /* Badge para lição disponível */
         .available-badge {
             position: absolute;
             top: 15px;
@@ -873,7 +864,6 @@
             z-index: 1;
         }
         
-        /* Badge especial para lições JOVENS */
         .lesson-card.youth .available-badge {
             background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
             box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
@@ -1132,6 +1122,401 @@
             z-index: 1;
         }
         
+        /* ============= MODAL ============= */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            overflow: auto;
+            animation: fadeIn 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            padding: 0;
+            width: 95%;
+            max-width: 1200px;
+            max-height: 94vh;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-60px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.8rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .modal.youth .modal-header {
+            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
+        }
+        
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.6rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .close-modal {
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 300;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+            border-radius: 8px;
+        }
+        
+        .close-modal:hover {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-body {
+            padding: 2.5rem;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        .lesson-section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .lesson-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .modal.youth .modal-section-title {
+            color: var(--youth-primary);
+            border-bottom: 3px solid var(--youth-accent);
+        }
+        
+        .modal-section-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 3px solid var(--secondary);
+            font-size: 1.5rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .verse-box {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
+            border-left: 5px solid var(--primary);
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            font-size: 1.2rem;
+            line-height: 1.7;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+        
+        .modal.youth .verse-box {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            border-left: 5px solid var(--youth-primary);
+        }
+        
+        .verse-box strong {
+            color: var(--primary-dark);
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            font-style: normal;
+        }
+        
+        .modal.youth .verse-box strong {
+            color: var(--youth-primary);
+        }
+        
+        .objectives-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .objectives-list li {
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding: 1rem 0 1rem 3rem;
+            background-color: #f8fafc;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+        }
+        
+        .modal.youth .objectives-list li {
+            border-left: 4px solid var(--youth-accent);
+        }
+        
+        .objectives-list li:before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            position: absolute;
+            left: 1.2rem;
+            top: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .reading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+        
+        .reading-day {
+            background: linear-gradient(135deg, #e8f4ff 0%, #dbeafe 100%);
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            border: 1px solid rgba(26, 95, 180, 0.1);
+        }
+        
+        .modal.youth .reading-day {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            border: 1px solid rgba(106, 17, 203, 0.1);
+        }
+        
+        .reading-day:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .reading-day strong {
+            color: var(--primary);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .modal.youth .reading-day strong {
+            color: var(--youth-primary);
+        }
+        
+        .reading-day small {
+            color: var(--gray);
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.5rem;
+        }
+        
+        .conclusion-box {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary);
+            margin-top: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .modal.youth .conclusion-box {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            border-left: 5px solid var(--youth-accent);
+        }
+        
+        .pdf-download-modal {
+            background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 0.9rem 1.8rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-left: 1rem;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modal.youth .pdf-download-modal {
+            background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
+        }
+        
+        .pdf-download-modal:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
+        }
+        
+        .modal.youth .pdf-download-modal:hover {
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+        }
+        
+        .modal-header-buttons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .youth-day-verse {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--youth-primary);
+        }
+        
+        .youth-day-verse strong {
+            color: var(--youth-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .youth-reflecting {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(255, 82, 82, 0.05) 100%);
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--youth-accent);
+            font-style: italic;
+        }
+        
+        .youth-point-key {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 2px solid var(--youth-primary);
+            position: relative;
+        }
+        
+        .youth-point-key::before {
+            content: "💡";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 1.5rem;
+            background: white;
+            padding: 0 10px;
+        }
+        
+        .youth-point-key strong {
+            color: var(--youth-primary);
+            display: block;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .youth-subsidio {
+            background: linear-gradient(135deg, rgba(230, 179, 37, 0.05) 0%, rgba(209, 156, 26, 0.05) 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .youth-subsidio h5 {
+            color: var(--youth-primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+        
+        .youth-complementing {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            padding: 1.8rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px dashed var(--youth-secondary);
+        }
+        
+        /* ============= LOADING ============= */
+        .pdf-loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 4000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-size: 1.3rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .pdf-loading .spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--secondary);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 1.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
         /* Responsive Design */
         @media (max-width: 1200px) {
             .hero h2 {
@@ -1267,6 +1652,44 @@
             .filter-btn {
                 white-space: nowrap;
             }
+            
+            .modal-content {
+                width: 98%;
+                margin: 2% auto;
+                max-height: 96vh;
+            }
+            
+            .modal-body {
+                padding: 1.8rem;
+            }
+            
+            .reading-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.2rem;
+                padding: 1.5rem;
+            }
+            
+            .modal-header-buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .pdf-download-modal {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .close-modal {
+                position: absolute;
+                top: 1.5rem;
+                right: 1.5rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1340,575 +1763,7 @@
             .youth-header h2 {
                 font-size: 1.8rem;
             }
-        }
-        
-        /* ============= MODAL DA LIÇÃO (ATUALIZADO) ============= */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 3000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            overflow: auto;
-            animation: fadeIn 0.3s;
-            backdrop-filter: blur(5px);
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 3% auto;
-            padding: 0;
-            width: 95%;
-            max-width: 1200px;
-            max-height: 94vh;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateY(-60px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        
-        /* Header do modal para lições normais */
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 1.8rem 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        /* Header do modal especial para lições JOVENS */
-        .modal.youth .modal-header {
-            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
-        }
-        
-        .modal-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        }
-        
-        .modal-header h2 {
-            margin: 0;
-            font-size: 1.6rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .close-modal {
-            color: white;
-            font-size: 2.2rem;
-            font-weight: 300;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            position: relative;
-            z-index: 1;
-            border-radius: 8px;
-        }
-        
-        .close-modal:hover {
-            transform: scale(1.1);
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .modal-body {
-            padding: 2.5rem;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-        
-        .lesson-section {
-            margin-bottom: 3rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .lesson-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        /* Títulos especiais para modal JOVENS */
-        .modal.youth .modal-section-title {
-            color: var(--youth-primary);
-            border-bottom: 3px solid var(--youth-accent);
-        }
-        
-        .modal-section-title {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 3px solid var(--secondary);
-            font-size: 1.5rem;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-        
-        .verse-box {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
-            border-left: 5px solid var(--primary);
-            padding: 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
-            font-style: italic;
-            font-size: 1.2rem;
-            line-height: 1.7;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-        
-        /* Box especial para modal JOVENS */
-        .modal.youth .verse-box {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border-left: 5px solid var(--youth-primary);
-        }
-        
-        .verse-box strong {
-            color: var(--primary-dark);
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            font-style: normal;
-        }
-        
-        /* Strong especial para modal JOVENS */
-        .modal.youth .verse-box strong {
-            color: var(--youth-primary);
-        }
-        
-        .objectives-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        
-        .objectives-list li {
-            margin-bottom: 1.2rem;
-            position: relative;
-            padding: 1rem 0 1rem 3rem;
-            background-color: #f8fafc;
-            border-radius: 10px;
-            border-left: 4px solid var(--secondary);
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
-        }
-        
-        /* Lista especial para modal JOVENS */
-        .modal.youth .objectives-list li {
-            border-left: 4px solid var(--youth-accent);
-        }
-        
-        .objectives-list li:before {
-            content: "✓";
-            color: var(--success);
-            font-weight: bold;
-            position: absolute;
-            left: 1.2rem;
-            top: 1rem;
-            font-size: 1.2rem;
-        }
-        
-        .reference-box {
-            background: linear-gradient(135deg, #f9f9f9 0%, #f1f1f1 100%);
-            border: 1px solid #e0e0e0;
-            padding: 2rem;
-            border-radius: 12px;
-            font-family: 'Georgia', serif;
-            line-height: 1.9;
-            font-size: 1.1rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-        
-        .reference-box h4 {
-            color: var(--primary-dark);
-            margin-bottom: 1.2rem;
-            font-size: 1.3rem;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 0.5rem;
-        }
-        
-        /* Referência especial para modal JOVENS */
-        .modal.youth .reference-box h4 {
-            color: var(--youth-primary);
-        }
-        
-        .lesson-point {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-        
-        /* Ponto especial para modal JOVENS */
-        .modal.youth .lesson-point {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.02) 0%, rgba(37, 117, 252, 0.02) 100%);
-            border: 1px solid rgba(106, 17, 203, 0.1);
-        }
-        
-        .point-title {
-            color: var(--primary-dark);
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 2px solid #e2e8f0;
-        }
-        
-        /* Título especial para modal JOVENS */
-        .modal.youth .point-title {
-            color: var(--youth-primary);
-            border-bottom: 2px solid rgba(106, 17, 203, 0.2);
-        }
-        
-        .point-title i {
-            color: var(--secondary);
-        }
-        
-        /* Ícone especial para modal JOVENS */
-        .modal.youth .point-title i {
-            color: var(--youth-accent);
-        }
-        
-        .reading-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 1.2rem;
-            margin-top: 1.2rem;
-        }
-        
-        .reading-day {
-            background: linear-gradient(135deg, #e8f4ff 0%, #dbeafe 100%);
-            padding: 1.2rem;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: var(--transition);
-            border: 1px solid rgba(26, 95, 180, 0.1);
-        }
-        
-        /* Dia de leitura especial para modal JOVENS */
-        .modal.youth .reading-day {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border: 1px solid rgba(106, 17, 203, 0.1);
-        }
-        
-        .reading-day:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-        
-        .reading-day strong {
-            color: var(--primary);
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-        
-        /* Strong especial para modal JOVENS */
-        .modal.youth .reading-day strong {
-            color: var(--youth-primary);
-        }
-        
-        .reading-day small {
-            color: var(--gray);
-            font-size: 0.9rem;
-            display: block;
-            margin-top: 0.5rem;
-        }
-        
-        .conclusion-box {
-            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            border-left: 5px solid var(--secondary);
-            margin-top: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Conclusão especial para modal JOVENS */
-        .modal.youth .conclusion-box {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border-left: 5px solid var(--youth-accent);
-        }
-        
-        .explanation-box, .application-box, .synthesis-box {
-            padding: 1.8rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
-            border-left: 5px solid;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
-        }
-        
-        .explanation-box {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e6f4ff 100%);
-            border-left-color: #1a5fb4;
-        }
-        
-        .application-box {
-            background: linear-gradient(135deg, #f0fff4 0%, #e6ffe6 100%);
-            border-left-color: #28a745;
-        }
-        
-        .synthesis-box {
-            background: linear-gradient(135deg, #fff8e1 0%, #fff3cd 100%);
-            border-left-color: #e6b325;
-        }
-        
-        /* Boxes especiais para modal JOVENS */
-        .modal.youth .explanation-box {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border-left-color: var(--youth-primary);
-        }
-        
-        .modal.youth .application-box {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(255, 82, 82, 0.05) 100%);
-            border-left-color: var(--youth-accent);
-        }
-        
-        .modal.youth .synthesis-box {
-            background: linear-gradient(135deg, rgba(230, 179, 37, 0.05) 0%, rgba(209, 156, 26, 0.05) 100%);
-            border-left-color: var(--secondary);
-        }
-        
-        .explanation-box h5, .application-box h5, .synthesis-box h5 {
-            color: var(--primary-dark);
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-        
-        /* Títulos especiais para modal JOVENS */
-        .modal.youth .explanation-box h5,
-        .modal.youth .application-box h5,
-        .modal.youth .synthesis-box h5 {
-            color: var(--youth-primary);
-        }
-        
-        .teaching-point {
-            background: linear-gradient(135deg, #e8f5e8 0%, #d4ecd4 100%);
-            padding: 1.8rem;
-            border-radius: 12px;
-            margin-top: 2rem;
-            border-left: 5px solid #28a745;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        /* Ponto de ensino especial para modal JOVENS */
-        .modal.youth .teaching-point {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border-left: 5px solid var(--youth-secondary);
-        }
-        
-        .teaching-point strong {
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-        }
-        
-        /* Strong especial para modal JOVENS */
-        .modal.youth .teaching-point strong {
-            color: var(--youth-primary);
-        }
-        
-        /* Botão de Download PDF no modal */
-        .pdf-download-modal {
-            background: linear-gradient(135deg, var(--danger) 0%, #c82333 100%);
-            color: white;
-            border: none;
-            padding: 0.9rem 1.8rem;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-left: 1rem;
-            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Botão especial para modal JOVENS */
-        .modal.youth .pdf-download-modal {
-            background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.2);
-        }
-        
-        .pdf-download-modal:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(220, 53, 69, 0.3);
-        }
-        
-        /* Hover especial para modal JOVENS */
-        .modal.youth .pdf-download-modal:hover {
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
-        }
-        
-        .modal-header-buttons {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* SEÇÃO ESPECIAL PARA JOVENS NO MODAL */
-        .youth-day-verse {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--youth-primary);
-        }
-        
-        .youth-day-verse strong {
-            color: var(--youth-primary);
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .youth-reflecting {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.05) 0%, rgba(255, 82, 82, 0.05) 100%);
-            padding: 1.8rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border-left: 4px solid var(--youth-accent);
-            font-style: italic;
-        }
-        
-        .youth-point-key {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            padding: 1.8rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border: 2px solid var(--youth-primary);
-            position: relative;
-        }
-        
-        .youth-point-key::before {
-            content: "💡";
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            font-size: 1.5rem;
-            background: white;
-            padding: 0 10px;
-        }
-        
-        .youth-point-key strong {
-            color: var(--youth-primary);
-            display: block;
-            margin-bottom: 0.8rem;
-            font-size: 1.2rem;
-        }
-        
-        .youth-subsidio {
-            background: linear-gradient(135deg, rgba(230, 179, 37, 0.05) 0%, rgba(209, 156, 26, 0.05) 100%);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
-            border-left: 5px solid var(--secondary);
-        }
-        
-        .youth-subsidio h5 {
-            color: var(--youth-primary);
-            margin-bottom: 1rem;
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-        
-        .youth-complementing {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            padding: 1.8rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
-            border: 1px dashed var(--youth-secondary);
-        }
-        
-        @media (max-width: 768px) {
-            .modal-content {
-                width: 98%;
-                margin: 2% auto;
-                max-height: 96vh;
-            }
             
-            .modal-body {
-                padding: 1.8rem;
-            }
-            
-            .reading-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .modal-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1.2rem;
-                padding: 1.5rem;
-            }
-            
-            .modal-header-buttons {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .pdf-download-modal {
-                margin-left: 0;
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .close-modal {
-                position: absolute;
-                top: 1.5rem;
-                right: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
             .modal-header h2 {
                 font-size: 1.3rem;
             }
@@ -1916,51 +1771,9 @@
             .modal-body {
                 padding: 1.5rem;
             }
-            
-            .lesson-point {
-                padding: 1.5rem;
-            }
-            
-            .modal-section-title {
-                font-size: 1.3rem;
-            }
-        }
-        /* ============= FIM DO MODAL ============= */
-        
-        /* ============= LOADING PARA PDF ============= */
-        .pdf-loading {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 4000;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            color: white;
-            font-size: 1.3rem;
-            backdrop-filter: blur(5px);
         }
         
-        .pdf-loading .spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            border-top-color: var(--secondary);
-            animation: spin 1s ease-in-out infinite;
-            margin-bottom: 1.5rem;
-        }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        /* ============= FIM LOADING ============= */
-        
-        /* Animação de entrada para elementos */
+        /* Animação de entrada */
         .fade-in {
             animation: fadeInUp 0.6s ease-out forwards;
             opacity: 0;
@@ -1977,7 +1790,7 @@
             }
         }
         
-        /* Efeito de onda no header */
+        /* Efeito de onda */
         .wave-divider {
             position: absolute;
             bottom: 0;
@@ -1999,7 +1812,7 @@
             fill: #f9fafc;
         }
         
-        /* Efeito de brilho nos botões */
+        /* Efeito de brilho */
         .glow-effect {
             position: relative;
             overflow: hidden;
@@ -2023,7 +1836,7 @@
     </style>
 </head>
 <body>
-    <!-- Loading para geração de PDF -->
+    <!-- Loading para PDF -->
     <div class="pdf-loading" id="pdfLoading">
         <div class="spinner"></div>
         <p>Gerando PDF, por favor aguarde...</p>
@@ -2104,9 +1917,8 @@
                 <p>Estudos bíblicos organizados por trimestre para seu crescimento espiritual e preparo para o ensino</p>
             </div>
             
-            <!-- SEÇÃO DE QUIZZES ATUALIZADA -->
+            <!-- SEÇÃO DE QUIZZES -->
             <div class="quiz-sections-container fade-in">
-                <!-- QUIZ CLASSE ADULTOS -->
                 <div class="quiz-section-box">
                     <h3><i class="fas fa-brain"></i> Quiz Classe Adultos</h3>
                     <p>Teste seu conhecimento sobre as lições da classe de adultos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras de forma interativa e desafiadora.</p>
@@ -2118,7 +1930,6 @@
                     </p>
                 </div>
                 
-                <!-- NOVA SEÇÃO: QUIZ CLASSE JOVENS -->
                 <div class="quiz-section-box">
                     <h3><i class="fas fa-users"></i> Quiz Classe Jovens</h3>
                     <p>Quizzes específicos para a classe de jovens! Teste seu conhecimento sobre as lições com perguntas direcionadas ao público jovem, abordando temas relevantes para essa faixa etária.</p>
@@ -2135,7 +1946,6 @@
             <div class="video-trimestre-section fade-in">
                 <h3><i class="fas fa-play-circle"></i> Vídeo sobre o Tema do Trimestre</h3>
                 
-                <!-- SOLUÇÃO PARA PC - IFRAME -->
                 <div class="video-universal-container" id="trimestrePcVideoContainer">
                     <div class="video-responsive-wrapper">
                         <iframe 
@@ -2150,7 +1960,6 @@
                     </div>
                 </div>
                 
-                <!-- SOLUÇÃO PARA MOBILE - THUMBNAIL COM LINK -->
                 <div class="video-mobile-fallback" id="trimestreMobileVideoFallback">
                     <div class="video-mobile-overlay">
                         <div class="play-icon-large">
@@ -2161,7 +1970,6 @@
                     </div>
                 </div>
                 
-                <!-- LINK DIRETO COMO FALLBACK -->
                 <div class="video-info">
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
@@ -2169,14 +1977,10 @@
                     <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
                         <i class="fab fa-youtube"></i> Assistir Vídeo no YouTube
                     </a>
-                    
-                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-                        <i class="fas fa-lightbulb"></i> Dica: Assista o vídeo antes de começar os quizzes para ter uma visão geral do tema.
-                    </p>
                 </div>
             </div>
             
-            <!-- ============= SEÇÃO REVISTA CONECTAR JOVENS ============= -->
+            <!-- SEÇÃO REVISTA CONECTAR JOVENS -->
             <div class="youth-section fade-in">
                 <div class="youth-header">
                     <h2><i class="fas fa-fire-alt"></i> Revista Conectar Jovens</h2>
@@ -2184,7 +1988,7 @@
                 </div>
             </div>
             
-            <!-- FILTROS ATUALIZADOS COM SEÇÃO JOVENS -->
+            <!-- FILTROS -->
             <div class="filters fade-in">
                 <button class="filter-btn active" data-filter="all">Todas as Lições</button>
                 <button class="filter-btn youth" data-filter="youth">Revista Conectar Jovens</button>
@@ -2369,7 +2173,7 @@
             }
         ];
 
-        // Dados das lições JOVENS (Revista Conectar Jovens)
+        // Dados das lições JOVENS
         const youthLessons = [
             {
                 id: 101,
@@ -2388,11 +2192,11 @@
                 quarter: "Revista Conectar Jovens",
                 quarterFilter: "youth",
                 number: "Lição 2",
-                title: "O Poder da Oração na Vida do Jovem",
+                title: "Bem-Aventurados em Cristo",
                 date: "11/01/2026",
-                description: "Como desenvolver uma vida de oração eficaz e transformadora na juventude cristã.",
+                description: "Como a verdadeira felicidade é encontrada em Cristo através das Bem-Aventuranças.",
                 tag: "CONECTAR JOVENS",
-                available: false,
+                available: true,
                 type: "youth"
             },
             {
@@ -2412,37 +2216,23 @@
         // Combinar todas as lições
         const allLessons = [...lessons, ...youthLessons];
 
-        // ============= CONTEÚDO DA LIÇÃO 1 JOVENS =============
+        // Conteúdo da lição 1 jovens
         const youthLesson1Content = {
             title: "As Beatitudes do Reino de Deus",
             type: "youth",
-            
-            // VERSÍCULO DO DIA
             verseOfDay: {
                 verse: "Mateus 5:1",
                 text: "E Jesus, vendo a multidão, subiu a um monte e, assentando-se, aproximaram-se dele os seus discípulos"
             },
-            
-            // OBJETIVOS DA LIÇÃO
             objectives: [
                 "Conhecer os primeiros ensinamentos de Jesus sobre o Reino de Deus",
                 "Identificar a estrutura do Sermão da Montanha",
                 "Ressaltar a importância do primeiro discurso do Ministério público de Jesus"
             ],
-            
-            // SUBSÍDIOS PEDAGÓGICOS
-            pedagogicAid: "Você conhece os subsídios pedagógicos para a juventude que a Editora Betel oferece gratuitamente a cada semana? Diagrama: Piano de incentivo à Leitura traz textos com informações complementares e curiosidades referentes à lição estudada.",
-            
-            // TEXTO DE REFERÊNCIA
+            pedagogicAid: "Você conhece os subsídios pedagógicos para a juventude que a Editora Betel oferece gratuitamente a cada semana?",
             referenceText: "Mateus 5:11",
-            
-            // VERDADE APLICADA
             appliedTruth: "Jesus nos convida a nos aproximarmos dEle com humildade para aprender os princípios do Reino dos Céus.",
-            
-            // MOMENTO DE ORAÇÃO
             prayerMoment: "Ore para que possamos praticar os princípios do Reino em nossa vida diária.",
-            
-            // LEITURA SEMANAL
             weeklyReading: [
                 { day: "SEGUNDA", ref: "Mt 5:13", text: "Jesus nos ensina que somos o sal da terra." },
                 { day: "TERÇA", ref: "Mt 5:16", text: "Jesus nos adverte que nossa luz deve resplandecer diante dos homens." },
@@ -2451,146 +2241,153 @@
                 { day: "SEXTA", ref: "Mt 6:25", text: "Não andeis preocupados quanto à vossa vida." },
                 { day: "SÁBADO", ref: "Mt 6:33", text: "Buscai primeiro o Reino de Deus." }
             ],
-            
-            // INTRODUÇÃO
             introduction: {
                 text: "O Sermão da Montanha (Mt 5–7) nos traz ensinamentos importantes. Do alto de um monte, sentado em uma posição típica dos mestres da época, Jesus ensinou os princípios do Reino de Deus não apenas aos Seus discípulos, mas também à multidão que O seguia."
             },
-            
-            // PONTO-CHAVE
             pointKey: "O Sermão da Montanha é o discurso inaugural do Ministério público de Jesus Cristo, no qual Ele revela os princípios do Seu Reino Messiânico.",
-            
-            // PONTO 1: JESUS, O MESTRE
             ponto1: {
                 title: "JESUS, O MESTRE",
-                content: "Nosso Senhor se assentou no alto de um monte e começou a ensinar os princípios básicos da vida cristã com autoridade. Naquele momento, o Sermão da Montanha se estabeleceu como um guia espiritual centrado no amor, na justiça e na humildade, direcionado àqueles que desejam viver uma vida que agrada a Deus e sendo o norteador dos princípios que regem a vida cristã ainda hoje.",
+                content: "Nosso Senhor se assentou no alto de um monte e começou a ensinar os princípios básicos da vida cristã com autoridade.",
                 subpoints: [
                     {
                         title: "1.1. Jesus ensinou os princípios da vida cristã",
-                        content: "A essência dos ensinamentos do Filho de Deus incidia na integridade do caráter de Seus discípulos, que iam se tornando trabalhadores importantes para o Reino. Jesus ensinava nas sinagogas (Mc 1.21), nos montes (Mt 5.1), à beira da praia (Lc 5.3), nas casas (Mc 2.1,2) e onde mais fosse necessário. O ato de subir o monte para ensinar destaca a centralidade da Palavra de Deus, sendo os ensinamentos de Jesus a base da vida cristã."
+                        content: "A essência dos ensinamentos do Filho de Deus incidia na integridade do caráter de Seus discípulos."
                     },
                     {
                         title: "1.2. Jesus ensinou com autoridade",
-                        content: "O Sermão da Montanha nos mostra a habilidade de Jesus na arte de ensinar, por isso Ele foi chamado de Rabi (Jo 1.38), um termo importante na tradição judaica naquele tempo e que evidencia que o povo O reconhecia como Mestre. Jesus, porém, era diferente dos outros. Ele ensinava com autoridade e não como os escribas, e isso fazia com que a multidão se admirasse com Sua doutrina (Mt 7.28)."
+                        content: "O Sermão da Montanha nos mostra a habilidade de Jesus na arte de ensinar, por isso Ele foi chamado de Rabi."
                     }
                 ],
                 reflecting: "Não há dúvidas de que o Sermão da Montanha, dentre os discursos proferidos, é o mais emblemático Sermão do nosso Senhor Jesus Cristo. - Bispo Abner Ferreira"
             },
-            
-            // PONTO 2: O SERMÃO INAUGURAL DO MESTRE
             ponto2: {
                 title: "O SERMÃO INAUGURAL DO MESTRE",
-                content: "Jesus falou tanto aos discípulos quanto à multidão, mostrando que Sua mensagem é universal, mas requer um coração aberto. A verdade é que o Reino de Deus está disponível a todos, mas exige um compromisso pessoal.",
+                content: "Jesus falou tanto aos discípulos quanto à multidão, mostrando que Sua mensagem é universal, mas requer um coração aberto.",
                 subpoints: [
                     {
                         title: "2.1. A localização do monte",
-                        content: "O Ministério de Jesus se concentrou no Norte de Israel, nas adjacências do Mar da Galileia, localidade em que Ele efetuou grande parte de Seus extraordinários milagres (Mt 4.23,24). Naqueles arredores, ficava o monte de onde Jesus proferiu o mais popular de Seus discursos, quando ensinou aos Seus ouvintes os princípios do Reino de Deus. Alguns estudiosos afirmam que o Monte das Bem-Aventuranças estava situado a 6,5Km a Oeste do Mar da Galileia e a 13Km de Cafarnaum."
+                        content: "O Ministério de Jesus se concentrou no Norte de Israel, nas adjacências do Mar da Galileia."
                     },
                     {
                         title: "2.2. O conteúdo do Sermão",
-                        content: "O Bispo Abner Ferreira (Revista Betel Dominical. 3º Trimestre de 2022. L.1) ressalta que, 'no Sermão da Montanha, Jesus tanto esclarece quanto revela pontos das Escrituras para os quais os judeus ainda não tinham atentado'. O conteúdo do discurso tem um caráter prático, que aponta para o estilo de vida esperado dos seguidores de Cristo. Assim, os ensinamentos de Jesus descritos em Mateus 5–7 devem nortear os crentes na caminhada cristã e no relacionamento com Deus e o próximo."
+                        content: "O conteúdo do discurso tem um caráter prático, que aponta para o estilo de vida esperado dos seguidores de Cristo."
                     }
                 ]
             },
-            
-            // PONTO 3: A PEDAGOGIA DO MESTRE
             ponto3: {
                 title: "A PEDAGOGIA DO MESTRE",
-                content: "O Sermão da Montanha aponta o caminho que conduz ao Reino dos Céus. Por sua relevância, é considerado 'A Carta Magna do Reino'. O que Jesus ensinou do alto daquele monte é a chave que abre o caminho do conhecimento que conduz à Vida Eterna.",
+                content: "O Sermão da Montanha aponta o caminho que conduz ao Reino dos Céus.",
                 subpoints: [
                     {
                         title: "3.1. Os valores do Reino",
-                        content: "O Sermão da Montanha revela valores morais, éticos e espirituais inegociáveis na vida cristã. Embora tenha sido dirigido aos discípulos e à multidão que seguia Jesus, o Sermão da Montanha tem norteado a vida dos crentes ainda hoje, ensinando o caminho da Salvação. Para John Stott (A Mensagem do Sermão da Montanha. Ed. ABU, 2001): 'O Sermão da Montanha exerce um fascínio sem par. Ele parece encerrar a essência do ensino de Jesus. Ele torna a justiça atrativa; envergonha o nosso fraco desempenho; gera sonhos de um mundo melhor'."
+                        content: "O Sermão da Montanha revela valores morais, éticos e espirituais inegociáveis na vida cristã."
                     },
                     {
                         title: "3.2. Um discurso de aplicação prática",
-                        content: "O Sermão da Montanha contém ensinamentos importantes acerca do amor ao próximo, da oração e do jejum, por exemplo. O que Jesus ensinou ali são atitudes práticas e direcionamentos firmes para quem deseja seguir pelo caminho que leva ao Reino de Deus. O Bispo Abner Ferreira (Revista Betel Dominical, 3º Trimestre de 2022. L.1) observa que 'Mateus separou três capítulos para descrever as palavras proferidas por Jesus do alto do Monte das Bem-Aventuranças. Devemos ter o entendimento de que os ensinos contidos no Sermão da Montanha não são uma instrução de ética ou moral apenas; antes, são uma exposição prática do modo de vida que o discípulo de Cristo deve adotar'."
+                        content: "O que Jesus ensinou ali são atitudes práticas e direcionamentos firmes para quem deseja seguir pelo caminho que leva ao Reino de Deus."
                     }
                 ]
             },
-            
-            // SUBSÍDIO PARA O EDUCADOR
             educatorSubsidy: {
                 title: "SUBSÍDIO PARA O EDUCADOR",
-                content: `Ao meditarmos sobre o cotidiano de Jesus, Seus gestos e métodos pedagógicos, vemos que Ele fez uma clara opção pela prática em relação ao discurso. Este fato tem enorme relevância para os obreiros cristãos que costumam eleger a fala como principal instrumento de ensino. Tomemos o Sermão da Montanha, onde Jesus inicia o ensino centrado no discurso (Mt 5.3; 7.1-23). O desfecho do Sermão é onde Jesus privilegia a prática (Mt 7.24-27). Ele não apenas recomenda a prática de Seus ensinos como também põe em prática, à vista de todos, a Sua Graça e misericórdia. Vemos isso nas curas que realizou (Mt 8.1-5.13-15). Com a prática das curas, Jesus devolve a dignidade aos pobres e marginalizados (mulher adúltera, leprosos) e outras categorias de pessoas oprimidas pelo sistema social daquela época. [...] O Reino não chega apenas pela palavra falada ou pela adesão exclusivamente intelectual, emocional, espiritual e moral. O Reino de Deus surge por meio da prática da misericórdia de Jesus. Por isso, a multidão à qual Ele devolveu a dignidade e a esperança reconhece nEle o Messias. (Elias Croce. Revista Betel Dominical, 2º Trimestre de 2006. L.O2).`
+                content: "Ao meditarmos sobre o cotidiano de Jesus, Seus gestos e métodos pedagógicos, vemos que Ele fez uma clara opção pela prática em relação ao discurso."
             },
-            
-            // CONCLUSÃO
             conclusion: {
-                text: "Jesus, ao se assentar para ensinar, modela uma liderança fundamentada na verdade divina. Para os cristãos, isso implica viver e liderar com integridade, refletindo os valores do Reino de Deus. A presença da multidão que O ouvia sugere que ninguém está excluído da mensagem de Jesus. E esse factos nos desafia a compartilhar o Evangelho com todas as pessoas, independentemente de quem elas sejam.",
-                complementing: "O Sermão da Montanha nos desafia a viver com humildade, misericórdia e integridade em um mundo que muitas vezes valoriza o oposto. Jesus nos propõe uma mudança de perspectiva, centrada em alcançar o Reino dos Céus e não em valores que em nada refletem a vida de quem nasceu de novo em Cristo."
+                text: "Jesus, ao se assentar para ensinar, modela uma liderança fundamentada na verdade divina.",
+                complementing: "O Sermão da Montanha nos desafia a viver com humildade, misericórdia e integridade em um mundo que muitas vezes valoriza o oposto."
             }
         };
 
-        // ============= CONTEÚDO DA LIÇÃO 1 ADULTOS =============
+        // Conteúdo da lição 2 jovens
+        const youthLesson2Content = {
+            title: "Bem-Aventurados em Cristo",
+            type: "youth",
+            verseOfDay: {
+                verse: "Salmos 146:5",
+                text: "Bem-aventurado aquele que tem o Deus de Jacó por seu auxílio e cuja esperança está posta no Senhor, seu Deus"
+            },
+            objectives: [
+                "Reconhecer que a felicidade do cristão não está em princípios humanos",
+                "Identificar a natureza das bem-aventuranças segundo o ensino de Jesus",
+                "Ressaltar os aspectos que definem a felicidade à luz do Reino de Deus"
+            ],
+            pedagogicAid: "Você conhece os subsídios pedagógicos para a juventude que a Editora Betel oferece gratuitamente a cada semana? Diagrama: Piano de incentivo à Leitura traz textos com informações complementares e curiosidades referentes à lição estudada.",
+            referenceText: "Lucas 6:20-22",
+            appliedTruth: "A verdadeira felicidade, ou bem-aventurança, não depende de recompensas terrenas, mas de vivermos segundo os princípios do Reino de Deus.",
+            prayerMoment: "Ore para que possamos ser bem-aventurados todos os dias da nossa vida.",
+            weeklyReading: [
+                { day: "SEGUNDA", ref: "Mt 5:3", text: "Bem-aventurados os pobres de espírito." },
+                { day: "TERÇA", ref: "Mt 5:4", text: "Bem-aventurados os que choram." },
+                { day: "QUARTA", ref: "Mt 5:5", text: "Bem-aventurados os mansos." },
+                { day: "QUINTA", ref: "Mt 5:6", text: "Bem-aventurados os que têm fome e sede de justiça." },
+                { day: "SEXTA", ref: "Mt 5:7", text: "Bem-aventurados os misericordiosos." },
+                { day: "SÁBADO", ref: "Mt 5:8", text: "Bem-aventurados os limpos de coração." }
+            ],
+            introduction: {
+                text: "As Bem-Aventuranças apresentadas por Jesus confrontam o conceito de felicidade propagado pelo mundo (Mt 5–7). Esse fato nos leva a ver que o Sermão da Montanha traz uma mensagem que se mantém atual ainda hoje."
+            },
+            pointKey: "Todos somos pecadores e incapazes de nos justificar perante Deus, mas a justiça divina é oferecida gratuitamente pela fé em Jesus Cristo.",
+            ponto1: {
+                title: "AS BEM-AVENTURANÇAS SÃO TRANSFORMADORAS",
+                content: "As Bem-Aventuranças são transformadoras porque redefinem o conceito de felicidade e sucesso à luz do Reino de Deus.",
+                subpoints: [
+                    {
+                        title: "1.1. A recompensa por nos alegrar em Cristo",
+                        content: "Segundo o Bispo Abner Ferreira: 'Quando nos alegramos no Senhor, as circunstâncias são mudadas. Quando passamos a caminhar com Cristo, encontramos a alegria de ficar livres do pecado'."
+                    },
+                    {
+                        title: "1.2. Um caminho de bênçãos",
+                        content: "As Bem-Aventuranças foram proferidas por Jesus no Sermão da Montanha, constituindo um conjunto de bênçãos preparadas para todos que buscam viver de acordo com os princípios do Reino."
+                    }
+                ],
+                reflecting: "As Bem-Aventuranças nos ensinam claramente como a cultura do mundo está em total desarmonia com a cultura do Reino de Deus. - Bispo Abner Ferreira"
+            },
+            ponto2: {
+                title: "A MENSAGEM DO MESTRE",
+                content: "O Sermão da Montanha desafia os valores mundanos e nos convida a viver com esperança e confiança em Deus, mesmo em meio às adversidades.",
+                subpoints: [
+                    {
+                        title: "2.1. As Beatitudes apontam para o Reino de Deus",
+                        content: "As Bem-Aventuranças apontam diretamente para o Reino de Deus ao revelarem os valores e as prioridades do Governo Divino."
+                    },
+                    {
+                        title: "2.2. A natureza das Beatitudes",
+                        content: "A natureza das Beatitudes é, ao mesmo tempo, espiritual e contracultural, pois reflete os valores do Reino de Deus em oposição às prioridades do mundo."
+                    }
+                ]
+            },
+            ponto3: {
+                title: "A DIDÁTICA DE JESUS NO SERMÃO DA MONTANHA",
+                content: "A didática de Jesus no Sermão da Montanha é marcada por autoridade, simplicidade e profundidade espiritual.",
+                subpoints: [
+                    {
+                        title: "3.1. A transformação do caráter",
+                        content: "Jesus nos desafia a repensar nossas prioridades por meio de ensinos práticos e éticos, como amar os nossos inimigos."
+                    },
+                    {
+                        title: "3.2. A aplicabilidade do Sermão",
+                        content: "Os ensinamentos de Jesus são intencionais e de aplicação prática, pois oferecem princípios atemporais para a vida cristã."
+                    }
+                ]
+            },
+            educatorSubsidy: {
+                title: "SUBSÍDIO PARA O EDUCADOR",
+                content: "As Bem-Aventuranças apresentam o Sermão da Montanha com uma visão sóbria, porém deslumbrante, da ação do Reino dos Céus entre o povo de Deus."
+            },
+            conclusion: {
+                text: "No Sermão da Montanha, Jesus traz à tona um dos maiores anseios da humanidade: a felicidade, que é alcançada quando se vive os preceitos do Reino de Deus.",
+                complementing: "Em contraste com este caos que o mundo atravessa, com a alteração dos padrões éticos e morais vistos em nossa sociedade, em Seu ensino no conjunto das Bem-Aventuranças, Jesus apresenta princípios de caráter e de conduta para aqueles que desejam desenvolver tais beatitudes.",
+                euEnsineiQue: "O Sermão da Montanha ressalta que cada Bem-Aventurança é uma característica do caráter de quem vive os princípios e valores do Reino."
+            }
+        };
+
+        // Conteúdo básico da lição 1 adultos
         const lesson1Content = {
             title: "Os discípulos de Cristo são novas criaturas",
             type: "adult",
-            
-            // 1. TEXTO ÁUREO
             textAureo: {
                 verse: "Colossenses 3:10",
                 text: "E vos vestistes do novo, que se renova para o conhecimento, segundo a imagem daquele que o criou"
-            },
-            
-            // 2. VERDADE APLICADA
-            appliedTruth: "O discípulo de Cristo anda em novidade de vida, não mais dominado pela natureza pecaminosa.",
-            
-            // 3. OBJETIVOS DA LIÇÃO
-            objectives: [
-                "Reconhecer o valor do arrependimento para a vida cristã",
-                "Ressaltar que em Jesus somos nova criatura",
-                "Saber que Cristo nos oferece uma nova vida"
-            ],
-            
-            // 4. TEXTOS DE REFERÊNCIA
-            references: {
-                title: "ROMANOS 6:2-6",
-                verses: [
-                    "2 De modo nenhum. Nós, que estamos mortos para o pecado, como viveremos ainda nele?",
-                    "3 Ou não sabeis que todos quantos fomos batizados em Jesus Cristo, fomos batizados na sua morte?",
-                    "4 De sorte que fomos sepultados com ele pelo batismo na morte; para que, como Cristo ressuscitou dos mortos pela glória do Pai, assim andemos nós também em novidade de vida.",
-                    "5 Porque, se fomos plantados juntamente com ele na semelhança da sua morte, também seremos na sua ressurreição.",
-                    "6 Sabendo isto: que o nosso homem velho foi com ele crucificado, para que o corpo do pecado seja desfeito, para que não sirvamos mais ao pecado."
-                ]
-            },
-            
-            // 5. LEITURAS COMPLEMENTARES
-            readings: [
-                { day: "SEGUNDA", ref: "2 Co 5:17", title: "A nova criatura em Cristo" },
-                { day: "TERÇA", ref: "Fp 3:13,14", title: "Deixando o passado e avançando para o futuro" },
-                { day: "QUARTA", ref: "Rm 6:4", title: "A nova vida em Jesus" },
-                { day: "QUINTA", ref: "At 10:43", title: "O perdão dos pecados está disponível a todos" },
-                { day: "SEXTA", ref: "Tt 3:5", title: "O novo nascimento significa Regeneração" },
-                { day: "SÁBADO", ref: "Cl 3:8-10", title: "É preciso se despojar do velho homem" }
-            ],
-            
-            // 6. HINOS SUGERIDOS
-            hymns: [117, 169, 171],
-            
-            // 7. MOTIVO DE ORAÇÃO
-            prayer: "Ore para que mais vidas sejam transformadas pelo poder do Evangelho e experimentem a nova vida em Cristo.",
-            
-            // 8. INTRODUÇÃO
-            introduction: {
-                text: "Nesta lição, veremos a necessidade de o ser humano se arrepender e crer em Jesus Cristo, a partir do anúncio do Evangelho e pela ação do Espírito Santo. Ao nos tornarmos discípulos de Cristo, passamos a viver como novas criaturas: não mais dominados pela natureza pecaminosa, mas andando segundo a Vontade de Deus e para a Glória de Deus.",
-                explanation: "A queda humana (Gênesis 3) introduziu uma natureza pecaminosa que separa o ser humano de Deus (Romanos 5:12). O Evangelho, porém, oferece restauração por meio do arrependimento e da fé em Jesus Cristo. Quando alguém se torna discípulo de Cristo, ocorre uma transformação radical: a velha natureza é substituída por uma nova, capacitando-o a viver segundo a vontade de Deus.",
-                application: "Um exemplo prático é o de uma pessoa que, antes dominada por vícios ou egoísmo, após encontrar Cristo, passa a buscar integridade e amor ao próximo. Essa mudança não é mera autoajuda, mas resultado da ação do Espírito Santo, que renova a mente e o coração (Romanos 12:2). O novo convertido experimenta libertação real, como testemunham muitos ex-dependentes químicos que, pela fé em Cristo, abandonam vícios que antes pareciam incuráveis."
-            },
-            
-            // 9. PONTO 1: UMA NOVA DIMENSÃO DE VIDA
-            ponto1: {
-                title: "1. UMA NOVA DIMENSÃO DE VIDA",
-                content: "Após a queda do primeiro casal, todos os seres humanos nascem com uma natureza pecaminosa e, como consequência, a morte atinge a todos (Rm 5.12). O pecado causa separação entre o ser humano e Deus (Rm 3.23). A restauração dessa comunhão ocorre quando o pecador atenta para o chamado de Deus e lhe obedece, como vemos por intermédio de João Batista e Jesus Cristo: 'Arrependei-vos!'. Essa necessidade de arrependimento continuou sendo enfatizada pelos Apóstolos após a Ascensão de Jesus (Mt 3.2; Mc 1.15; At 2.38; 3.19). Logo no início do Seu Ministério, Ele disse: 'Arrependei-vos, porque é chegado o reino dos céus', Mt 4.17.",
-                subpoints: [
-                    {
-                        title: "1.1. O arrependimento é uma ordenança",
-                        content: "No AT, os profetas tinham a incumbência de confrontar o povo e pregar a mensagem do arrependimento. Alguns deles falaram ao povo sobre a importância de voltarem-se para God mediante o arrependimento sincero (Is 30.15; Jr 8.6; Ez 14.6). A advertência dos profetas era para que os israelitas se arrependessem de suas iniquidades e se voltassem para God, abandonando a vida de pecado para fazer o bem (Cl 3.9,10).",
-                        explanation: "Desde o Antigo Testamento, Deus chama o ser humano ao arrependimento por meio de profetas (Isaías 30:15; Jeremias 8:6). No Novo Testamento, João Batista e Jesus iniciam seus ministérios com a mensagem: 'Arrependei-vos!' (Mateus 3:2; 4:17). O arrependimento não é opcional; é uma resposta necessária ao convite divino, produzida pela convicção do Espírito Santo através da Palavra (João 16:8; Hebreus 4:12). O arrependimento bíblico (metanoia) implica mudança de mente e direção, não apenas remorso temporário.",
-                        application: "Na vida cristã, o arrependimento se expressa quando reconhecemos pecados específicos (como mentiras ou mágoas) e os confessamos a Deus, abandonando-os. Por exemplo, alguém que costumava fofocar pode pedir perdão e buscar edificar outros com suas palavras (Efésios 4:29). Na igreja local, isso se materializa quando irmãos reconciliam relacionamentos rompidos, restituem bens mal adquiridos ou abandonam práticas contrárias à Palavra. O arrependimento autêntico produz frutos visíveis (Mateus 3:8)."
-                    }
-                ],
-                euEnsineiQue: "Jesus advertiu Seus seguidores a arrependerem-se e a crer no Evangelho."
             }
         };
 
@@ -2614,10 +2411,8 @@
                 lessonCard.className = `lesson-card fade-in ${lesson.type === 'youth' ? 'youth' : ''}`;
                 lessonCard.style.animationDelay = `${index * 0.05}s`;
                 
-                // Verificar se a lição está disponível
                 const isAvailable = lesson.available;
                 
-                // Botões específicos para lições disponíveis
                 let buttonsHTML = '';
                 if (isAvailable) {
                     buttonsHTML = `
@@ -2640,10 +2435,7 @@
                     `;
                 }
                 
-                // Badge para lição disponível
                 const badgeHTML = isAvailable ? `<span class="available-badge">Disponível</span>` : '';
-                
-                // Ícone especial para lições jovens
                 const youthIcon = lesson.type === 'youth' ? '<i class="fas fa-fire-alt" style="margin-right: 5px;"></i>' : '';
                 
                 lessonCard.innerHTML = `
@@ -2669,7 +2461,7 @@
                 container.appendChild(lessonCard);
             });
             
-            // Adicionar evento ao botão "Ver Lição"
+            // Adicionar eventos aos botões
             document.querySelectorAll('.view-btn').forEach(btn => {
                 if (!btn.disabled) {
                     btn.addEventListener('click', function() {
@@ -2680,7 +2472,6 @@
                 }
             });
             
-            // Adicionar evento ao botão "PDF"
             document.querySelectorAll('.pdf-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const lessonId = this.getAttribute('data-lesson');
@@ -2690,18 +2481,23 @@
             });
         }
         
-        // ============= FUNÇÃO PARA ABRIR MODAL DA LIÇÃO =============
+        // Função para abrir modal da lição
         function openLessonModal(lessonId, lessonType) {
             let lessonContent;
+            let lessonNumber = '';
             
-            // Selecionar conteúdo baseado no tipo e ID da lição
             if (lessonType === 'youth') {
                 if (lessonId == 101) {
                     lessonContent = youthLesson1Content;
+                    lessonNumber = 'Lição 1';
+                } else if (lessonId == 102) {
+                    lessonContent = youthLesson2Content;
+                    lessonNumber = 'Lição 2';
                 }
             } else {
                 if (lessonId == 1) {
                     lessonContent = lesson1Content;
+                    lessonNumber = 'Lição 1';
                 }
             }
             
@@ -2714,12 +2510,12 @@
             modal.className = `modal ${lessonType === 'youth' ? 'youth' : ''}`;
             modal.id = 'lessonModal';
             
-            // HTML específico para lições JOVENS
+            // HTML para lições jovens
             if (lessonType === 'youth') {
                 modal.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2>${lessonContent.number || 'Lição 1'}: ${lessonContent.title}</h2>
+                            <h2>${lessonNumber}: ${lessonContent.title}</h2>
                             <div class="modal-header-buttons">
                                 <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
                                     <i class="fas fa-file-pdf"></i> Baixar em PDF
@@ -2728,7 +2524,6 @@
                             </div>
                         </div>
                         <div class="modal-body">
-                            <!-- VERSÍCULO DO DIA -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-bible"></i> VERSÍCULO DO DIA</h3>
                                 <div class="verse-box">
@@ -2737,7 +2532,6 @@
                                 </div>
                             </div>
                             
-                            <!-- OBJETIVOS DA LIÇÃO -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-bullseye"></i> OBJETIVOS DA LIÇÃO</h3>
                                 <ul class="objectives-list">
@@ -2745,15 +2539,6 @@
                                 </ul>
                             </div>
                             
-                            <!-- SUBSÍDIOS PEDAGÓGICOS -->
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> SUBSÍDIOS PEDAGÓGICOS</h3>
-                                <div class="youth-point-key">
-                                    <p>${lessonContent.pedagogicAid}</p>
-                                </div>
-                            </div>
-                            
-                            <!-- TEXTO DE REFERÊNCIA -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-bookmark"></i> TEXTO DE REFERÊNCIA</h3>
                                 <div class="youth-day-verse">
@@ -2761,7 +2546,6 @@
                                 </div>
                             </div>
                             
-                            <!-- VERDADE APLICADA -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-check-circle"></i> VERDADE APLICADA</h3>
                                 <div class="youth-point-key">
@@ -2769,7 +2553,6 @@
                                 </div>
                             </div>
                             
-                            <!-- MOMENTO DE ORAÇÃO -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-pray"></i> MOMENTO DE ORAÇÃO</h3>
                                 <div class="youth-reflecting">
@@ -2777,7 +2560,6 @@
                                 </div>
                             </div>
                             
-                            <!-- LEITURA SEMANAL -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-calendar-week"></i> LEITURA SEMANAL</h3>
                                 <div class="reading-grid">
@@ -2791,13 +2573,11 @@
                                 </div>
                             </div>
                             
-                            <!-- INTRODUÇÃO -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
                                 <p>${lessonContent.introduction.text}</p>
                             </div>
                             
-                            <!-- PONTO-CHAVE -->
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-key"></i> PONTO-CHAVE</h3>
                                 <div class="youth-point-key">
@@ -2806,85 +2586,93 @@
                                 </div>
                             </div>
                             
-                            <!-- PONTO 1: JESUS, O MESTRE -->
+                            ${lessonContent.ponto1 ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto1.title}</h3>
                                 <p>${lessonContent.ponto1.content}</p>
                                 
                                 ${lessonContent.ponto1.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
+                                    <div class="youth-point-key">
+                                        <strong>${subpoint.title}</strong>
                                         <p>${subpoint.content}</p>
                                     </div>
                                 `).join('')}
                                 
-                                <!-- REFLETINDO -->
+                                ${lessonContent.ponto1.reflecting ? `
                                 <div class="youth-reflecting">
                                     <p><strong>Refletindo:</strong> ${lessonContent.ponto1.reflecting}</p>
                                 </div>
+                                ` : ''}
                             </div>
+                            ` : ''}
                             
-                            <!-- PONTO 2: O SERMÃO INAUGURAL DO MESTRE -->
+                            ${lessonContent.ponto2 ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto2.title}</h3>
                                 <p>${lessonContent.ponto2.content}</p>
                                 
                                 ${lessonContent.ponto2.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
+                                    <div class="youth-point-key">
+                                        <strong>${subpoint.title}</strong>
                                         <p>${subpoint.content}</p>
                                     </div>
                                 `).join('')}
                             </div>
+                            ` : ''}
                             
-                            <!-- PONTO 3: A PEDAGOGIA DO MESTRE -->
+                            ${lessonContent.ponto3 ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto3.title}</h3>
                                 <p>${lessonContent.ponto3.content}</p>
                                 
                                 ${lessonContent.ponto3.subpoints.map(subpoint => `
-                                    <div class="lesson-point">
-                                        <h4 class="point-title">
-                                            <i class="fas fa-circle"></i> ${subpoint.title}
-                                        </h4>
+                                    <div class="youth-point-key">
+                                        <strong>${subpoint.title}</strong>
                                         <p>${subpoint.content}</p>
                                     </div>
                                 `).join('')}
                             </div>
+                            ` : ''}
                             
-                            <!-- SUBSÍDIO PARA O EDUCADOR -->
+                            ${lessonContent.educatorSubsidy ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-user-graduate"></i> ${lessonContent.educatorSubsidy.title}</h3>
                                 <div class="youth-subsidio">
                                     <p>${lessonContent.educatorSubsidy.content}</p>
                                 </div>
                             </div>
+                            ` : ''}
                             
-                            <!-- CONCLUSÃO -->
+                            ${lessonContent.conclusion ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
                                 <div class="conclusion-box">
                                     <p>${lessonContent.conclusion.text}</p>
                                 </div>
                                 
-                                <!-- COMPLEMENTANDO -->
+                                ${lessonContent.conclusion.complementing ? `
                                 <div class="youth-complementing">
                                     <p><strong>Complementando:</strong> ${lessonContent.conclusion.complementing}</p>
                                 </div>
+                                ` : ''}
+                                
+                                ${lessonContent.conclusion.euEnsineiQue ? `
+                                <div class="youth-point-key">
+                                    <strong>Eu ensinei que:</strong>
+                                    <p>${lessonContent.conclusion.euEnsineiQue}</p>
+                                </div>
+                                ` : ''}
                             </div>
+                            ` : ''}
                         </div>
                     </div>
                 `;
             } else {
-                // HTML para lições ADULTOS (simplificado para exemplo)
+                // HTML para lições adultas
                 modal.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2>${lessonContent.title}</h2>
+                            <h2>${lessonNumber}: ${lessonContent.title}</h2>
                             <div class="modal-header-buttons">
                                 <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
                                     <i class="fas fa-file-pdf"></i> Baixar em PDF
@@ -2907,10 +2695,10 @@
             
             document.body.appendChild(modal);
             
-            // Mostrar o modal
+            // Mostrar modal
             modal.style.display = 'block';
             
-            // Adicionar evento ao botão de download PDF no modal
+            // Evento para download de PDF
             const pdfDownloadBtn = document.getElementById('pdfDownloadModal');
             if (pdfDownloadBtn) {
                 pdfDownloadBtn.addEventListener('click', function() {
@@ -2918,7 +2706,7 @@
                 });
             }
             
-            // Fechar o modal
+            // Fechar modal
             const closeBtn = modal.querySelector('.close-modal');
             const closeModal = () => {
                 modal.style.display = 'none';
@@ -2927,14 +2715,12 @@
             
             closeBtn.addEventListener('click', closeModal);
             
-            // Fechar ao clicar fora do conteúdo
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
                     closeModal();
                 }
             });
             
-            // Fechar com ESC
             document.addEventListener('keydown', function handleEsc(e) {
                 if (e.key === 'Escape') {
                     closeModal();
@@ -2943,26 +2729,28 @@
             });
         }
         
-        // ============= FUNÇÃO PARA GERAR PDF DA LIÇÃO =============
+        // Função para gerar PDF COMPLETO
         function generateLessonPDF(lessonId, lessonType) {
-            // Mostrar loading
             document.getElementById('pdfLoading').style.display = 'flex';
             
-            // Usar setTimeout para permitir que a interface atualize o loading
             setTimeout(() => {
                 try {
                     let lessonContent;
-                    let lessonNumber = lessonId;
+                    let lessonNumber = '';
                     
                     // Selecionar conteúdo baseado no tipo e ID da lição
                     if (lessonType === 'youth') {
                         if (lessonId == 101) {
                             lessonContent = youthLesson1Content;
-                            lessonNumber = 'J1'; // J de Jovens
+                            lessonNumber = 'J1';
+                        } else if (lessonId == 102) {
+                            lessonContent = youthLesson2Content;
+                            lessonNumber = 'J2';
                         }
                     } else {
                         if (lessonId == 1) {
                             lessonContent = lesson1Content;
+                            lessonNumber = '1';
                         }
                     }
                     
@@ -2980,7 +2768,7 @@
                         format: 'a4'
                     });
                     
-                    // Configurações melhoradas
+                    // Configurações
                     const pageWidth = doc.internal.pageSize.getWidth();
                     const pageHeight = doc.internal.pageSize.getHeight();
                     const marginLeft = 20;
@@ -2989,17 +2777,16 @@
                     const marginBottom = 25;
                     let yPos = marginTop;
                     
-                    // Logo da EBD Fiel
-                    const logoUrl = 'https://i.imgur.com/vsNu5IC.png';
-                    
-                    // Função para adicionar texto
-                    const addText = (text, fontSize = 11, isBold = false, align = 'left') => {
+                    // Função auxiliar para adicionar texto com quebra de linha
+                    const addText = (text, fontSize = 11, isBold = false, align = 'left', lineHeight = 5) => {
                         doc.setFontSize(fontSize);
                         doc.setFont('helvetica', isBold ? 'bold' : 'normal');
                         
-                        const lines = doc.splitTextToSize(text, pageWidth - marginLeft - marginRight);
+                        const maxWidth = pageWidth - marginLeft - marginRight;
+                        const lines = doc.splitTextToSize(text, maxWidth);
                         
                         lines.forEach(line => {
+                            // Verificar se precisa de nova página
                             if (yPos > pageHeight - marginBottom) {
                                 doc.addPage();
                                 yPos = marginTop;
@@ -3018,335 +2805,387 @@
                             }
                             
                             doc.text(line, xPos, yPos, { align: align });
-                            yPos += 5;
+                            yPos += lineHeight;
                         });
                         
-                        yPos += 3;
+                        yPos += 3; // Espaço após o texto
                     };
                     
-                    // Cabeçalho do PDF
-                    try {
-                        doc.addImage(logoUrl, 'PNG', 15, 10, 30, 30);
-                    } catch (e) {
-                        console.log("Logo não carregada, continuando sem ela");
-                    }
-                    
-                    // Título principal
-                    doc.setTextColor(26, 95, 180);
-                    doc.setFontSize(16);
+                    // ============= CABEÇALHO =============
+                    // Texto do cabeçalho
+                    doc.setFontSize(20);
                     doc.setFont('helvetica', 'bold');
-                    doc.text("ESCOLA BÍBLICA DOMINICAL", 55, 20);
+                    doc.setTextColor(26, 95, 180);
+                    doc.text("EBD FIEL", pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 8;
                     
-                    // Subtítulo para jovens
-                    if (lessonType === 'youth') {
-                        doc.setTextColor(106, 17, 203);
-                        doc.setFontSize(14);
-                        doc.text("REVISTA CONECTAR JOVENS", pageWidth / 2, 30, { align: 'center' });
-                    }
+                    doc.setFontSize(14);
+                    doc.setTextColor(100, 100, 100);
+                    doc.text("Escola Bíblica Dominical", pageWidth / 2, yPos, { align: 'center' });
+                    yPos += 15;
                     
-                    doc.setFontSize(11);
-                    doc.setFont('helvetica', 'normal');
-                    doc.setTextColor(0, 0, 0);
-                    doc.text("EBD Fiel - Fiel à Palavra", 55, 27);
-                    
-                    // Linha separadora
+                    // Linha decorativa
                     doc.setDrawColor(230, 179, 37);
                     doc.setLineWidth(1);
-                    doc.line(15, 42, pageWidth - 15, 42);
+                    doc.line(marginLeft, yPos, pageWidth - marginRight, yPos);
+                    yPos += 15;
                     
-                    yPos = 48;
+                    // ============= TÍTULO PRINCIPAL =============
+                    if (lessonType === 'youth') {
+                        doc.setFontSize(16);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(106, 17, 203);
+                        doc.text("REVISTA CONECTAR JOVENS", pageWidth / 2, yPos, { align: 'center' });
+                        yPos += 10;
+                    }
                     
-                    // Título da lição
                     doc.setFontSize(18);
                     doc.setFont('helvetica', 'bold');
                     doc.setTextColor(lessonType === 'youth' ? 106 : 26, 17, lessonType === 'youth' ? 203 : 95, lessonType === 'youth' ? 180 : 0);
                     doc.text(`LIÇÃO ${lessonNumber}: ${lessonContent.title}`, pageWidth / 2, yPos, { align: 'center' });
-                    yPos += 15;
+                    yPos += 20;
                     
-                    // Conteúdo específico para jovens
+                    // ============= CONTEÚDO DA LIÇÃO =============
                     if (lessonType === 'youth') {
-                        // Versículo do Dia
+                        // VERSÍCULO DO DIA
                         doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
                         doc.setTextColor(106, 17, 203);
-                        doc.text("VERSÍCULO DO DIA", marginLeft, yPos);
-                        yPos += 8;
+                        addText("VERSÍCULO DO DIA", 14, true, 'left', 6);
                         
                         doc.setFontSize(12);
                         doc.setFont('helvetica', 'italic');
                         doc.setTextColor(0, 0, 0);
-                        addText(`"${lessonContent.verseOfDay.text}" (${lessonContent.verseOfDay.verse})`, 12, false, 'left');
-                        
-                        // Objetivos
-                        yPos += 5;
-                        doc.setFontSize(14);
-                        doc.setTextColor(106, 17, 203);
-                        doc.text("OBJETIVOS DA LIÇÃO", marginLeft, yPos);
-                        yPos += 8;
+                        addText(`"${lessonContent.verseOfDay.text}"`, 12, false, 'left', 5);
                         
                         doc.setFontSize(11);
-                        doc.setTextColor(0, 0, 0);
-                        lessonContent.objectives.forEach((obj, index) => {
-                            addText(`✓ ${obj}`, 11, false, 'left');
-                        });
-                        
-                        // Verdade Aplicada
+                        addText(`(${lessonContent.verseOfDay.verse})`, 11, true, 'left', 5);
                         yPos += 5;
-                        doc.setFontSize(14);
-                        doc.setTextColor(106, 17, 203);
-                        doc.text("VERDADE APLICADA", marginLeft, yPos);
-                        yPos += 8;
                         
-                        doc.setFontSize(12);
+                        // OBJETIVOS DA LIÇÃO
+                        doc.setFontSize(14);
                         doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.appliedTruth, 12, true, 'left');
-                        
-                        // Momento de Oração
-                        yPos += 5;
-                        doc.setFontSize(14);
                         doc.setTextColor(106, 17, 203);
-                        doc.text("MOMENTO DE ORAÇÃO", marginLeft, yPos);
-                        yPos += 8;
+                        addText("OBJETIVOS DA LIÇÃO", 14, true, 'left', 6);
                         
                         doc.setFontSize(11);
                         doc.setFont('helvetica', 'normal');
-                        addText(lessonContent.prayerMoment, 11, false, 'left');
-                        
-                        // Leitura Semanal
+                        doc.setTextColor(0, 0, 0);
+                        lessonContent.objectives.forEach((obj, index) => {
+                            addText(`• ${obj}`, 11, false, 'left', 5);
+                        });
                         yPos += 5;
+                        
+                        // TEXTO DE REFERÊNCIA
                         doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
                         doc.setTextColor(106, 17, 203);
-                        doc.text("LEITURA SEMANAL", marginLeft, yPos);
-                        yPos += 8;
+                        addText("TEXTO DE REFERÊNCIA", 14, true, 'left', 6);
+                        
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(lessonContent.referenceText, 12, true, 'left', 5);
+                        yPos += 5;
+                        
+                        // VERDADE APLICADA
+                        doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(106, 17, 203);
+                        addText("VERDADE APLICADA", 14, true, 'left', 6);
+                        
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'italic');
+                        doc.setTextColor(0, 0, 0);
+                        addText(lessonContent.appliedTruth, 12, false, 'left', 5);
+                        yPos += 5;
+                        
+                        // MOMENTO DE ORAÇÃO
+                        doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(106, 17, 203);
+                        addText("MOMENTO DE ORAÇÃO", 14, true, 'left', 6);
+                        
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
+                        addText(lessonContent.prayerMoment, 11, false, 'left', 5);
+                        yPos += 10;
+                        
+                        // LEITURA SEMANAL
+                        doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(106, 17, 203);
+                        addText("LEITURA SEMANAL", 14, true, 'left', 6);
+                        
+                        doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(0, 0, 0);
                         
                         lessonContent.weeklyReading.forEach(reading => {
-                            addText(`${reading.day}: ${reading.ref} - ${reading.text}`, 11, false, 'left');
+                            addText(`${reading.day}: ${reading.ref}`, 11, true, 'left', 5);
+                            addText(reading.text, 11, false, 'left', 5);
+                            yPos += 3;
                         });
-                        
-                        // Introdução
                         yPos += 5;
+                        
+                        // INTRODUÇÃO
                         doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
                         doc.setTextColor(106, 17, 203);
-                        doc.text("INTRODUÇÃO", marginLeft, yPos);
-                        yPos += 8;
+                        addText("INTRODUÇÃO", 14, true, 'left', 6);
                         
                         doc.setFontSize(11);
+                        doc.setFont('helvetica', 'normal');
                         doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.introduction.text, 11, false, 'justify');
+                        addText(lessonContent.introduction.text, 11, false, 'justify', 5);
+                        yPos += 10;
                         
-                        // Ponto-Chave
-                        yPos += 5;
+                        // PONTO-CHAVE
                         doc.setFontSize(14);
+                        doc.setFont('helvetica', 'bold');
                         doc.setTextColor(106, 17, 203);
-                        doc.text("PONTO-CHAVE", marginLeft, yPos);
-                        yPos += 8;
+                        addText("PONTO-CHAVE", 14, true, 'left', 6);
                         
-                        doc.setFontSize(11);
+                        doc.setFontSize(12);
                         doc.setFont('helvetica', 'italic');
-                        addText(lessonContent.pointKey, 11, false, 'justify');
+                        doc.setTextColor(0, 0, 0);
+                        addText(lessonContent.pointKey, 12, false, 'justify', 5);
+                        yPos += 10;
                         
-                        // Pontos principais
-                        [lessonContent.ponto1, lessonContent.ponto2, lessonContent.ponto3].forEach((ponto, index) => {
-                            if (!ponto) return;
-                            
-                            yPos += 5;
+                        // PONTO 1
+                        if (lessonContent.ponto1) {
                             doc.setFontSize(14);
+                            doc.setFont('helvetica', 'bold');
                             doc.setTextColor(106, 17, 203);
-                            doc.text(ponto.title, marginLeft, yPos);
-                            yPos += 8;
+                            addText(lessonContent.ponto1.title, 14, true, 'left', 6);
                             
                             doc.setFontSize(11);
                             doc.setFont('helvetica', 'normal');
-                            addText(ponto.content, 11, false, 'justify');
+                            doc.setTextColor(0, 0, 0);
+                            addText(lessonContent.ponto1.content, 11, false, 'justify', 5);
+                            yPos += 5;
                             
-                            ponto.subpoints.forEach(subpoint => {
-                                yPos += 3;
-                                doc.setFontSize(12);
-                                doc.setFont('helvetica', 'bold');
-                                addText(subpoint.title, 12, true, 'left');
-                                
-                                doc.setFontSize(11);
-                                doc.setFont('helvetica', 'normal');
-                                addText(subpoint.content, 11, false, 'justify');
-                            });
+                            // Subpontos do Ponto 1
+                            if (lessonContent.ponto1.subpoints) {
+                                lessonContent.ponto1.subpoints.forEach(subpoint => {
+                                    doc.setFontSize(12);
+                                    doc.setFont('helvetica', 'bold');
+                                    addText(subpoint.title, 12, true, 'left', 5);
+                                    
+                                    doc.setFontSize(11);
+                                    doc.setFont('helvetica', 'normal');
+                                    addText(subpoint.content, 11, false, 'justify', 5);
+                                    yPos += 3;
+                                });
+                            }
                             
-                            if (ponto.reflecting) {
-                                yPos += 3;
+                            // Refletindo
+                            if (lessonContent.ponto1.reflecting) {
+                                yPos += 5;
                                 doc.setFontSize(11);
                                 doc.setFont('helvetica', 'italic');
-                                addText(`Refletindo: ${ponto.reflecting}`, 11, false, 'justify');
+                                addText(`Refletindo: ${lessonContent.ponto1.reflecting}`, 11, false, 'justify', 5);
                             }
-                        });
+                            yPos += 10;
+                        }
                         
-                        // Conclusão
-                        yPos += 5;
+                        // PONTO 2
+                        if (lessonContent.ponto2) {
+                            doc.setFontSize(14);
+                            doc.setFont('helvetica', 'bold');
+                            doc.setTextColor(106, 17, 203);
+                            addText(lessonContent.ponto2.title, 14, true, 'left', 6);
+                            
+                            doc.setFontSize(11);
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(0, 0, 0);
+                            addText(lessonContent.ponto2.content, 11, false, 'justify', 5);
+                            yPos += 5;
+                            
+                            // Subpontos do Ponto 2
+                            if (lessonContent.ponto2.subpoints) {
+                                lessonContent.ponto2.subpoints.forEach(subpoint => {
+                                    doc.setFontSize(12);
+                                    doc.setFont('helvetica', 'bold');
+                                    addText(subpoint.title, 12, true, 'left', 5);
+                                    
+                                    doc.setFontSize(11);
+                                    doc.setFont('helvetica', 'normal');
+                                    addText(subpoint.content, 11, false, 'justify', 5);
+                                    yPos += 3;
+                                });
+                            }
+                            yPos += 10;
+                        }
+                        
+                        // PONTO 3
+                        if (lessonContent.ponto3) {
+                            doc.setFontSize(14);
+                            doc.setFont('helvetica', 'bold');
+                            doc.setTextColor(106, 17, 203);
+                            addText(lessonContent.ponto3.title, 14, true, 'left', 6);
+                            
+                            doc.setFontSize(11);
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(0, 0, 0);
+                            addText(lessonContent.ponto3.content, 11, false, 'justify', 5);
+                            yPos += 5;
+                            
+                            // Subpontos do Ponto 3
+                            if (lessonContent.ponto3.subpoints) {
+                                lessonContent.ponto3.subpoints.forEach(subpoint => {
+                                    doc.setFontSize(12);
+                                    doc.setFont('helvetica', 'bold');
+                                    addText(subpoint.title, 12, true, 'left', 5);
+                                    
+                                    doc.setFontSize(11);
+                                    doc.setFont('helvetica', 'normal');
+                                    addText(subpoint.content, 11, false, 'justify', 5);
+                                    yPos += 3;
+                                });
+                            }
+                            yPos += 10;
+                        }
+                        
+                        // SUBSÍDIO PARA O EDUCADOR
+                        if (lessonContent.educatorSubsidy) {
+                            doc.setFontSize(14);
+                            doc.setFont('helvetica', 'bold');
+                            doc.setTextColor(106, 17, 203);
+                            addText(lessonContent.educatorSubsidy.title, 14, true, 'left', 6);
+                            
+                            doc.setFontSize(11);
+                            doc.setFont('helvetica', 'italic');
+                            doc.setTextColor(0, 0, 0);
+                            addText(lessonContent.educatorSubsidy.content, 11, false, 'justify', 5);
+                            yPos += 10;
+                        }
+                        
+                        // CONCLUSÃO
+                        if (lessonContent.conclusion) {
+                            doc.setFontSize(14);
+                            doc.setFont('helvetica', 'bold');
+                            doc.setTextColor(106, 17, 203);
+                            addText("CONCLUSÃO", 14, true, 'left', 6);
+                            
+                            doc.setFontSize(11);
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(0, 0, 0);
+                            addText(lessonContent.conclusion.text, 11, false, 'justify', 5);
+                            
+                            if (lessonContent.conclusion.complementing) {
+                                yPos += 5;
+                                doc.setFontSize(11);
+                                doc.setFont('helvetica', 'italic');
+                                addText(`Complementando: ${lessonContent.conclusion.complementing}`, 11, false, 'justify', 5);
+                            }
+                            
+                            if (lessonContent.conclusion.euEnsineiQue) {
+                                yPos += 5;
+                                doc.setFontSize(11);
+                                doc.setFont('helvetica', 'bold');
+                                addText(`Eu ensinei que: ${lessonContent.conclusion.euEnsineiQue}`, 11, false, 'justify', 5);
+                            }
+                        }
+                    } else {
+                        // CONTEÚDO PARA LIÇÕES ADULTOS
                         doc.setFontSize(14);
-                        doc.setTextColor(106, 17, 203);
-                        doc.text("CONCLUSÃO", marginLeft, yPos);
-                        yPos += 8;
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(26, 95, 180);
+                        addText("TEXTO ÁUREO", 14, true, 'left', 6);
                         
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        addText(lessonContent.conclusion.text, 11, false, 'justify');
-                        
-                        yPos += 3;
-                        doc.setFontSize(11);
+                        doc.setFontSize(12);
                         doc.setFont('helvetica', 'italic');
-                        addText(`Complementando: ${lessonContent.conclusion.complementing}`, 11, false, 'justify');
+                        doc.setTextColor(0, 0, 0);
+                        addText(`"${lessonContent.textAureo.text}"`, 12, false, 'left', 5);
+                        
+                        doc.setFontSize(11);
+                        addText(`(${lessonContent.textAureo.verse})`, 11, true, 'left', 5);
                     }
                     
-                    // Rodapé em todas as páginas
+                    // ============= RODAPÉ EM TODAS AS PÁGINAS =============
                     const totalPages = doc.internal.getNumberOfPages();
+                    
                     for (let i = 1; i <= totalPages; i++) {
                         doc.setPage(i);
+                        
+                        // Linha do rodapé
+                        doc.setDrawColor(200, 200, 200);
+                        doc.setLineWidth(0.5);
+                        doc.line(marginLeft, pageHeight - 15, pageWidth - marginRight, pageHeight - 15);
+                        
+                        // Texto do rodapé
                         doc.setFontSize(9);
                         doc.setFont('helvetica', 'normal');
                         doc.setTextColor(100, 100, 100);
-                        doc.text(`EBD Fiel - Escola Bíblica Dominical`, marginLeft, pageHeight - 10);
-                        doc.text(`Página ${i} de ${totalPages}`, pageWidth - marginRight, pageHeight - 10, { align: 'right' });
+                        
+                        // Texto à esquerda
+                        doc.text("EBD Fiel - Escola Bíblica Dominical", marginLeft, pageHeight - 10);
+                        
+                        // Número da página no centro
+                        doc.text(`Página ${i} de ${totalPages}`, pageWidth / 2, pageHeight - 10, { align: 'center' });
+                        
+                        // Data à direita
+                        const today = new Date();
+                        const dateStr = today.toLocaleDateString('pt-BR');
+                        doc.text(dateStr, pageWidth - marginRight, pageHeight - 10, { align: 'right' });
                     }
                     
-                    // Salvar o PDF
+                    // ============= SALVAR O PDF =============
                     const typePrefix = lessonType === 'youth' ? 'JOVENS_' : '';
-                    const fileName = `EBD_Fiel_${typePrefix}Licao_${lessonId}.pdf`;
+                    const fileName = `EBD_Fiel_${typePrefix}Licao_${lessonId}_${lessonContent.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                    
+                    // Salvar o PDF
                     doc.save(fileName);
                     
                     // Esconder loading
                     document.getElementById('pdfLoading').style.display = 'none';
                     
                     // Mostrar mensagem de sucesso
-                    alert(`PDF gerado com sucesso!\nArquivo: ${fileName}\nO download começará automaticamente.`);
+                    alert(`✅ PDF gerado com sucesso!\n📄 Arquivo: ${fileName}\n📂 O download começará automaticamente.`);
                     
                 } catch (error) {
-                    console.error("Erro ao gerar PDF:", error);
+                    console.error("❌ Erro ao gerar PDF:", error);
                     document.getElementById('pdfLoading').style.display = 'none';
-                    alert("Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
+                    alert("❌ Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
                 }
             }, 500);
         }
         
-        // ============= FUNÇÃO PARA INICIALIZAR O VÍDEO DO TRIMESTRE =============
+        // Inicializar vídeo
         function initTrimestreVideo() {
-            // SOLUÇÃO PARA O VÍDEO DO YOUTUBE SHORTS
-            const videoId = 'te9eFEEVqKQ';
-            const youtubeShortsUrl = `https://youtube.com/shorts/${videoId}`;
-            const youtubeEmbedUrl = `https://www.youtube.com/embed/${videoId}`;
-            
-            // Elementos do DOM
-            const pcVideoContainer = document.getElementById('trimestrePcVideoContainer');
-            const mobileVideoFallback = document.getElementById('trimestreMobileVideoFallback');
-            const youtubeIframe = document.getElementById('trimestreYoutubeIframe');
-            const directVideoLink = document.getElementById('trimestreDirectVideoLink');
-            
-            // Detectar se é dispositivo móvel
+            // Detectar dispositivo móvel
             function isMobileDevice() {
                 return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             }
             
-            // Detectar se é iOS
-            function isIOS() {
-                return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-            }
+            const isMobile = isMobileDevice();
+            const pcVideoContainer = document.getElementById('trimestrePcVideoContainer');
+            const mobileVideoFallback = document.getElementById('trimestreMobileVideoFallback');
             
-            // Detectar se é um navegador específico
-            function isInAppBrowser() {
-                const userAgent = navigator.userAgent.toLowerCase();
-                return userAgent.includes('fbios') || 
-                       userAgent.includes('fban') || 
-                       userAgent.includes('fbbv') ||
-                       userAgent.includes('twitter') ||
-                       userAgent.includes('instagram') ||
-                       userAgent.includes('line') ||
-                       userAgent.includes('whatsapp');
-            }
-            
-            // Função para abrir o vídeo no YouTube
-            function openYouTubeVideo() {
-                // Tentar abrir no aplicativo do YouTube se estiver disponível
-                const youtubeAppUrl = `vnd.youtube://shorts/${videoId}`;
-                const youtubeWebUrl = youtubeShortsUrl;
+            if (isMobile) {
+                pcVideoContainer.style.display = 'none';
+                mobileVideoFallback.style.display = 'block';
                 
-                // Primeiro tenta abrir no app, depois no navegador
-                window.location.href = youtubeAppUrl;
-                
-                // Fallback após um tempo se o app não abrir
-                setTimeout(function() {
-                    if (document.hasFocus()) {
-                        // O app não abriu, então abrir no navegador
-                        window.open(youtubeWebUrl, '_blank', 'noopener,noreferrer');
-                    }
-                }, 500);
-            }
-            
-            // Estratégia inteligente para carregar o vídeo
-            function initVideoPlayer() {
-                const isMobile = isMobileDevice();
-                const isIOSDevice = isIOS();
-                const isInApp = isInAppBrowser();
-                
-                // URL do vídeo para diferentes cenários
-                let finalVideoUrl = youtubeEmbedUrl;
-                
-                // Adicionar parâmetros específicos para iOS
-                if (isIOSDevice) {
-                    finalVideoUrl += '?playsinline=1&rel=0&modestbranding=1&autoplay=0';
-                } else {
-                    finalVideoUrl += '?rel=0&modestbranding=1&playsinline=1&enablejsapi=1';
-                }
-                
-                // Atualizar o iframe com a URL correta
-                youtubeIframe.src = finalVideoUrl;
-                
-                // Estratégia para dispositivos móveis
-                if (isMobile) {
-                    // Para navegadores in-app (Facebook, Instagram, etc.), usar thumbnail
-                    if (isInApp) {
-                        pcVideoContainer.style.display = 'none';
-                        mobileVideoFallback.style.display = 'block';
-                    }
-                    // Para iOS, tentar iframe com parâmetros especiais
-                    else if (isIOSDevice) {
-                        // Manter iframe visível
-                        pcVideoContainer.style.display = 'block';
-                        mobileVideoFallback.style.display = 'none';
-                    }
-                    // Para outros dispositivos móveis
-                    else {
-                        // Manter iframe visível
-                        pcVideoContainer.style.display = 'block';
-                        mobileVideoFallback.style.display = 'none';
-                    }
-                } else {
-                    pcVideoContainer.style.display = 'block';
-                    mobileVideoFallback.style.display = 'none';
-                }
-                
-                // Configurar o link direto
-                directVideoLink.href = youtubeShortsUrl + '?si=dInX3vVQ4xiUd-nF';
-                
-                // Configurar clique na thumbnail (para fallback mobile)
-                mobileVideoFallback.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    openYouTubeVideo();
+                mobileVideoFallback.addEventListener('click', function() {
+                    window.open('https://youtube.com/shorts/te9eFEEVqKQ', '_blank');
                 });
+            } else {
+                pcVideoContainer.style.display = 'block';
+                mobileVideoFallback.style.display = 'none';
             }
-            
-            // Inicializar o player de vídeo
-            initVideoPlayer();
         }
         
         // Filtros
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                // Remover classe active de todos os botões
                 document.querySelectorAll('.filter-btn').forEach(b => {
                     b.classList.remove('active');
                 });
                 
-                // Adicionar classe active ao botão clicado
                 this.classList.add('active');
                 
-                // Filtrar lições
                 const filter = this.getAttribute('data-filter');
                 renderLessons(filter);
             });
@@ -3363,7 +3202,7 @@
                 : '<i class="fas fa-bars"></i>';
         });
         
-        // Fechar menu ao clicar em um link
+        // Fechar menu ao clicar em link
         document.querySelectorAll('#mainNav a').forEach(link => {
             link.addEventListener('click', function() {
                 mainNav.classList.remove('active');
@@ -3371,20 +3210,18 @@
             });
         });
         
-        // Inicializar a página
+        // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
             renderLessons();
-            
-            // Inicializar o vídeo do trimestre
             initTrimestreVideo();
             
-            // Animar elementos com atraso
+            // Animações
             const fadeElements = document.querySelectorAll('.fade-in');
             fadeElements.forEach((el, index) => {
                 el.style.animationDelay = `${index * 0.1}s`;
             });
             
-            // Smooth scroll para links internos
+            // Smooth scroll
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -3394,7 +3231,6 @@
                     
                     const targetElement = document.querySelector(targetId);
                     if (targetElement) {
-                        // Fechar menu mobile se aberto
                         if (mainNav.classList.contains('active')) {
                             mainNav.classList.remove('active');
                             mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
