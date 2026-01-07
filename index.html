@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -21,9 +22,11 @@
             --light-gray: #e9ecef;
             --success: #28a745;
             --danger: #dc3545;
-            --youth-primary: #6a11cb;
-            --youth-secondary: #2575fc;
+            --youth-primary: #8a2be2;
+            --youth-secondary: #9370db;
             --youth-accent: #ff6b6b;
+            --adult-primary: #1a5fb4;
+            --adult-secondary: #2e8bc0;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15);
             --radius: 12px;
@@ -311,46 +314,6 @@
             left: 100%;
         }
         
-        /* Quiz Button */
-        .quiz-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
-            color: var(--dark);
-            padding: 1.1rem 2.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            transition: var(--transition);
-            border: none;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .quiz-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-        
-        .quiz-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-        }
-        
-        .quiz-button:hover::before {
-            left: 100%;
-        }
-        
         /* Main Content */
         .container {
             max-width: 1400px;
@@ -360,14 +323,13 @@
         
         .section-title {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             position: relative;
             padding-bottom: 1.5rem;
         }
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--primary);
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
@@ -381,7 +343,6 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
             border-radius: 2px;
         }
         
@@ -392,116 +353,104 @@
             margin: 0 auto;
         }
         
-        /* Quiz Sections Container */
-        .quiz-sections-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 5rem;
-        }
-        
-        .quiz-section-box {
-            background: white;
-            padding: 2.8rem;
+        /* Seções separadas para Adultos e Jovens */
+        .class-section {
+            margin-bottom: 6rem;
+            padding: 3rem;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
             transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
         }
         
-        .quiz-section-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        .class-section.adult {
+            background: linear-gradient(135deg, rgba(26, 95, 180, 0.03) 0%, rgba(46, 139, 192, 0.03) 100%);
+            border-left: 5px solid var(--adult-primary);
         }
         
-        .quiz-section-box:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
+        .class-section.youth {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.03) 0%, rgba(147, 112, 219, 0.03) 100%);
+            border-left: 5px solid var(--youth-primary);
         }
         
-        .quiz-section-box h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.2rem;
-            color: var(--primary);
+        .class-section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .class-section-title h2 {
+            font-size: 2.2rem;
+        }
+        
+        .adult .class-section-title h2 {
+            color: var(--adult-primary);
+        }
+        
+        .youth .class-section-title h2 {
+            color: var(--youth-primary);
+        }
+        
+        .class-section-title i {
+            font-size: 2rem;
+        }
+        
+        .adult .class-section-title i {
+            color: var(--adult-primary);
+        }
+        
+        .youth .class-section-title i {
+            color: var(--youth-primary);
+        }
+        
+        .class-description {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+        
+        /* Seção de Vídeos */
+        .video-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .adult .video-section {
+            border-top: 4px solid var(--adult-primary);
+        }
+        
+        .youth .video-section {
+            border-top: 4px solid var(--youth-primary);
+        }
+        
+        .video-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.8rem;
         }
         
-        .quiz-section-box h3 i {
-            color: var(--secondary);
-            font-size: 1.6rem;
+        .adult .video-section h3 {
+            color: var(--adult-primary);
         }
         
-        .quiz-section-box p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            color: var(--gray);
-            line-height: 1.7;
-            flex-grow: 1;
-        }
-        
-        .quiz-note {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        /* SEÇÃO DO VÍDEO DO TRIMESTRE */
-        .video-trimestre-section {
-            background: rgba(52, 152, 219, 0.08);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 5px solid #3498db;
-            text-align: center;
-        }
-        
-        /* SEÇÃO DO VÍDEO DA CLASSE JOVEM */
-        .video-jovem-section {
-            background: rgba(106, 17, 203, 0.08);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            border-left: 5px solid var(--youth-primary);
-            text-align: center;
-        }
-        
-        .video-trimestre-section h3, .video-jovem-section h3 {
-            color: #2c3e50;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .video-jovem-section h3 {
+        .youth .video-section h3 {
             color: var(--youth-primary);
         }
         
-        /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
+        /* Container universal para vídeo */
         .video-universal-container {
             width: 100%;
-            max-width: 315px !important; /* Largura máxima para 9:16 */
+            max-width: 315px !important;
             margin: 0 auto;
             border-radius: 10px;
             overflow: hidden;
@@ -509,22 +458,16 @@
             background: #000;
             transition: all 0.3s ease;
         }
-
-        /* Para vídeo em modo paisagem (16:9) quando alternado */
-        .video-universal-container.landscape-mode {
-            max-width: 560px !important; /* Largura máxima para 16:9 */
-        }
-
-        /* Container responsivo para vídeo em 9:16 por padrão */
+        
         .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 177.78%; /* Proporção 9:16 (altura é 177.78% da largura) */
+            padding-bottom: 177.78%;
             height: 0;
             overflow: hidden;
             transition: all 0.3s ease;
             background: #000;
         }
-
+        
         .video-responsive-wrapper iframe {
             position: absolute;
             top: 0;
@@ -533,27 +476,18 @@
             height: 100%;
             border: none;
         }
-
-        /* Para vídeo em modo paisagem (16:9) quando alternado */
-        .video-responsive-wrapper.landscape-mode {
-            padding-bottom: 56.25% !important; /* Proporção 16:9 */
-        }
         
-        /* Thumbnail com link para mobile */
+        /* Thumbnail para mobile */
         .video-mobile-fallback {
             width: 100%;
-            max-width: 315px; /* Mesma largura do modo 9:16 */
+            max-width: 315px;
             margin: 0 auto;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             cursor: pointer;
             position: relative;
-            display: none; /* Inicialmente escondido */
-        }
-
-        .video-mobile-fallback.landscape-mode {
-            max-width: 560px; /* Largura para modo 16:9 */
+            display: none;
         }
         
         .video-mobile-overlay {
@@ -609,164 +543,127 @@
         
         .video-direct-link {
             display: inline-block;
-            background: #FF0000;
             color: white;
             padding: 12px 25px;
             border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
             margin-top: 15px;
-            margin-left: 10px;
             transition: all 0.3s ease;
         }
         
-        .video-direct-link:hover {
-            background: #cc0000;
-            transform: translateY(-2px);
+        .adult .video-direct-link {
+            background: #FF0000;
         }
         
-        .video-jovem-section .video-direct-link {
+        .adult .video-direct-link:hover {
+            background: #cc0000;
+        }
+        
+        .youth .video-direct-link {
             background: var(--youth-primary);
         }
         
-        .video-jovem-section .video-direct-link:hover {
+        .youth .video-direct-link:hover {
             background: #5a0db3;
         }
         
-        /* Botões de controle de vídeo */
-        .video-control-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        /* Seção de Quizzes */
+        .quiz-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .quiz-section h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+        
+        .adult .quiz-section {
+            border-top: 4px solid var(--adult-secondary);
+        }
+        
+        .youth .quiz-section {
+            border-top: 4px solid var(--youth-secondary);
+        }
+        
+        .adult .quiz-section h3 {
+            color: var(--adult-secondary);
+        }
+        
+        .youth .quiz-section h3 {
+            color: var(--youth-secondary);
+        }
+        
+        .quiz-section p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .quiz-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 1.1rem 2.8rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            margin-left: 10px;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: var(--transition);
             border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
         }
         
-        .video-control-btn:hover {
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            transform: translateY(-2px);
+        .quiz-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
         
-        .video-jovem-section .video-control-btn {
-            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
+        .quiz-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
         }
         
-        .video-jovem-section .video-control-btn:hover {
+        .quiz-button:hover::before {
+            left: 100%;
+        }
+        
+        .adult .quiz-button {
+            background: linear-gradient(135deg, var(--adult-secondary) 0%, var(--adult-primary) 100%);
+        }
+        
+        .youth .quiz-button {
             background: linear-gradient(135deg, var(--youth-secondary) 0%, var(--youth-primary) 100%);
         }
         
-        /* Botão de play na página */
-        .play-inline-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--success) 0%, #1e7e34 100%);
-            color: white;
-            padding: 12px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 15px;
-            margin-right: 10px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-        
-        .play-inline-btn:hover {
-            background: linear-gradient(135deg, #1e7e34 0%, var(--success) 100%);
-            transform: translateY(-2px);
-        }
-        
-        .video-jovem-section .play-inline-btn {
-            background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
-        }
-        
-        .video-jovem-section .play-inline-btn:hover {
-            background: linear-gradient(135deg, #ff5252 0%, var(--youth-accent) 100%);
-        }
-        
-        /* Mensagem de feedback */
-        .video-feedback {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            z-index: 10000;
-            display: none;
-            animation: fadeInOut 3s ease-in-out;
-        }
-        
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-        }
-        
-        /* Controles de vídeo móvel */
-        .video-mobile-controls {
-            display: none;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .video-mobile-controls button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+        .quiz-note {
+            margin-top: 1.5rem;
             font-size: 0.9rem;
-        }
-        
-        .video-mobile-controls button:hover {
-            background: var(--primary-dark);
-        }
-        
-        /* ============= SEÇÃO REVISTA CONECTAR JOVENS ============= */
-        .youth-section {
-            margin: 5rem 0;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border-radius: var(--radius);
-            border-left: 5px solid var(--youth-primary);
-        }
-        
-        .youth-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        
-        .youth-header h2 {
-            font-size: 2.2rem;
-            color: var(--youth-primary);
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--youth-primary), var(--youth-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .youth-header p {
-            color: var(--dark);
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 0 auto;
+            opacity: 0.7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
         
         /* ============= FILTROS ============= */
@@ -781,44 +678,49 @@
         .filter-btn {
             padding: 0.8rem 2rem;
             background-color: white;
-            border: 2px solid var(--primary-light);
             border-radius: 50px;
-            color: var(--primary);
             cursor: pointer;
             font-weight: 500;
             transition: var(--transition);
             font-size: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 2px solid transparent;
         }
         
-        .filter-btn:hover {
-            background-color: var(--primary-light);
+        .adult .filter-btn {
+            border-color: var(--adult-primary);
+            color: var(--adult-primary);
+        }
+        
+        .adult .filter-btn:hover {
+            background-color: var(--adult-primary);
             color: white;
             transform: translateY(-3px);
         }
         
-        .filter-btn.active {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        .adult .filter-btn.active {
+            background: linear-gradient(135deg, var(--adult-primary) 0%, var(--adult-secondary) 100%);
             color: white;
-            border-color: var(--primary);
+            border-color: var(--adult-primary);
             box-shadow: 0 6px 15px rgba(26, 95, 180, 0.2);
         }
         
-        .filter-btn.youth {
-            border-color: var(--youth-secondary);
+        .youth .filter-btn {
+            border-color: var(--youth-primary);
             color: var(--youth-primary);
         }
         
-        .filter-btn.youth:hover {
-            background-color: var(--youth-secondary);
+        .youth .filter-btn:hover {
+            background-color: var(--youth-primary);
             color: white;
+            transform: translateY(-3px);
         }
         
-        .filter-btn.youth.active {
+        .youth .filter-btn.active {
             background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
             color: white;
             border-color: var(--youth-primary);
-            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.2);
+            box-shadow: 0 6px 15px rgba(138, 43, 226, 0.2);
         }
         
         /* ============= CARDS DE LIÇÕES ============= */
@@ -826,7 +728,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2.5rem;
-            margin-bottom: 5rem;
+            margin-bottom: 3rem;
         }
         
         .lesson-card {
@@ -847,7 +749,6 @@
         }
         
         .lesson-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: white;
             padding: 1.5rem;
             text-align: center;
@@ -855,7 +756,11 @@
             overflow: hidden;
         }
         
-        .lesson-card.youth .lesson-header {
+        .adult .lesson-card .lesson-header {
+            background: linear-gradient(135deg, var(--adult-primary) 0%, var(--adult-secondary) 100%);
+        }
+        
+        .youth .lesson-card .lesson-header {
             background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
         }
         
@@ -922,7 +827,7 @@
         
         .lesson-tag {
             background: linear-gradient(135deg, #e8f4ff 0%, #d4e7ff 100%);
-            color: var(--primary);
+            color: var(--adult-primary);
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -930,8 +835,8 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
         
-        .lesson-card.youth .lesson-tag {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
+        .youth .lesson-card .lesson-tag {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(147, 112, 219, 0.1) 100%);
             color: var(--youth-primary);
             font-weight: 700;
         }
@@ -968,31 +873,33 @@
             box-shadow: 0 6px 15px rgba(220, 53, 69, 0.3);
         }
         
-        .view-btn {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        .adult .view-btn {
+            background: linear-gradient(135deg, var(--adult-primary) 0%, var(--adult-secondary) 100%);
             color: white;
             box-shadow: 0 4px 10px rgba(26, 95, 180, 0.2);
         }
         
+        .youth .view-btn {
+            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
+            box-shadow: 0 4px 10px rgba(138, 43, 226, 0.2);
+        }
+        
         .view-btn:hover {
             transform: translateY(-3px);
+        }
+        
+        .adult .view-btn:hover {
             box-shadow: 0 6px 15px rgba(26, 95, 180, 0.3);
         }
         
-        .lesson-card.youth .view-btn {
-            background: linear-gradient(135deg, var(--youth-primary) 0%, var(--youth-secondary) 100%);
-            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.2);
-        }
-        
-        .lesson-card.youth .view-btn:hover {
-            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.3);
+        .youth .view-btn:hover {
+            box-shadow: 0 6px 15px rgba(138, 43, 226, 0.3);
         }
         
         .available-badge {
             position: absolute;
             top: 15px;
             right: 15px;
-            background: linear-gradient(135deg, var(--success) 0%, #1e7e34 100%);
             color: white;
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
@@ -1001,7 +908,11 @@
             box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
         }
         
-        .lesson-card.youth .available-badge {
+        .adult .available-badge {
+            background: linear-gradient(135deg, var(--success) 0%, #1e7e34 100%);
+        }
+        
+        .youth .available-badge {
             background: linear-gradient(135deg, var(--youth-accent) 0%, #ff5252 100%);
             box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
         }
@@ -1300,7 +1211,7 @@
         }
         
         .modal-header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            background: linear-gradient(135deg, var(--adult-primary) 0%, var(--adult-secondary) 100%);
             color: white;
             padding: 1.8rem 2.5rem;
             display: flex;
@@ -1380,7 +1291,7 @@
         }
         
         .modal-section-title {
-            color: var(--primary);
+            color: var(--adult-primary);
             margin-bottom: 1.5rem;
             padding-bottom: 0.8rem;
             border-bottom: 3px solid var(--secondary);
@@ -1393,7 +1304,7 @@
         
         .verse-box {
             background: linear-gradient(135deg, #f0f7ff 0%, #e6f0ff 100%);
-            border-left: 5px solid var(--primary);
+            border-left: 5px solid var(--adult-primary);
             padding: 1.8rem;
             margin: 1.5rem 0;
             border-radius: 0 12px 12px 0;
@@ -1404,12 +1315,12 @@
         }
         
         .modal.youth .verse-box {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(147, 112, 219, 0.05) 100%);
             border-left: 5px solid var(--youth-primary);
         }
         
         .verse-box strong {
-            color: var(--primary-dark);
+            color: var(--adult-primary);
             display: block;
             margin-bottom: 0.8rem;
             font-size: 1.1rem;
@@ -1466,8 +1377,8 @@
         }
         
         .modal.youth .reading-day {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
-            border: 1px solid rgba(106, 17, 203, 0.1);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(147, 112, 219, 0.05) 100%);
+            border: 1px solid rgba(138, 43, 226, 0.1);
         }
         
         .reading-day:hover {
@@ -1476,7 +1387,7 @@
         }
         
         .reading-day strong {
-            color: var(--primary);
+            color: var(--adult-primary);
             display: block;
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
@@ -1503,7 +1414,7 @@
         }
         
         .modal.youth .conclusion-box {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(147, 112, 219, 0.05) 100%);
             border-left: 5px solid var(--youth-accent);
         }
         
@@ -1548,7 +1459,7 @@
         }
         
         .youth-day-verse {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1) 0%, rgba(147, 112, 219, 0.1) 100%);
             padding: 1.5rem;
             border-radius: 10px;
             margin: 1.5rem 0;
@@ -1572,7 +1483,7 @@
         }
         
         .youth-point-key {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(147, 112, 219, 0.05) 100%);
             padding: 1.8rem;
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -1615,7 +1526,7 @@
         }
         
         .youth-complementing {
-            background: linear-gradient(135deg, rgba(106, 17, 203, 0.05) 0%, rgba(37, 117, 252, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.05) 0%, rgba(147, 112, 219, 0.05) 100%);
             padding: 1.8rem;
             border-radius: 12px;
             margin: 1.5rem 0;
@@ -1654,17 +1565,32 @@
             to { transform: rotate(360deg); }
         }
         
+        /* Feedback para vídeo */
+        .video-feedback {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            z-index: 10000;
+            display: none;
+            animation: fadeInOut 3s ease-in-out;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+            10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            90% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+        }
+        
         /* Responsive Design */
         @media (max-width: 1200px) {
             .hero h2 {
                 font-size: 2.8rem;
-            }
-            
-            .quiz-sections-container {
-                grid-template-columns: 1fr;
-                max-width: 800px;
-                margin-left: auto;
-                margin-right: auto;
             }
         }
         
@@ -1685,7 +1611,7 @@
                 font-size: 2.4rem;
             }
             
-            .youth-section {
+            .class-section {
                 padding: 2rem;
             }
         }
@@ -1760,20 +1686,16 @@
                 font-size: 1.1rem;
             }
             
-            .section-title h2 {
-                font-size: 2rem;
+            .class-section-title h2 {
+                font-size: 1.8rem;
             }
             
             .container {
                 padding: 3rem 1.5rem;
             }
             
-            .quiz-section-box {
-                padding: 2rem;
-            }
-            
-            .quiz-sections-container {
-                grid-template-columns: 1fr;
+            .class-section {
+                padding: 2rem 1.5rem;
             }
             
             .about-section {
@@ -1832,43 +1754,11 @@
                 max-width: 100%;
             }
             
-            .video-control-btn, .play-inline-btn {
-                margin: 5px;
-                padding: 8px 15px;
-                font-size: 0.85rem;
-            }
-            
-            .video-info .play-inline-btn {
-                display: block;
-                margin: 10px auto;
-                width: 100%;
-                max-width: 200px;
-            }
-            
-            .video-info .video-control-btn {
-                display: block;
-                margin: 10px auto;
-                width: 100%;
-                max-width: 200px;
-            }
-            
-            .video-info .video-direct-link {
-                display: block;
-                margin: 10px auto;
-                width: 100%;
-                max-width: 200px;
-            }
-            
-            .video-mobile-controls {
-                display: none; /* REMOVIDO */
-            }
-            
             .video-mobile-fallback {
                 display: block;
             }
             
-            #trimestrePcVideoContainer,
-            #classeJovemPcVideoContainer {
+            .video-section .video-universal-container {
                 display: none;
             }
         }
@@ -1910,8 +1800,8 @@
                 justify-content: center;
             }
             
-            .quiz-section-box h3 {
-                font-size: 1.5rem;
+            .quiz-section h3, .video-section h3 {
+                font-size: 1.3rem;
             }
             
             .footer-content {
@@ -1936,13 +1826,13 @@
                 font-size: 0.8rem;
             }
             
-            .youth-section {
+            .class-section {
                 padding: 1.5rem;
                 margin: 3rem 0;
             }
             
-            .youth-header h2 {
-                font-size: 1.8rem;
+            .class-section-title h2 {
+                font-size: 1.6rem;
             }
             
             .modal-header h2 {
@@ -1953,16 +1843,8 @@
                 padding: 1.5rem;
             }
             
-            .video-trimestre-section, .video-jovem-section {
+            .video-section, .quiz-section {
                 padding: 15px;
-            }
-            
-            .video-info .play-inline-btn,
-            .video-info .video-control-btn,
-            .video-info .video-direct-link {
-                margin: 5px auto;
-                padding: 10px;
-                font-size: 0.8rem;
             }
         }
         
@@ -2081,7 +1963,8 @@
             <nav id="mainNav">
                 <ul>
                     <li><a href="#home">Início</a></li>
-                    <li><a href="#lessons">Lições</a></li>
+                    <li><a href="#adult-class">Classe Adultos</a></li>
+                    <li><a href="#youth-class">Classe Jovens</a></li>
                     <li><a href="#about">Sobre</a></li>
                     <li><a href="#contact">Contato</a></li>
                 </ul>
@@ -2094,7 +1977,7 @@
         <div class="hero-content fade-in">
             <h2>Escola Bíblica Dominical</h2>
             <p>Estudos profundos e relevantes para o crescimento espiritual. Material fiel às Escrituras para professores e alunos comprometidos com a Palavra de Deus.</p>
-            <a href="#lessons" class="cta-button glow-effect">Explorar Lições <i class="fas fa-arrow-down"></i></a>
+            <a href="#adult-class" class="cta-button glow-effect">Explorar Lições <i class="fas fa-arrow-down"></i></a>
         </div>
         
         <!-- Wave divider -->
@@ -2107,46 +1990,26 @@
 
     <!-- Main Content -->
     <main class="container">
-        <section id="lessons">
-            <div class="section-title fade-in">
-                <h2>Lições da EBD Betel 2026</h2>
-                <p>Estudos bíblicos organizados por trimestre para seu crescimento espiritual e preparo para o ensino</p>
+        <!-- SEÇÃO CLASSE ADULTOS -->
+        <section class="class-section adult fade-in" id="adult-class">
+            <div class="class-section-title">
+                <i class="fas fa-users"></i>
+                <h2>Classe Adultos</h2>
             </div>
             
-            <!-- SEÇÃO DE QUIZZES -->
-            <div class="quiz-sections-container fade-in">
-                <div class="quiz-section-box">
-                    <h3><i class="fas fa-brain"></i> Quiz Classe Adultos</h3>
-                    <p>Teste seu conhecimento sobre as lições da classe de adultos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras de forma interativa e desafiadora.</p>
-                    <a href="https://ebdfiel.github.io/ebd-licoes-2026/" target="_blank" class="quiz-button glow-effect">
-                        <i class="fas fa-question-circle"></i> Acessar Quiz
-                    </a>
-                    <p class="quiz-note">
-                        <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
-                    </p>
-                </div>
-                
-                <div class="quiz-section-box">
-                    <h3><i class="fas fa-users"></i> Quiz Classe Jovens</h3>
-                    <p>Quizzes específicos para a classe de jovens! Teste seu conhecimento sobre as lições com perguntas direcionadas ao público jovem, abordando temas relevantes para essa faixa etária.</p>
-                    <a href="https://ebdfiel.github.io/ebd-jovens-2026/" target="_blank" class="quiz-button glow-effect">
-                        <i class="fas fa-question-circle"></i> Acessar Quiz
-                    </a>
-                    <p class="quiz-note">
-                        <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
-                    </p>
-                </div>
+            <div class="class-description">
+                <p>Lições para adultos com estudos bíblicos profundos e aplicações práticas para a vida cristã. Conteúdo completo para o crescimento espiritual e preparo para o ensino.</p>
             </div>
             
-            <!-- SEÇÃO DO VÍDEO DO TRIMESTRE (SIMPLIFICADA) -->
-            <div class="video-trimestre-section fade-in">
+            <!-- SEÇÃO DO VÍDEO DO TRIMESTRE (ADULTOS) -->
+            <div class="video-section fade-in">
                 <h3><i class="fas fa-play-circle"></i> Vídeo sobre o Tema do Trimestre</h3>
                 
                 <!-- Container para Desktop -->
-                <div class="video-universal-container" id="trimestrePcVideoContainer">
+                <div class="video-universal-container" id="adultVideoContainer">
                     <div class="video-responsive-wrapper">
                         <iframe 
-                            id="trimestreYoutubeIframe"
+                            id="adultYoutubeIframe"
                             src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1&enablejsapi=1" 
                             title="Vídeo sobre o Tema: Os Discípulos de Jesus Cristo" 
                             frameborder="0" 
@@ -2158,8 +2021,8 @@
                 </div>
                 
                 <!-- Thumbnail para Mobile -->
-                <div class="video-mobile-fallback" id="trimestreMobileVideoFallback">
-                    <img src="https://img.youtube.com/vi/te9eFEEVqKQ/maxresdefault.jpg" alt="Thumbnail do vídeo do trimestre">
+                <div class="video-mobile-fallback" id="adultMobileVideoFallback">
+                    <img src="https://img.youtube.com/vi/te9eFEEVqKQ/maxresdefault.jpg" alt="Thumbnail do vídeo do trimestre" style="width:100%; height:auto;">
                     <div class="video-mobile-overlay">
                         <div class="play-icon-large">
                             <i class="fas fa-play"></i>
@@ -2173,24 +2036,59 @@
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
                     
-                    <!-- Link alternativo para YouTube (opcional) -->
-                    <div class="video-desktop-controls">
-                        <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link">
-                            <i class="fab fa-youtube"></i> Assistir no YouTube
-                        </a>
-                    </div>
+                    <!-- Link alternativo para YouTube -->
+                    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link">
+                        <i class="fab fa-youtube"></i> Assistir no YouTube
+                    </a>
                 </div>
             </div>
             
-            <!-- SEÇÃO DO VÍDEO DA CLASSE JOVEM (SIMPLIFICADA) -->
-            <div class="video-jovem-section fade-in">
+            <!-- SEÇÃO DO QUIZ (ADULTOS) -->
+            <div class="quiz-section fade-in">
+                <h3><i class="fas fa-brain"></i> Quiz Classe Adultos</h3>
+                <p>Teste seu conhecimento sobre as lições da classe de adultos! Responda perguntas sobre cada lição e avalie seu entendimento das Escrituras de forma interativa e desafiadora.</p>
+                <a href="https://ebdfiel.github.io/ebd-licoes-2026/" target="_blank" class="quiz-button glow-effect">
+                    <i class="fas fa-question-circle"></i> Acessar Quiz Adultos
+                </a>
+                <p class="quiz-note">
+                    <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
+                </p>
+            </div>
+            
+            <!-- FILTROS ADULTOS -->
+            <div class="filters fade-in">
+                <button class="filter-btn active" data-filter="all" data-section="adult">Todas as Lições</button>
+                <button class="filter-btn" data-filter="trim1" data-section="adult">1º Trimestre</button>
+                <button class="filter-btn" data-filter="trim2" data-section="adult">2º Trimestre</button>
+                <button class="filter-btn" data-filter="trim3" data-section="adult">3º Trimestre</button>
+                <button class="filter-btn" data-filter="trim4" data-section="adult">4º Trimestre</button>
+            </div>
+            
+            <div class="lessons-grid" id="adultLessonsContainer">
+                <!-- Lições de adultos serão inseridas aqui via JavaScript -->
+            </div>
+        </section>
+        
+        <!-- SEÇÃO CLASSE JOVENS -->
+        <section class="class-section youth fade-in" id="youth-class">
+            <div class="class-section-title">
+                <i class="fas fa-fire-alt"></i>
+                <h2>Classe Jovens - Revista Conectar</h2>
+            </div>
+            
+            <div class="class-description">
+                <p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas para a vida dos adolescentes e jovens cristãos. Conteúdo dinâmico e relevante para os desafios atuais.</p>
+            </div>
+            
+            <!-- SEÇÃO DO VÍDEO (JOVENS) -->
+            <div class="video-section fade-in">
                 <h3><i class="fas fa-fire-alt"></i> Vídeo da Classe Jovem</h3>
                 
                 <!-- Container para Desktop -->
-                <div class="video-universal-container" id="classeJovemPcVideoContainer">
+                <div class="video-universal-container" id="youthVideoContainer">
                     <div class="video-responsive-wrapper">
                         <iframe 
-                            id="classeJovemYoutubeIframe"
+                            id="youthYoutubeIframe"
                             src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1&enablejsapi=1" 
                             title="Vídeo da Classe Jovem" 
                             frameborder="0" 
@@ -2202,8 +2100,8 @@
                 </div>
                 
                 <!-- Thumbnail para Mobile -->
-                <div class="video-mobile-fallback" id="classeJovemMobileVideoFallback">
-                    <img src="https://img.youtube.com/vi/kIB-BtFmb-Y/maxresdefault.jpg" alt="Thumbnail do vídeo da classe jovem">
+                <div class="video-mobile-fallback" id="youthMobileVideoFallback">
+                    <img src="https://img.youtube.com/vi/kIB-BtFmb-Y/maxresdefault.jpg" alt="Thumbnail do vídeo da classe jovem" style="width:100%; height:auto;">
                     <div class="video-mobile-overlay">
                         <div class="play-icon-large">
                             <i class="fas fa-play"></i>
@@ -2217,35 +2115,33 @@
                     <p><strong>Vídeo especial para a classe de jovens:</strong> Conteúdo adicional e direcionado para o público jovem, abordando temas relevantes e atuais.</p>
                     <p>Este vídeo complementa os estudos da Revista Conectar Jovens, proporcionando uma visão mais dinâmica e aplicada das lições.</p>
                     
-                    <!-- Link alternativo para YouTube (opcional) -->
-                    <div class="video-desktop-controls">
-                        <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link">
-                            <i class="fab fa-youtube"></i> Assistir no YouTube
-                        </a>
-                    </div>
+                    <!-- Link alternativo para YouTube -->
+                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link">
+                        <i class="fab fa-youtube"></i> Assistir no YouTube
+                    </a>
                 </div>
             </div>
             
-            <!-- SEÇÃO REVISTA CONECTAR JOVENS -->
-            <div class="youth-section fade-in">
-                <div class="youth-header">
-                    <h2><i class="fas fa-fire-alt"></i> Revista Conectar Jovens</h2>
-                    <p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas para a vida dos adolescentes e jovens cristãos.</p>
-                </div>
+            <!-- SEÇÃO DO QUIZ (JOVENS) -->
+            <div class="quiz-section fade-in">
+                <h3><i class="fas fa-users"></i> Quiz Classe Jovens</h3>
+                <p>Quizzes específicos para a classe de jovens! Teste seu conhecimento sobre as lições com perguntas direcionadas ao público jovem, abordando temas relevantes para essa faixa etária.</p>
+                <a href="https://ebdfiel.github.io/ebd-jovens-2026/" target="_blank" class="quiz-button glow-effect">
+                    <i class="fas fa-question-circle"></i> Acessar Quiz Jovens
+                </a>
+                <p class="quiz-note">
+                    <i class="fas fa-external-link-alt"></i> Link externo para plataforma de quizzes
+                </p>
             </div>
             
-            <!-- FILTROS -->
+            <!-- FILTROS JOVENS -->
             <div class="filters fade-in">
-                <button class="filter-btn active" data-filter="all">Todas as Lições</button>
-                <button class="filter-btn youth" data-filter="youth">Revista Conectar Jovens</button>
-                <button class="filter-btn" data-filter="trim1">1º Trimestre</button>
-                <button class="filter-btn" data-filter="trim2">2º Trimestre</button>
-                <button class="filter-btn" data-filter="trim3">3º Trimestre</button>
-                <button class="filter-btn" data-filter="trim4">4º Trimestre</button>
+                <button class="filter-btn active" data-filter="all" data-section="youth">Todas as Lições</button>
+                <button class="filter-btn" data-filter="youth" data-section="youth">Revista Conectar Jovens</button>
             </div>
             
-            <div class="lessons-grid" id="lessonsContainer">
-                <!-- Lições serão inseridas aqui via JavaScript -->
+            <div class="lessons-grid" id="youthLessonsContainer">
+                <!-- Lições de jovens serão inseridas aqui via JavaScript -->
             </div>
         </section>
         
@@ -2333,9 +2229,9 @@
                 <h3>Links Rápidos</h3>
                 <ul>
                     <li><a href="#home"><i class="fas fa-home"></i> Início</a></li>
-                    <li><a href="#lessons"><i class="fas fa-book"></i> Lições 2026</a></li>
+                    <li><a href="#adult-class"><i class="fas fa-user-friends"></i> Classe Adultos</a></li>
+                    <li><a href="#youth-class"><i class="fas fa-fire-alt"></i> Classe Jovens</a></li>
                     <li><a href="#about"><i class="fas fa-info-circle"></i> Sobre Nós</a></li>
-                    <li><a href="#"><i class="fas fa-history"></i> Lições Anteriores</a></li>
                 </ul>
             </div>
             
@@ -2356,7 +2252,7 @@
 
     <script>
         // Dados das lições ADULTOS
-        const lessons = [
+        const adultLessons = [
             {
                 id: 1,
                 quarter: "1º Trimestre",
@@ -2458,9 +2354,6 @@
                 type: "youth"
             }
         ];
-
-        // Combinar todas as lições
-        const allLessons = [...lessons, ...youthLessons];
 
         // Conteúdo da lição 1 jovens
         const youthLesson1Content = {
@@ -2628,7 +2521,7 @@
         };
 
         // Conteúdo básico da lição 1 adultos
-        const lesson1Content = {
+        const adultLesson1Content = {
             title: "Os discípulos de Cristo são novas criaturas",
             type: "adult",
             textAureo: {
@@ -2637,113 +2530,235 @@
             }
         };
 
-        // Função para renderizar as lições
-        function renderLessons(filter = 'all') {
-            const container = document.getElementById('lessonsContainer');
+        // Variáveis globais para controle
+        let currentAdultFilter = 'all';
+        let currentYouthFilter = 'all';
+
+        // Função para criar um card de lição
+        function createLessonCard(lesson, index, sectionType) {
+            const lessonCard = document.createElement('div');
+            lessonCard.className = `lesson-card fade-in ${sectionType === 'youth' ? 'youth' : ''}`;
+            lessonCard.style.animationDelay = `${index * 0.05}s`;
+            
+            const isAvailable = lesson.available;
+            
+            let buttonsHTML = '';
+            if (isAvailable) {
+                buttonsHTML = `
+                    <div class="lesson-buttons">
+                        <button class="view-btn glow-effect" data-lesson="${lesson.id}" data-type="${lesson.type}">
+                            <i class="fas fa-book-open"></i> Ver Lição
+                        </button>
+                        <button class="pdf-btn glow-effect" data-lesson="${lesson.id}" data-type="${lesson.type}">
+                            <i class="fas fa-file-pdf"></i> Baixar PDF
+                        </button>
+                    </div>
+                `;
+            } else {
+                buttonsHTML = `
+                    <div class="lesson-buttons">
+                        <button class="view-btn" disabled style="opacity: 0.6; cursor: not-allowed;">
+                            <i class="fas fa-clock"></i> Em breve
+                        </button>
+                    </div>
+                `;
+            }
+            
+            const badgeHTML = isAvailable ? `<span class="available-badge">Disponível</span>` : '';
+            const youthIcon = lesson.type === 'youth' ? '<i class="fas fa-fire-alt" style="margin-right: 5px;"></i>' : '';
+            
+            lessonCard.innerHTML = `
+                ${badgeHTML}
+                <div class="lesson-header">
+                    <div class="lesson-quarter">${lesson.quarter}</div>
+                    <div class="lesson-number">${lesson.number}</div>
+                    <div class="lesson-title">${youthIcon}${lesson.title}</div>
+                </div>
+                <div class="lesson-body">
+                    <div class="lesson-date">
+                        <i class="far fa-calendar-alt"></i> ${lesson.date}
+                    </div>
+                    <div class="lesson-description">
+                        ${lesson.description}
+                    </div>
+                    <div class="lesson-footer">
+                        <span class="lesson-tag">${lesson.tag}</span>
+                        ${buttonsHTML}
+                    </div>
+                </div>
+            `;
+            
+            return lessonCard;
+        }
+
+        // Função para renderizar as lições de adultos
+        function renderAdultLessons(filter = 'all') {
+            const container = document.getElementById('adultLessonsContainer');
+            if (!container) return;
+            
             container.innerHTML = '';
             
             let filteredLessons;
             
             if (filter === 'all') {
-                filteredLessons = allLessons;
-            } else if (filter === 'youth') {
-                filteredLessons = youthLessons;
+                filteredLessons = adultLessons;
             } else {
-                filteredLessons = allLessons.filter(lesson => lesson.quarterFilter === filter);
+                filteredLessons = adultLessons.filter(lesson => lesson.quarterFilter === filter);
+            }
+            
+            if (filteredLessons.length === 0) {
+                container.innerHTML = `
+                    <div class="no-lessons-message" style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>Nenhuma lição encontrada para este filtro</h3>
+                        <p>Tente selecionar outro trimestre ou categoria.</p>
+                    </div>
+                `;
+                return;
             }
             
             filteredLessons.forEach((lesson, index) => {
-                const lessonCard = document.createElement('div');
-                lessonCard.className = `lesson-card fade-in ${lesson.type === 'youth' ? 'youth' : ''}`;
-                lessonCard.style.animationDelay = `${index * 0.05}s`;
-                
-                const isAvailable = lesson.available;
-                
-                let buttonsHTML = '';
-                if (isAvailable) {
-                    buttonsHTML = `
-                        <div class="lesson-buttons">
-                            <button class="view-btn glow-effect" data-lesson="${lesson.id}" data-type="${lesson.type}">
-                                <i class="fas fa-book-open"></i> Ver Lição
-                            </button>
-                            <button class="pdf-btn glow-effect" data-lesson="${lesson.id}" data-type="${lesson.type}">
-                                <i class="fas fa-file-pdf"></i> Baixar PDF
-                            </button>
-                        </div>
-                    `;
-                } else {
-                    buttonsHTML = `
-                        <div class="lesson-buttons">
-                            <button class="view-btn" style="opacity: 0.6; cursor: not-allowed;">
-                                <i class="fas fa-clock"></i> Em breve
-                            </button>
-                        </div>
-                    `;
-                }
-                
-                const badgeHTML = isAvailable ? `<span class="available-badge">Disponível</span>` : '';
-                const youthIcon = lesson.type === 'youth' ? '<i class="fas fa-fire-alt" style="margin-right: 5px;"></i>' : '';
-                
-                lessonCard.innerHTML = `
-                    ${badgeHTML}
-                    <div class="lesson-header">
-                        <div class="lesson-quarter">${lesson.quarter}</div>
-                        <div class="lesson-number">${lesson.number}</div>
-                        <div class="lesson-title">${youthIcon}${lesson.title}</div>
-                    </div>
-                    <div class="lesson-body">
-                        <div class="lesson-date">
-                            <i class="far fa-calendar-alt"></i> ${lesson.date}
-                        </div>
-                        <div class="lesson-description">
-                            ${lesson.description}
-                        </div>
-                        <div class="lesson-footer">
-                            <span class="lesson-tag">${lesson.tag}</span>
-                            ${buttonsHTML}
-                        </div>
-                    </div>
-                `;
+                const lessonCard = createLessonCard(lesson, index, 'adult');
                 container.appendChild(lessonCard);
             });
             
-            // Adicionar eventos aos botões
-            document.querySelectorAll('.view-btn').forEach(btn => {
-                if (!btn.disabled) {
-                    btn.addEventListener('click', function() {
-                        const lessonId = this.getAttribute('data-lesson');
-                        const lessonType = this.getAttribute('data-type');
-                        openLessonModal(lessonId, lessonType);
-                    });
-                }
+            // Adicionar event listeners aos botões recém-criados
+            setTimeout(() => {
+                addButtonEventListeners('adult');
+            }, 100);
+        }
+
+        // Função para renderizar as lições de jovens
+        function renderYouthLessons(filter = 'all') {
+            const container = document.getElementById('youthLessonsContainer');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            let filteredLessons;
+            
+            if (filter === 'all') {
+                filteredLessons = youthLessons;
+            } else {
+                filteredLessons = youthLessons.filter(lesson => lesson.quarterFilter === filter);
+            }
+            
+            if (filteredLessons.length === 0) {
+                container.innerHTML = `
+                    <div class="no-lessons-message" style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--gray);">
+                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <h3>Nenhuma lição encontrada para este filtro</h3>
+                        <p>Tente selecionar outra categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredLessons.forEach((lesson, index) => {
+                const lessonCard = createLessonCard(lesson, index, 'youth');
+                container.appendChild(lessonCard);
             });
             
-            document.querySelectorAll('.pdf-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const lessonId = this.getAttribute('data-lesson');
-                    const lessonType = this.getAttribute('data-type');
+            // Adicionar event listeners aos botões recém-criados
+            setTimeout(() => {
+                addButtonEventListeners('youth');
+            }, 100);
+        }
+
+        // Função para adicionar event listeners aos botões
+        function addButtonEventListeners(sectionType) {
+            const containerId = sectionType === 'youth' ? 'youthLessonsContainer' : 'adultLessonsContainer';
+            const container = document.getElementById(containerId);
+            
+            if (!container) return;
+            
+            // Event delegation para os botões dentro do container
+            container.addEventListener('click', function(e) {
+                // Verificar se o clique foi em um botão view-btn
+                const viewBtn = e.target.closest('.view-btn');
+                if (viewBtn && !viewBtn.disabled) {
+                    const lessonId = viewBtn.getAttribute('data-lesson');
+                    const lessonType = viewBtn.getAttribute('data-type');
+                    openLessonModal(lessonId, lessonType);
+                    return;
+                }
+                
+                // Verificar se o clique foi em um botão pdf-btn
+                const pdfBtn = e.target.closest('.pdf-btn');
+                if (pdfBtn) {
+                    const lessonId = pdfBtn.getAttribute('data-lesson');
+                    const lessonType = pdfBtn.getAttribute('data-type');
                     generateLessonPDF(lessonId, lessonType);
-                });
+                    return;
+                }
             });
         }
-        
+
         // Função para abrir modal da lição
         function openLessonModal(lessonId, lessonType) {
+            // Fechar modal existente se houver
+            const existingModal = document.getElementById('lessonModal');
+            if (existingModal) {
+                document.body.removeChild(existingModal);
+            }
+            
             let lessonContent;
             let lessonNumber = '';
+            let lessonTitle = '';
             
             if (lessonType === 'youth') {
                 if (lessonId == 101) {
                     lessonContent = youthLesson1Content;
                     lessonNumber = 'Lição 1';
+                    lessonTitle = youthLesson1Content.title;
                 } else if (lessonId == 102) {
                     lessonContent = youthLesson2Content;
                     lessonNumber = 'Lição 2';
+                    lessonTitle = youthLesson2Content.title;
+                } else {
+                    // Para outras lições jovens, mostrar conteúdo básico
+                    const lesson = youthLessons.find(l => l.id == lessonId);
+                    if (lesson) {
+                        lessonContent = {
+                            title: lesson.title,
+                            type: "youth",
+                            verseOfDay: {
+                                verse: "Mateus 5:1",
+                                text: "E Jesus, vendo a multidão, subiu a um monte e, assentando-se, aproximaram-se dele os seus discípulos"
+                            },
+                            objectives: [
+                                "Conhecer os ensinamentos bíblicos para jovens cristãos",
+                                "Aplicar os princípios das Escrituras na vida prática",
+                                "Crescer no conhecimento e na graça de nosso Senhor Jesus Cristo"
+                            ],
+                            referenceText: "Mateus 5:11",
+                            appliedTruth: "Jesus nos convida a viver de acordo com os princípios do Reino dos Céus.",
+                            prayerMoment: "Ore para que possamos aplicar estes ensinamentos em nossa vida diária."
+                        };
+                        lessonNumber = lesson.number;
+                        lessonTitle = lesson.title;
+                    }
                 }
             } else {
                 if (lessonId == 1) {
-                    lessonContent = lesson1Content;
+                    lessonContent = adultLesson1Content;
                     lessonNumber = 'Lição 1';
+                    lessonTitle = adultLesson1Content.title;
+                } else {
+                    // Para outras lições adultas, mostrar conteúdo básico
+                    const lesson = adultLessons.find(l => l.id == lessonId);
+                    if (lesson) {
+                        lessonContent = {
+                            title: lesson.title,
+                            type: "adult",
+                            textAureo: {
+                                verse: "Colossenses 3:10",
+                                text: "E vos vestistes do novo, que se renova para o conhecimento, segundo a imagem daquele que o criou"
+                            }
+                        };
+                        lessonNumber = lesson.number;
+                        lessonTitle = lesson.title;
+                    }
                 }
             }
             
@@ -2761,7 +2776,7 @@
                 modal.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2>${lessonNumber}: ${lessonContent.title}</h2>
+                            <h2>${lessonNumber}: ${lessonTitle}</h2>
                             <div class="modal-header-buttons">
                                 <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
                                     <i class="fas fa-file-pdf"></i> Baixar em PDF
@@ -2806,6 +2821,7 @@
                                 </div>
                             </div>
                             
+                            ${lessonContent.weeklyReading ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-calendar-week"></i> LEITURA SEMANAL</h3>
                                 <div class="reading-grid">
@@ -2818,12 +2834,16 @@
                                     `).join('')}
                                 </div>
                             </div>
+                            ` : ''}
                             
+                            ${lessonContent.introduction ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-door-open"></i> INTRODUÇÃO</h3>
                                 <p>${lessonContent.introduction.text}</p>
                             </div>
+                            ` : ''}
                             
+                            ${lessonContent.pointKey ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-key"></i> PONTO-CHAVE</h3>
                                 <div class="youth-point-key">
@@ -2831,85 +2851,14 @@
                                     <p>${lessonContent.pointKey}</p>
                                 </div>
                             </div>
-                            
-                            ${lessonContent.ponto1 ? `
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto1.title}</h3>
-                                <p>${lessonContent.ponto1.content}</p>
-                                
-                                ${lessonContent.ponto1.subpoints.map(subpoint => `
-                                    <div class="youth-point-key">
-                                        <strong>${subpoint.title}</strong>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                                
-                                ${lessonContent.ponto1.reflecting ? `
-                                <div class="youth-reflecting">
-                                    <p><strong>Refletindo:</strong> ${lessonContent.ponto1.reflecting}</p>
-                                </div>
-                                ` : ''}
-                            </div>
                             ` : ''}
                             
-                            ${lessonContent.ponto2 ? `
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto2.title}</h3>
-                                <p>${lessonContent.ponto2.content}</p>
-                                
-                                ${lessonContent.ponto2.subpoints.map(subpoint => `
-                                    <div class="youth-point-key">
-                                        <strong>${subpoint.title}</strong>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            ` : ''}
-                            
-                            ${lessonContent.ponto3 ? `
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-chalkboard-teacher"></i> ${lessonContent.ponto3.title}</h3>
-                                <p>${lessonContent.ponto3.content}</p>
-                                
-                                ${lessonContent.ponto3.subpoints.map(subpoint => `
-                                    <div class="youth-point-key">
-                                        <strong>${subpoint.title}</strong>
-                                        <p>${subpoint.content}</p>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            ` : ''}
-                            
-                            ${lessonContent.educatorSubsidy ? `
-                            <div class="lesson-section">
-                                <h3 class="modal-section-title"><i class="fas fa-user-graduate"></i> ${lessonContent.educatorSubsidy.title}</h3>
-                                <div class="youth-subsidio">
-                                    <p>${lessonContent.educatorSubsidy.content}</p>
-                                </div>
-                            </div>
-                            ` : ''}
-                            
-                            ${lessonContent.conclusion ? `
                             <div class="lesson-section">
                                 <h3 class="modal-section-title"><i class="fas fa-flag-checkered"></i> CONCLUSÃO</h3>
                                 <div class="conclusion-box">
-                                    <p>${lessonContent.conclusion.text}</p>
+                                    <p>Esta lição nos ensina importantes princípios bíblicos para nossa vida cristã. Que possamos aplicar estes ensinamentos em nosso dia a dia.</p>
                                 </div>
-                                
-                                ${lessonContent.conclusion.complementing ? `
-                                <div class="youth-complementing">
-                                    <p><strong>Complementando:</strong> ${lessonContent.conclusion.complementing}</p>
-                                </div>
-                                ` : ''}
-                                
-                                ${lessonContent.conclusion.euEnsineiQue ? `
-                                <div class="youth-point-key">
-                                    <strong>Eu ensinei que:</strong>
-                                    <p>${lessonContent.conclusion.euEnsineiQue}</p>
-                                </div>
-                                ` : ''}
                             </div>
-                            ` : ''}
                         </div>
                     </div>
                 `;
@@ -2918,7 +2867,7 @@
                 modal.innerHTML = `
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h2>${lessonNumber}: ${lessonContent.title}</h2>
+                            <h2>${lessonNumber}: ${lessonTitle}</h2>
                             <div class="modal-header-buttons">
                                 <button class="pdf-download-modal glow-effect" id="pdfDownloadModal">
                                     <i class="fas fa-file-pdf"></i> Baixar em PDF
@@ -2934,6 +2883,11 @@
                                     <p>"${lessonContent.textAureo.text}"</p>
                                 </div>
                             </div>
+                            
+                            <div class="lesson-section">
+                                <h3 class="modal-section-title"><i class="fas fa-info-circle"></i> INFORMAÇÕES DA LIÇÃO</h3>
+                                <p>Esta lição aborda temas importantes para o crescimento espiritual e entendimento das Escrituras. Conteúdo completo disponível em breve.</p>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -2941,11 +2895,13 @@
             
             document.body.appendChild(modal);
             
-            // Mostrar modal
-            modal.style.display = 'block';
+            // Mostrar modal com animação
+            setTimeout(() => {
+                modal.style.display = 'block';
+            }, 10);
             
-            // Evento para download de PDF
-            const pdfDownloadBtn = document.getElementById('pdfDownloadModal');
+            // Evento para download de PDF no modal
+            const pdfDownloadBtn = modal.querySelector('#pdfDownloadModal');
             if (pdfDownloadBtn) {
                 pdfDownloadBtn.addEventListener('click', function() {
                     generateLessonPDF(lessonId, lessonType);
@@ -2954,28 +2910,42 @@
             
             // Fechar modal
             const closeBtn = modal.querySelector('.close-modal');
-            const closeModal = () => {
+            closeBtn.addEventListener('click', function() {
                 modal.style.display = 'none';
-                document.body.removeChild(modal);
-            };
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        document.body.removeChild(modal);
+                    }
+                }, 300);
+            });
             
-            closeBtn.addEventListener('click', closeModal);
-            
-            modal.addEventListener('click', (e) => {
+            // Fechar modal ao clicar fora
+            modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
-                    closeModal();
+                    modal.style.display = 'none';
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            document.body.removeChild(modal);
+                        }
+                    }, 300);
                 }
             });
             
-            document.addEventListener('keydown', function handleEsc(e) {
+            // Fechar modal com ESC
+            document.addEventListener('keydown', function closeOnEsc(e) {
                 if (e.key === 'Escape') {
-                    closeModal();
-                    document.removeEventListener('keydown', handleEsc);
+                    modal.style.display = 'none';
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            document.body.removeChild(modal);
+                        }
+                        document.removeEventListener('keydown', closeOnEsc);
+                    }, 300);
                 }
             });
         }
-        
-        // Função para gerar PDF COMPLETO
+
+        // Função para gerar PDF
         function generateLessonPDF(lessonId, lessonType) {
             document.getElementById('pdfLoading').style.display = 'flex';
             
@@ -2983,24 +2953,40 @@
                 try {
                     let lessonContent;
                     let lessonNumber = '';
+                    let lessonTitle = '';
                     
                     // Selecionar conteúdo baseado no tipo e ID da lição
                     if (lessonType === 'youth') {
                         if (lessonId == 101) {
                             lessonContent = youthLesson1Content;
                             lessonNumber = 'J1';
+                            lessonTitle = youthLesson1Content.title;
                         } else if (lessonId == 102) {
                             lessonContent = youthLesson2Content;
                             lessonNumber = 'J2';
+                            lessonTitle = youthLesson2Content.title;
+                        } else {
+                            const lesson = youthLessons.find(l => l.id == lessonId);
+                            if (lesson) {
+                                lessonTitle = lesson.title;
+                                lessonNumber = lesson.number.replace('Lição ', 'J');
+                            }
                         }
                     } else {
                         if (lessonId == 1) {
-                            lessonContent = lesson1Content;
+                            lessonContent = adultLesson1Content;
                             lessonNumber = '1';
+                            lessonTitle = adultLesson1Content.title;
+                        } else {
+                            const lesson = adultLessons.find(l => l.id == lessonId);
+                            if (lesson) {
+                                lessonTitle = lesson.title;
+                                lessonNumber = lesson.number.replace('Lição ', '');
+                            }
                         }
                     }
                     
-                    if (!lessonContent) {
+                    if (!lessonTitle) {
                         alert('Conteúdo da lição não disponível para geração de PDF.');
                         document.getElementById('pdfLoading').style.display = 'none';
                         return;
@@ -3032,7 +3018,6 @@
                         const lines = doc.splitTextToSize(text, maxWidth);
                         
                         lines.forEach(line => {
-                            // Verificar se precisa de nova página
                             if (yPos > pageHeight - marginBottom) {
                                 doc.addPage();
                                 yPos = marginTop;
@@ -3054,11 +3039,10 @@
                             yPos += lineHeight;
                         });
                         
-                        yPos += 3; // Espaço após o texto
+                        yPos += 3;
                     };
                     
-                    // ============= CABEÇALHO =============
-                    // Texto do cabeçalho
+                    // CABEÇALHO
                     doc.setFontSize(20);
                     doc.setFont('helvetica', 'bold');
                     doc.setTextColor(26, 95, 180);
@@ -3076,281 +3060,37 @@
                     doc.line(marginLeft, yPos, pageWidth - marginRight, yPos);
                     yPos += 15;
                     
-                    // ============= TÍTULO PRINCIPAL =============
+                    // TÍTULO PRINCIPAL
                     if (lessonType === 'youth') {
                         doc.setFontSize(16);
                         doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
+                        doc.setTextColor(138, 43, 226);
                         doc.text("REVISTA CONECTAR JOVENS", pageWidth / 2, yPos, { align: 'center' });
                         yPos += 10;
                     }
                     
                     doc.setFontSize(18);
                     doc.setFont('helvetica', 'bold');
-                    doc.setTextColor(lessonType === 'youth' ? 106 : 26, 17, lessonType === 'youth' ? 203 : 95, lessonType === 'youth' ? 180 : 0);
-                    doc.text(`LIÇÃO ${lessonNumber}: ${lessonContent.title}`, pageWidth / 2, yPos, { align: 'center' });
+                    const titleColor = lessonType === 'youth' ? [138, 43, 226] : [26, 95, 180];
+                    doc.setTextColor(...titleColor);
+                    doc.text(`LIÇÃO ${lessonNumber}: ${lessonTitle}`, pageWidth / 2, yPos, { align: 'center' });
                     yPos += 20;
                     
-                    // ============= CONTEÚDO DA LIÇÃO =============
-                    if (lessonType === 'youth') {
-                        // VERSÍCULO DO DIA
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("VERSÍCULO DO DIA", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(12);
-                        doc.setFont('helvetica', 'italic');
-                        doc.setTextColor(0, 0, 0);
-                        addText(`"${lessonContent.verseOfDay.text}"`, 12, false, 'left', 5);
-                        
-                        doc.setFontSize(11);
-                        addText(`(${lessonContent.verseOfDay.verse})`, 11, true, 'left', 5);
-                        yPos += 5;
-                        
-                        // OBJETIVOS DA LIÇÃO
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("OBJETIVOS DA LIÇÃO", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        lessonContent.objectives.forEach((obj, index) => {
-                            addText(`• ${obj}`, 11, false, 'left', 5);
-                        });
-                        yPos += 5;
-                        
-                        // TEXTO DE REFERÊNCIA
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("TEXTO DE REFERÊNCIA", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(12);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.referenceText, 12, true, 'left', 5);
-                        yPos += 5;
-                        
-                        // VERDADE APLICADA
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("VERDADE APLICADA", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(12);
-                        doc.setFont('helvetica', 'italic');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.appliedTruth, 12, false, 'left', 5);
-                        yPos += 5;
-                        
-                        // MOMENTO DE ORAÇÃO
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("MOMENTO DE ORAÇÃO", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.prayerMoment, 11, false, 'left', 5);
-                        yPos += 10;
-                        
-                        // LEITURA SEMANAL
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("LEITURA SEMANAL", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        
-                        lessonContent.weeklyReading.forEach(reading => {
-                            addText(`${reading.day}: ${reading.ref}`, 11, true, 'left', 5);
-                            addText(reading.text, 11, false, 'left', 5);
-                            yPos += 3;
-                        });
-                        yPos += 5;
-                        
-                        // INTRODUÇÃO
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("INTRODUÇÃO", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(11);
-                        doc.setFont('helvetica', 'normal');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.introduction.text, 11, false, 'justify', 5);
-                        yPos += 10;
-                        
-                        // PONTO-CHAVE
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(106, 17, 203);
-                        addText("PONTO-CHAVE", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(12);
-                        doc.setFont('helvetica', 'italic');
-                        doc.setTextColor(0, 0, 0);
-                        addText(lessonContent.pointKey, 12, false, 'justify', 5);
-                        yPos += 10;
-                        
-                        // PONTO 1
-                        if (lessonContent.ponto1) {
-                            doc.setFontSize(14);
-                            doc.setFont('helvetica', 'bold');
-                            doc.setTextColor(106, 17, 203);
-                            addText(lessonContent.ponto1.title, 14, true, 'left', 6);
-                            
-                            doc.setFontSize(11);
-                            doc.setFont('helvetica', 'normal');
-                            doc.setTextColor(0, 0, 0);
-                            addText(lessonContent.ponto1.content, 11, false, 'justify', 5);
-                            yPos += 5;
-                            
-                            // Subpontos do Ponto 1
-                            if (lessonContent.ponto1.subpoints) {
-                                lessonContent.ponto1.subpoints.forEach(subpoint => {
-                                    doc.setFontSize(12);
-                                    doc.setFont('helvetica', 'bold');
-                                    addText(subpoint.title, 12, true, 'left', 5);
-                                    
-                                    doc.setFontSize(11);
-                                    doc.setFont('helvetica', 'normal');
-                                    addText(subpoint.content, 11, false, 'justify', 5);
-                                    yPos += 3;
-                                });
-                            }
-                            
-                            // Refletindo
-                            if (lessonContent.ponto1.reflecting) {
-                                yPos += 5;
-                                doc.setFontSize(11);
-                                doc.setFont('helvetica', 'italic');
-                                addText(`Refletindo: ${lessonContent.ponto1.reflecting}`, 11, false, 'justify', 5);
-                            }
-                            yPos += 10;
-                        }
-                        
-                        // PONTO 2
-                        if (lessonContent.ponto2) {
-                            doc.setFontSize(14);
-                            doc.setFont('helvetica', 'bold');
-                            doc.setTextColor(106, 17, 203);
-                            addText(lessonContent.ponto2.title, 14, true, 'left', 6);
-                            
-                            doc.setFontSize(11);
-                            doc.setFont('helvetica', 'normal');
-                            doc.setTextColor(0, 0, 0);
-                            addText(lessonContent.ponto2.content, 11, false, 'justify', 5);
-                            yPos += 5;
-                            
-                            // Subpontos do Ponto 2
-                            if (lessonContent.ponto2.subpoints) {
-                                lessonContent.ponto2.subpoints.forEach(subpoint => {
-                                    doc.setFontSize(12);
-                                    doc.setFont('helvetica', 'bold');
-                                    addText(subpoint.title, 12, true, 'left', 5);
-                                    
-                                    doc.setFontSize(11);
-                                    doc.setFont('helvetica', 'normal');
-                                    addText(subpoint.content, 11, false, 'justify', 5);
-                                    yPos += 3;
-                                });
-                            }
-                            yPos += 10;
-                        }
-                        
-                        // PONTO 3
-                        if (lessonContent.ponto3) {
-                            doc.setFontSize(14);
-                            doc.setFont('helvetica', 'bold');
-                            doc.setTextColor(106, 17, 203);
-                            addText(lessonContent.ponto3.title, 14, true, 'left', 6);
-                            
-                            doc.setFontSize(11);
-                            doc.setFont('helvetica', 'normal');
-                            doc.setTextColor(0, 0, 0);
-                            addText(lessonContent.ponto3.content, 11, false, 'justify', 5);
-                            yPos += 5;
-                            
-                            // Subpontos do Ponto 3
-                            if (lessonContent.ponto3.subpoints) {
-                                lessonContent.ponto3.subpoints.forEach(subpoint => {
-                                    doc.setFontSize(12);
-                                    doc.setFont('helvetica', 'bold');
-                                    addText(subpoint.title, 12, true, 'left', 5);
-                                    
-                                    doc.setFontSize(11);
-                                    doc.setFont('helvetica', 'normal');
-                                    addText(subpoint.content, 11, false, 'justify', 5);
-                                    yPos += 3;
-                                });
-                            }
-                            yPos += 10;
-                        }
-                        
-                        // SUBSÍDIO PARA O EDUCADOR
-                        if (lessonContent.educatorSubsidy) {
-                            doc.setFontSize(14);
-                            doc.setFont('helvetica', 'bold');
-                            doc.setTextColor(106, 17, 203);
-                            addText(lessonContent.educatorSubsidy.title, 14, true, 'left', 6);
-                            
-                            doc.setFontSize(11);
-                            doc.setFont('helvetica', 'italic');
-                            doc.setTextColor(0, 0, 0);
-                            addText(lessonContent.educatorSubsidy.content, 11, false, 'justify', 5);
-                            yPos += 10;
-                        }
-                        
-                        // CONCLUSÃO
-                        if (lessonContent.conclusion) {
-                            doc.setFontSize(14);
-                            doc.setFont('helvetica', 'bold');
-                            doc.setTextColor(106, 17, 203);
-                            addText("CONCLUSÃO", 14, true, 'left', 6);
-                            
-                            doc.setFontSize(11);
-                            doc.setFont('helvetica', 'normal');
-                            doc.setTextColor(0, 0, 0);
-                            addText(lessonContent.conclusion.text, 11, false, 'justify', 5);
-                            
-                            if (lessonContent.conclusion.complementing) {
-                                yPos += 5;
-                                doc.setFontSize(11);
-                                doc.setFont('helvetica', 'italic');
-                                addText(`Complementando: ${lessonContent.conclusion.complementing}`, 11, false, 'justify', 5);
-                            }
-                            
-                            if (lessonContent.conclusion.euEnsineiQue) {
-                                yPos += 5;
-                                doc.setFontSize(11);
-                                doc.setFont('helvetica', 'bold');
-                                addText(`Eu ensinei que: ${lessonContent.conclusion.euEnsineiQue}`, 11, false, 'justify', 5);
-                            }
-                        }
-                    } else {
-                        // CONTEÚDO PARA LIÇÕES ADULTOS
-                        doc.setFontSize(14);
-                        doc.setFont('helvetica', 'bold');
-                        doc.setTextColor(26, 95, 180);
-                        addText("TEXTO ÁUREO", 14, true, 'left', 6);
-                        
-                        doc.setFontSize(12);
-                        doc.setFont('helvetica', 'italic');
-                        doc.setTextColor(0, 0, 0);
-                        addText(`"${lessonContent.textAureo.text}"`, 12, false, 'left', 5);
-                        
-                        doc.setFontSize(11);
-                        addText(`(${lessonContent.textAureo.verse})`, 11, true, 'left', 5);
-                    }
+                    // CONTEÚDO BÁSICO
+                    doc.setFontSize(14);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(...titleColor);
+                    addText("CONTEÚDO DA LIÇÃO", 14, true, 'left', 6);
                     
-                    // ============= RODAPÉ EM TODAS AS PÁGINAS =============
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(0, 0, 0);
+                    addText(`Esta é a lição ${lessonNumber} para ${lessonType === 'youth' ? 'jovens' : 'adultos'} da EBD Fiel. O conteúdo completo estará disponível em breve.`, 11, false, 'justify', 5);
+                    yPos += 10;
+                    
+                    addText("Mantenha-se atualizado visitando nosso site regularmente para novas lições e materiais de estudo.", 11, false, 'justify', 5);
+                    
+                    // RODAPÉ EM TODAS AS PÁGINAS
                     const totalPages = doc.internal.getNumberOfPages();
                     
                     for (let i = 1; i <= totalPages; i++) {
@@ -3378,9 +3118,9 @@
                         doc.text(dateStr, pageWidth - marginRight, pageHeight - 10, { align: 'right' });
                     }
                     
-                    // ============= SALVAR O PDF =============
-                    const typePrefix = lessonType === 'youth' ? 'JOVENS_' : '';
-                    const fileName = `EBD_Fiel_${typePrefix}Licao_${lessonId}_${lessonContent.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                    // SALVAR O PDF
+                    const typePrefix = lessonType === 'youth' ? 'JOVENS_' : 'ADULTOS_';
+                    const fileName = `EBD_Fiel_${typePrefix}Licao_${lessonId}.pdf`;
                     
                     // Salvar o PDF
                     doc.save(fileName);
@@ -3389,21 +3129,21 @@
                     document.getElementById('pdfLoading').style.display = 'none';
                     
                     // Mostrar mensagem de sucesso
-                    alert(`✅ PDF gerado com sucesso!\n📄 Arquivo: ${fileName}\n📂 O download começará automaticamente.`);
+                    showVideoFeedback(`✅ PDF gerado: ${fileName}`);
                     
                 } catch (error) {
-                    console.error("❌ Erro ao gerar PDF:", error);
+                    console.error("Erro ao gerar PDF:", error);
                     document.getElementById('pdfLoading').style.display = 'none';
-                    alert("❌ Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
+                    alert("Ocorreu um erro ao gerar o PDF. Por favor, tente novamente.");
                 }
             }, 500);
         }
-        
+
         // Função para detectar dispositivos móveis
         function isMobileDevice() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
         }
-        
+
         // Função para mostrar mensagem de feedback
         function showVideoFeedback(message) {
             const feedback = document.getElementById('videoFeedback');
@@ -3414,12 +3154,11 @@
                 feedback.style.display = 'none';
             }, 3000);
         }
-        
-        // Função para tocar vídeo no mobile (SIMPLIFICADA)
+
+        // Função para tocar vídeo no mobile
         function playVideoOnMobile(videoType) {
-            // No mobile, tentar reproduzir inline primeiro
             const iframe = document.getElementById(`${videoType}YoutubeIframe`);
-            const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
+            const pcContainer = document.getElementById(`${videoType}VideoContainer`);
             const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
             
             if (pcContainer) {
@@ -3451,8 +3190,8 @@
             
             // Se não conseguir reproduzir inline, abrir no YouTube como fallback
             const urls = {
-                'trimestre': 'https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF',
-                'classeJovem': 'https://youtube.com/shorts/kIB-BtFmb-Y?feature=share'
+                'adult': 'https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF',
+                'youth': 'https://youtube.com/shorts/kIB-BtFmb-Y?feature=share'
             };
             
             if (urls[videoType]) {
@@ -3460,117 +3199,117 @@
                 showVideoFeedback('📱 Abrindo no YouTube...');
             }
         }
-        
+
         // Inicializar vídeos
         function initVideos() {
             const isMobile = isMobileDevice();
             
-            // Configurar vídeos para iniciar no modo 9:16
-            const videoTypes = ['trimestre', 'classeJovem'];
+            const videoTypes = ['adult', 'youth'];
             
             videoTypes.forEach(videoType => {
-                const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
+                const pcContainer = document.getElementById(`${videoType}VideoContainer`);
                 const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
                 
-                // Configurar desktop
-                if (pcContainer) {
-                    // Remover classes de modo paisagem (se existirem)
-                    pcContainer.classList.remove('landscape-mode');
-                    const videoWrapper = pcContainer.querySelector('.video-responsive-wrapper');
-                    if (videoWrapper) {
-                        videoWrapper.classList.remove('landscape-mode');
+                if (pcContainer && mobileFallback) {
+                    if (isMobile) {
+                        // MOBILE: Mostrar thumbnail
+                        pcContainer.style.display = 'none';
+                        mobileFallback.style.display = 'block';
+                        
+                        // Adicionar evento de clique
+                        mobileFallback.addEventListener('click', function() {
+                            playVideoOnMobile(videoType);
+                        });
+                    } else {
+                        // DESKTOP: Mostrar iframe
+                        pcContainer.style.display = 'block';
+                        mobileFallback.style.display = 'none';
                     }
                 }
-                
-                // Configurar mobile fallback
-                if (mobileFallback) {
-                    // Mobile também inicia em 9:16
-                    mobileFallback.classList.remove('landscape-mode');
-                }
             });
-            
-            // Configurações específicas para mobile/desktop
-            const trimestrePcContainer = document.getElementById('trimestrePcVideoContainer');
-            const trimestreMobileFallback = document.getElementById('trimestreMobileVideoFallback');
-            const classeJovemPcContainer = document.getElementById('classeJovemPcVideoContainer');
-            const classeJovemMobileFallback = document.getElementById('classeJovemMobileVideoFallback');
-            
-            if (isMobile) {
-                // MOBILE: Mostrar thumbnails inicialmente
-                if (trimestrePcContainer) trimestrePcContainer.style.display = 'none';
-                if (trimestreMobileFallback) {
-                    trimestreMobileFallback.style.display = 'block';
-                    // Adicionar evento de clique para tentar reproduzir inline
-                    trimestreMobileFallback.addEventListener('click', function() {
-                        playVideoOnMobile('trimestre');
-                    });
-                }
-                
-                if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'none';
-                if (classeJovemMobileFallback) {
-                    classeJovemMobileFallback.style.display = 'block';
-                    // Adicionar evento de clique para tentar reproduzir inline
-                    classeJovemMobileFallback.addEventListener('click', function() {
-                        playVideoOnMobile('classeJovem');
-                    });
-                }
-                
-            } else {
-                // DESKTOP: Mostrar iframes
-                if (trimestrePcContainer) trimestrePcContainer.style.display = 'block';
-                if (trimestreMobileFallback) trimestreMobileFallback.style.display = 'none';
-                
-                if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'block';
-                if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'none';
-            }
             
             // Verificar redimensionamento da janela
+            let resizeTimer;
             window.addEventListener('resize', function() {
-                const isMobileNow = isMobileDevice();
-                
-                if (isMobileNow !== isMobile) {
-                    // Recarregar a configuração dos vídeos
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
                     initVideos();
-                }
+                }, 250);
             });
         }
-        
-        // Filtros
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(b => {
-                    b.classList.remove('active');
+
+        // Configurar filtros
+        function setupFilters() {
+            // Filtros adultos
+            document.querySelectorAll('.adult .filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Atualizar botão ativo
+                    document.querySelectorAll('.adult .filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Atualizar e renderizar
+                    currentAdultFilter = filter;
+                    renderAdultLessons(filter);
                 });
-                
-                this.classList.add('active');
-                
-                const filter = this.getAttribute('data-filter');
-                renderLessons(filter);
             });
-        });
-        
+            
+            // Filtros jovens
+            document.querySelectorAll('.youth .filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Atualizar botão ativo
+                    document.querySelectorAll('.youth .filter-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Atualizar e renderizar
+                    currentYouthFilter = filter;
+                    renderYouthLessons(filter);
+                });
+            });
+        }
+
         // Menu mobile
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mainNav = document.getElementById('mainNav');
         
-        mobileMenuBtn.addEventListener('click', function() {
-            mainNav.classList.toggle('active');
-            this.innerHTML = mainNav.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-        
-        // Fechar menu ao clicar em link
-        document.querySelectorAll('#mainNav a').forEach(link => {
-            link.addEventListener('click', function() {
-                mainNav.classList.remove('active');
-                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+        if (mobileMenuBtn && mainNav) {
+            mobileMenuBtn.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                this.innerHTML = mainNav.classList.contains('active') 
+                    ? '<i class="fas fa-times"></i>' 
+                    : '<i class="fas fa-bars"></i>';
             });
-        });
-        
+            
+            // Fechar menu ao clicar em link
+            document.querySelectorAll('#mainNav a').forEach(link => {
+                link.addEventListener('click', function() {
+                    mainNav.classList.remove('active');
+                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                });
+            });
+        }
+
         // Inicializar
         document.addEventListener('DOMContentLoaded', function() {
-            renderLessons();
+            // Renderizar lições iniciais
+            renderAdultLessons(currentAdultFilter);
+            renderYouthLessons(currentYouthFilter);
+            
+            // Configurar event listeners para os botões
+            addButtonEventListeners('adult');
+            addButtonEventListeners('youth');
+            
+            // Configurar filtros
+            setupFilters();
+            
+            // Inicializar vídeos
             initVideos();
             
             // Animações
@@ -3579,29 +3318,74 @@
                 el.style.animationDelay = `${index * 0.1}s`;
             });
             
-            // Smooth scroll
+            // Smooth scroll para âncoras internas
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
+                    const href = this.getAttribute('href');
                     
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        if (mainNav.classList.contains('active')) {
-                            mainNav.classList.remove('active');
-                            mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
-                        }
+                    // Verificar se é uma âncora interna
+                    if (href !== '#' && href.startsWith('#')) {
+                        e.preventDefault();
                         
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+                        const targetId = href;
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            // Fechar menu mobile se aberto
+                            if (mainNav && mainNav.classList.contains('active')) {
+                                mainNav.classList.remove('active');
+                                if (mobileMenuBtn) {
+                                    mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                                }
+                            }
+                            
+                            // Scroll suave
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                        }
                     }
                 });
             });
+            
+            // Animar elementos ao rolar
+            function animateOnScroll() {
+                const elements = document.querySelectorAll('.fade-in:not(.animated)');
+                
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('animated');
+                    }
+                });
+            }
+            
+            // Verificar animação no carregamento e no scroll
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+            
+            // Inicializar tooltips se houver
+            if (typeof tippy !== 'undefined') {
+                tippy('[title]', {
+                    placement: 'top',
+                    arrow: true,
+                    animation: 'scale'
+                });
+            }
         });
+
+        // Garantir que as funções sejam acessíveis globalmente para debug
+        window.debug = {
+            renderAdultLessons,
+            renderYouthLessons,
+            openLessonModal,
+            generateLessonPDF,
+            adultLessons,
+            youthLessons
+        };
     </script>
 </body>
 </html>
