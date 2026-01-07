@@ -2174,54 +2174,30 @@
                     <p><strong>Assista a este vídeo especial que introduz o tema do trimestre:</strong> "Os Discípulos de Jesus Cristo".</p>
                     <p>Este conteúdo ajudará você a compreender melhor o contexto e os principais conceitos que serão abordados nas 13 lições deste trimestre.</p>
                     
-                    <!-- Controles para Mobile -->
-                    <div class="video-mobile-controls" id="trimestreMobileControls">
-                        <button onclick="playVideoOnMobile('trimestre')">
-                            <i class="fas fa-play"></i> Play na Página
-                        </button>
-                        <button onclick="toggleAspectRatio('trimestre')">
-                            <i class="fas fa-mobile-alt"></i> 9:16
-                        </button>
-                        <button onclick="window.open('https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF', '_blank')">
-                            <i class="fab fa-youtube"></i> YouTube
-                        </button>
-                    </div>
+                    <!-- Controles para Mobile (opcional - pode remover se quiser) -->
+<div class="video-mobile-controls" id="trimestreMobileControls">
+    <button onclick="window.open('https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF', '_blank')">
+        <i class="fab fa-youtube"></i> Abrir no YouTube
+    </button>
+</div>
                     
                     <!-- Controles para Desktop -->
-                    <div class="video-desktop-controls">
-                        <button class="play-inline-btn" id="trimestrePlayInline">
-                            <i class="fas fa-play-circle"></i> Play na Página
-                        </button>
-                        
-                        <button class="video-control-btn" id="trimestreAspectToggle">
-                            <i class="fas fa-desktop"></i> Modo 16:9
-                        </button>
-                        
-                        <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
-                            <i class="fab fa-youtube"></i> Assistir no YouTube
-                        </a>
-                    </div>
-                </div>
-            </div>
+<div class="video-desktop-controls">
+    <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
+        <i class="fab fa-youtube"></i> Assistir no YouTube (se necessário)
+    </a>
+</div>
             
             <!-- SEÇÃO DO VÍDEO DA CLASSE JOVEM -->
             <div class="video-jovem-section fade-in">
                 <h3><i class="fas fa-fire-alt"></i> Vídeo da Classe Jovem</h3>
                 
-                <!-- Container para Desktop -->
-                <div class="video-universal-container" id="classeJovemPcVideoContainer">
-                    <div class="video-responsive-wrapper">
-                        <iframe 
-                            id="classeJovemYoutubeIframe"
-                            src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1&enablejsapi=1" 
-                            title="Vídeo da Classe Jovem" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                            allowfullscreen
-                            referrerpolicy="strict-origin-when-cross-origin">
-                        </iframe>
-                    </div>
-                </div>
+                <!-- Controles para Desktop -->
+<div class="video-desktop-controls">
+    <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
+        <i class="fab fa-youtube"></i> Assistir no YouTube (se necessário)
+    </a>
+</div>
                 
                 <!-- Thumbnail para Mobile -->
                 <div class="video-mobile-fallback" id="classeJovemMobileVideoFallback">
@@ -3447,51 +3423,7 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
         }
         
-        // Função para alternar entre 16:9 e 9:16
-        function toggleVideoAspectRatio(videoType) {
-            const videoContainer = document.getElementById(`${videoType}PcVideoContainer`);
-            const videoWrapper = videoContainer ? videoContainer.querySelector('.video-responsive-wrapper') : null;
-            const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
-            const btn = document.getElementById(`${videoType}AspectToggle`);
-            
-            if (!videoContainer || !videoWrapper) return;
-            
-            if (videoContainer.classList.contains('portrait-mode')) {
-                // Mudar para 16:9 (paisagem)
-                videoContainer.classList.remove('portrait-mode');
-                videoContainer.classList.add('landscape-mode');
-                videoWrapper.classList.add('landscape-mode');
-                
-                // Atualizar botão
-                if (btn) {
-                    btn.innerHTML = '<i class="fas fa-mobile-alt"></i> Modo 9:16';
-                    btn.title = "Mudar para modo retrato (9:16)";
-                }
-            } else {
-                // Voltar para 9:16 (retrato)
-                videoContainer.classList.remove('landscape-mode');
-                videoContainer.classList.add('portrait-mode');
-                videoWrapper.classList.remove('landscape-mode');
-                
-                // Atualizar botão
-                if (btn) {
-                    btn.innerHTML = '<i class="fas fa-desktop"></i> Modo 16:9';
-                    btn.title = "Mudar para modo paisagem (16:9)";
-                }
-            }
-            
-            // Atualizar também no mobile se estiver visível
-            if (mobileFallback && mobileFallback.style.display !== 'none') {
-                if (mobileFallback.classList.contains('portrait-mode')) {
-                    mobileFallback.classList.remove('portrait-mode');
-                    mobileFallback.classList.add('landscape-mode');
-                } else {
-                    mobileFallback.classList.remove('landscape-mode');
-                    mobileFallback.classList.add('portrait-mode');
-                }
-            }
-        }
-        
+             
         // Função para mostrar mensagem de feedback
         function showVideoFeedback(message) {
             const feedback = document.getElementById('videoFeedback');
@@ -3503,74 +3435,52 @@
             }, 3000);
         }
         
-        // Função para tocar vídeo inline (DESKTOP)
-        function playVideoInline(videoType) {
-            const iframe = document.getElementById(`${videoType}YoutubeIframe`);
-            if (!iframe) return;
-            
-            try {
-                // Tentar usar a API do YouTube
-                if (iframe.contentWindow && typeof iframe.contentWindow.postMessage === 'function') {
-                    // Enviar comando para tocar o vídeo
-                    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                    showVideoFeedback('🎬 Reproduzindo vídeo...');
-                } else {
-                    // Fallback: recarregar o iframe com autoplay
-                    const currentSrc = iframe.src;
-                    if (!currentSrc.includes('autoplay=1')) {
-                        const separator = currentSrc.includes('?') ? '&' : '?';
-                        iframe.src = `${currentSrc}${separator}autoplay=1`;
-                        showVideoFeedback('🎬 Iniciando reprodução...');
-                    } else {
-                        showVideoFeedback('⚠️ O vídeo já está sendo reproduzido');
-                    }
-                }
-            } catch (error) {
-                console.error('Erro ao reproduzir vídeo:', error);
-                showVideoFeedback('❌ Não foi possível reproduzir o vídeo');
-            }
-        }
-        
+               
         // Função para tocar vídeo no mobile
         function playVideoOnMobile(videoType) {
-            // No mobile, primeiro tentar reproduzir inline
-            const iframe = document.getElementById(`${videoType}YoutubeIframe`);
-            const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
-            const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
-            
-            if (pcContainer) {
-                // Mostrar o container do PC (que contém o iframe)
-                pcContainer.style.display = 'block';
-                
-                // Esconder o fallback mobile
-                if (mobileFallback) {
-                    mobileFallback.style.display = 'none';
+    // No mobile, tentar reproduzir inline primeiro
+    const iframe = document.getElementById(`${videoType}YoutubeIframe`);
+    const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
+    const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
+    
+    if (pcContainer) {
+        // Mostrar o container do PC (que contém o iframe)
+        pcContainer.style.display = 'block';
+        
+        // Esconder o fallback mobile
+        if (mobileFallback) {
+            mobileFallback.style.display = 'none';
+        }
+        
+        // Tentar reproduzir o vídeo
+        if (iframe) {
+            try {
+                // Adicionar autoplay ao iframe se ainda não tiver
+                const currentSrc = iframe.src;
+                if (!currentSrc.includes('autoplay=1')) {
+                    const separator = currentSrc.includes('?') ? '&' : '?';
+                    iframe.src = `${currentSrc}${separator}autoplay=1`;
                 }
                 
-                // Tentar reproduzir o vídeo
-                if (iframe) {
-                    try {
-                        // Adicionar autoplay ao iframe se ainda não tiver
-                        const currentSrc = iframe.src;
-                        if (!currentSrc.includes('autoplay=1')) {
-                            const separator = currentSrc.includes('?') ? '&' : '?';
-                            iframe.src = `${currentSrc}${separator}autoplay=1`;
-                        }
-                        
-                        // Tentar usar a API do YouTube
-                        setTimeout(() => {
-                            if (iframe.contentWindow && typeof iframe.contentWindow.postMessage === 'function') {
-                                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                            }
-                        }, 500);
-                        
-                        showVideoFeedback('🎬 Reproduzindo vídeo na página...');
-                        return;
-                    } catch (error) {
-                        console.error('Erro ao reproduzir vídeo inline:', error);
-                    }
-                }
+                showVideoFeedback('🎬 Reproduzindo vídeo...');
+                return;
+            } catch (error) {
+                console.error('Erro ao reproduzir vídeo inline:', error);
             }
+        }
+    }
+    
+    // Se não conseguir reproduzir inline, abrir no YouTube como fallback
+    const urls = {
+        'trimestre': 'https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF',
+        'classeJovem': 'https://youtube.com/shorts/kIB-BtFmb-Y?feature=share'
+    };
+    
+    if (urls[videoType]) {
+        window.open(urls[videoType], '_blank');
+        showVideoFeedback('📱 Abrindo no YouTube...');
+    }
+}
             
             // Se não conseguir reproduzir inline, abrir no YouTube como fallback
             const urls = {
@@ -3585,26 +3495,7 @@
         }
         
         // Função para alternar aspecto no mobile
-        function toggleAspectRatio(videoType) {
-            const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
-            const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
-            
-            // Alternar no container PC
-            if (pcContainer) {
-                const videoWrapper = pcContainer.querySelector('.video-responsive-wrapper');
-                if (videoWrapper) {
-                    if (videoWrapper.classList.contains('landscape-mode')) {
-                        videoWrapper.classList.remove('landscape-mode');
-                        pcContainer.classList.remove('landscape-mode');
-                        showVideoFeedback('📱 Modo 9:16');
-                    } else {
-                        videoWrapper.classList.add('landscape-mode');
-                        pcContainer.classList.add('landscape-mode');
-                        showVideoFeedback('📺 Modo 16:9');
-                    }
-                }
-            }
-            
+                    
             // Alternar no fallback mobile
             if (mobileFallback) {
                 if (mobileFallback.classList.contains('landscape-mode')) {
@@ -3689,46 +3580,18 @@
                 
             } else {
                 // DESKTOP: Mostrar iframes e controles desktop
+                
                 if (trimestrePcContainer) trimestrePcContainer.style.display = 'block';
-                if (trimestreMobileFallback) trimestreMobileFallback.style.display = 'none';
-                if (trimestreMobileControls) trimestreMobileControls.style.display = 'none';
-                if (trimestreDesktopControls) trimestreDesktopControls.style.display = 'block';
-                
-                if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'block';
-                if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'none';
-                if (classeJovemMobileControls) classeJovemMobileControls.style.display = 'none';
-                if (classeJovemDesktopControls) classeJovemDesktopControls.style.display = 'block';
-                
-                // Adicionar eventos para botões de play inline
-                const trimestrePlayBtn = document.getElementById('trimestrePlayInline');
-                if (trimestrePlayBtn) {
-                    trimestrePlayBtn.addEventListener('click', function() {
-                        playVideoInline('trimestre');
-                    });
-                }
-                
-                const classeJovemPlayBtn = document.getElementById('classeJovemPlayInline');
-                if (classeJovemPlayBtn) {
-                    classeJovemPlayBtn.addEventListener('click', function() {
-                        playVideoInline('classeJovem');
-                    });
-                }
-                
-                // Adicionar eventos para botões de alternar aspecto
-                const trimestreAspectBtn = document.getElementById('trimestreAspectToggle');
-                if (trimestreAspectBtn) {
-                    trimestreAspectBtn.addEventListener('click', function() {
-                        toggleVideoAspectRatio('trimestre');
-                    });
-                }
-                
-                const classeJovemAspectBtn = document.getElementById('classeJovemAspectToggle');
-                if (classeJovemAspectBtn) {
-                    classeJovemAspectBtn.addEventListener('click', function() {
-                        toggleVideoAspectRatio('classeJovem');
-                    });
-                }
-            }
+if (trimestreMobileFallback) trimestreMobileFallback.style.display = 'none';
+if (trimestreMobileControls) trimestreMobileControls.style.display = 'none';
+if (trimestreDesktopControls) trimestreDesktopControls.style.display = 'block';
+
+if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'block';
+if (classeJovemMobileFallback) classeJovemMobileFallback.style.display = 'none';
+if (classeJovemMobileControls) classeJovemMobileControls.style.display = 'none';
+if (classeJovemDesktopControls) classeJovemDesktopControls.style.display = 'block';
+
+// NÃO ADICIONE mais event listeners aqui - os botões foram removidos
             
             // Verificar redimensionamento da janela
             window.addEventListener('resize', function() {
