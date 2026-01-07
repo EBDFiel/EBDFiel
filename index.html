@@ -502,7 +502,7 @@
         /* SOLUÇÃO UNIVERSAL PARA O VÍDEO */
         .video-universal-container {
             width: 100%;
-            max-width: 560px;
+            max-width: 315px !important; /* Largura máxima para 9:16 */
             margin: 0 auto;
             border-radius: 10px;
             overflow: hidden;
@@ -510,16 +510,22 @@
             background: #000;
             transition: all 0.3s ease;
         }
-        
-        /* Container responsivo para vídeo */
+
+        /* Para vídeo em modo paisagem (16:9) quando alternado */
+        .video-universal-container.landscape-mode {
+            max-width: 560px !important; /* Largura máxima para 16:9 */
+        }
+
+        /* Container responsivo para vídeo em 9:16 por padrão */
         .video-responsive-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* Proporção 16:9 */
+            padding-bottom: 177.78%; /* Proporção 9:16 (altura é 177.78% da largura) */
             height: 0;
             overflow: hidden;
             transition: all 0.3s ease;
+            background: #000;
         }
-        
+
         .video-responsive-wrapper iframe {
             position: absolute;
             top: 0;
@@ -528,11 +534,16 @@
             height: 100%;
             border: none;
         }
+
+        /* Para vídeo em modo paisagem (16:9) quando alternado */
+        .video-responsive-wrapper.landscape-mode {
+            padding-bottom: 56.25% !important; /* Proporção 16:9 */
+        }
         
         /* Thumbnail com link para mobile */
         .video-mobile-fallback {
             width: 100%;
-            max-width: 560px;
+            max-width: 315px; /* Mesma largura do modo 9:16 */
             margin: 0 auto;
             border-radius: 10px;
             overflow: hidden;
@@ -541,11 +552,9 @@
             position: relative;
             display: none; /* Inicialmente escondido */
         }
-        
-        .video-mobile-fallback img {
-            width: 100%;
-            height: auto;
-            display: block;
+
+        .video-mobile-fallback.landscape-mode {
+            max-width: 560px; /* Largura para modo 16:9 */
         }
         
         .video-mobile-overlay {
@@ -653,16 +662,6 @@
         
         .video-jovem-section .video-control-btn:hover {
             background: linear-gradient(135deg, var(--youth-secondary) 0%, var(--youth-primary) 100%);
-        }
-        
-        /* Para vídeo em modo retrato (9:16) */
-        .video-universal-container.portrait-mode {
-            max-width: 315px !important;
-            margin: 0 auto;
-        }
-        
-        .video-universal-container.portrait-mode .video-responsive-wrapper {
-            padding-bottom: 177.78% !important; /* 9:16 */
         }
         
         /* Botão de play na página */
@@ -2196,7 +2195,7 @@
                         </button>
                         
                         <button class="video-control-btn" id="trimestreAspectToggle">
-                            <i class="fas fa-mobile-alt"></i> Modo 9:16
+                            <i class="fas fa-desktop"></i> Modo 16:9
                         </button>
                         
                         <a href="https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF" target="_blank" rel="noopener" class="video-direct-link" id="trimestreDirectVideoLink">
@@ -2261,7 +2260,7 @@
                         </button>
                         
                         <button class="video-control-btn" id="classeJovemAspectToggle">
-                            <i class="fas fa-mobile-alt"></i> Modo 9:16
+                            <i class="fas fa-desktop"></i> Modo 16:9
                         </button>
                         
                         <a href="https://youtube.com/shorts/kIB-BtFmb-Y?feature=share" target="_blank" rel="noopener" class="video-direct-link" id="classeJovemDirectVideoLink">
@@ -3452,14 +3451,17 @@
         // Função para alternar entre 16:9 e 9:16
         function toggleVideoAspectRatio(videoType) {
             const videoContainer = document.getElementById(`${videoType}PcVideoContainer`);
+            const videoWrapper = videoContainer ? videoContainer.querySelector('.video-responsive-wrapper') : null;
             const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
             const btn = document.getElementById(`${videoType}AspectToggle`);
             
-            if (!videoContainer) return;
+            if (!videoContainer || !videoWrapper) return;
             
             if (videoContainer.classList.contains('portrait-mode')) {
-                // Voltar para 16:9
+                // Mudar para 16:9 (paisagem)
                 videoContainer.classList.remove('portrait-mode');
+                videoContainer.classList.add('landscape-mode');
+                videoWrapper.classList.add('landscape-mode');
                 
                 // Atualizar botão
                 if (btn) {
@@ -3467,8 +3469,10 @@
                     btn.title = "Mudar para modo retrato (9:16)";
                 }
             } else {
-                // Mudar para 9:16
+                // Voltar para 9:16 (retrato)
+                videoContainer.classList.remove('landscape-mode');
                 videoContainer.classList.add('portrait-mode');
+                videoWrapper.classList.remove('landscape-mode');
                 
                 // Atualizar botão
                 if (btn) {
@@ -3481,7 +3485,9 @@
             if (mobileFallback && mobileFallback.style.display !== 'none') {
                 if (mobileFallback.classList.contains('portrait-mode')) {
                     mobileFallback.classList.remove('portrait-mode');
+                    mobileFallback.classList.add('landscape-mode');
                 } else {
+                    mobileFallback.classList.remove('landscape-mode');
                     mobileFallback.classList.add('portrait-mode');
                 }
             }
@@ -3547,8 +3553,10 @@
             
             if (mobileFallback.classList.contains('portrait-mode')) {
                 mobileFallback.classList.remove('portrait-mode');
+                mobileFallback.classList.add('landscape-mode');
                 showVideoFeedback('📺 Modo 16:9');
             } else {
+                mobileFallback.classList.remove('landscape-mode');
                 mobileFallback.classList.add('portrait-mode');
                 showVideoFeedback('📱 Modo 9:16');
             }
@@ -3558,13 +3566,45 @@
         function initVideos() {
             const isMobile = isMobileDevice();
             
-            // Elementos do vídeo do trimestre
+            // Configurar vídeos para iniciar no modo 9:16
+            const videoTypes = ['trimestre', 'classeJovem'];
+            
+            videoTypes.forEach(videoType => {
+                const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
+                const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
+                const videoWrapper = pcContainer ? pcContainer.querySelector('.video-responsive-wrapper') : null;
+                const aspectBtn = document.getElementById(`${videoType}AspectToggle`);
+                
+                // Configurar desktop
+                if (pcContainer && videoWrapper) {
+                    // Remover classes de modo paisagem (se existirem)
+                    pcContainer.classList.remove('landscape-mode');
+                    videoWrapper.classList.remove('landscape-mode');
+                    
+                    // Garantir que está no modo retrato (9:16)
+                    pcContainer.classList.add('portrait-mode');
+                }
+                
+                // Configurar mobile fallback
+                if (mobileFallback) {
+                    // Mobile também inicia em 9:16
+                    mobileFallback.classList.remove('landscape-mode');
+                    mobileFallback.classList.add('portrait-mode');
+                }
+                
+                // Atualizar texto do botão
+                if (aspectBtn) {
+                    aspectBtn.innerHTML = '<i class="fas fa-desktop"></i> Modo 16:9';
+                    aspectBtn.title = "Mudar para modo paisagem (16:9)";
+                }
+            });
+            
+            // Restante do código para mobile/desktop
             const trimestrePcContainer = document.getElementById('trimestrePcVideoContainer');
             const trimestreMobileFallback = document.getElementById('trimestreMobileVideoFallback');
             const trimestreMobileControls = document.getElementById('trimestreMobileControls');
             const trimestreDesktopControls = document.querySelector('#trimestreVideoInfo .video-desktop-controls');
             
-            // Elementos do vídeo da classe jovem
             const classeJovemPcContainer = document.getElementById('classeJovemPcVideoContainer');
             const classeJovemMobileFallback = document.getElementById('classeJovemMobileVideoFallback');
             const classeJovemMobileControls = document.getElementById('classeJovemMobileControls');
