@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>EBD Fiel - Escola Bíblica Dominical</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -1000,7 +1000,6 @@
             font-size: 0.75rem;
             font-weight: 600;
             box-shadow: 0 3px 8px rgba(40, 167, 69, 0.3);
-            z-index: 1;
         }
         
         .lesson-card.youth .available-badge {
@@ -3534,7 +3533,46 @@
         
         // Função para tocar vídeo no mobile
         function playVideoOnMobile(videoType) {
-            // No mobile, sempre abrir no YouTube
+            // No mobile, primeiro tentar reproduzir inline
+            const iframe = document.getElementById(`${videoType}YoutubeIframe`);
+            const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
+            const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
+            
+            if (pcContainer) {
+                // Mostrar o container do PC (que contém o iframe)
+                pcContainer.style.display = 'block';
+                
+                // Esconder o fallback mobile
+                if (mobileFallback) {
+                    mobileFallback.style.display = 'none';
+                }
+                
+                // Tentar reproduzir o vídeo
+                if (iframe) {
+                    try {
+                        // Adicionar autoplay ao iframe se ainda não tiver
+                        const currentSrc = iframe.src;
+                        if (!currentSrc.includes('autoplay=1')) {
+                            const separator = currentSrc.includes('?') ? '&' : '?';
+                            iframe.src = `${currentSrc}${separator}autoplay=1`;
+                        }
+                        
+                        // Tentar usar a API do YouTube
+                        setTimeout(() => {
+                            if (iframe.contentWindow && typeof iframe.contentWindow.postMessage === 'function') {
+                                iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                            }
+                        }, 500);
+                        
+                        showVideoFeedback('🎬 Reproduzindo vídeo na página...');
+                        return;
+                    } catch (error) {
+                        console.error('Erro ao reproduzir vídeo inline:', error);
+                    }
+                }
+            }
+            
+            // Se não conseguir reproduzir inline, abrir no YouTube como fallback
             const urls = {
                 'trimestre': 'https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF',
                 'classeJovem': 'https://youtube.com/shorts/kIB-BtFmb-Y?feature=share'
@@ -3548,17 +3586,32 @@
         
         // Função para alternar aspecto no mobile
         function toggleAspectRatio(videoType) {
+            const pcContainer = document.getElementById(`${videoType}PcVideoContainer`);
             const mobileFallback = document.getElementById(`${videoType}MobileVideoFallback`);
-            if (!mobileFallback) return;
             
-            if (mobileFallback.classList.contains('portrait-mode')) {
-                mobileFallback.classList.remove('portrait-mode');
-                mobileFallback.classList.add('landscape-mode');
-                showVideoFeedback('📺 Modo 16:9');
-            } else {
-                mobileFallback.classList.remove('landscape-mode');
-                mobileFallback.classList.add('portrait-mode');
-                showVideoFeedback('📱 Modo 9:16');
+            // Alternar no container PC
+            if (pcContainer) {
+                const videoWrapper = pcContainer.querySelector('.video-responsive-wrapper');
+                if (videoWrapper) {
+                    if (videoWrapper.classList.contains('landscape-mode')) {
+                        videoWrapper.classList.remove('landscape-mode');
+                        pcContainer.classList.remove('landscape-mode');
+                        showVideoFeedback('📱 Modo 9:16');
+                    } else {
+                        videoWrapper.classList.add('landscape-mode');
+                        pcContainer.classList.add('landscape-mode');
+                        showVideoFeedback('📺 Modo 16:9');
+                    }
+                }
+            }
+            
+            // Alternar no fallback mobile
+            if (mobileFallback) {
+                if (mobileFallback.classList.contains('landscape-mode')) {
+                    mobileFallback.classList.remove('landscape-mode');
+                } else {
+                    mobileFallback.classList.add('landscape-mode');
+                }
             }
         }
         
@@ -3599,7 +3652,7 @@
                 }
             });
             
-            // Restante do código para mobile/desktop
+            // Configurações específicas para mobile/desktop
             const trimestrePcContainer = document.getElementById('trimestrePcVideoContainer');
             const trimestreMobileFallback = document.getElementById('trimestreMobileVideoFallback');
             const trimestreMobileControls = document.getElementById('trimestreMobileControls');
@@ -3611,13 +3664,13 @@
             const classeJovemDesktopControls = document.querySelector('#classeJovemVideoInfo .video-desktop-controls');
             
             if (isMobile) {
-                // MOBILE: Mostrar thumbnails e controles mobile
+                // MOBILE: Mostrar thumbnails e controles mobile inicialmente
                 if (trimestrePcContainer) trimestrePcContainer.style.display = 'none';
                 if (trimestreMobileFallback) {
                     trimestreMobileFallback.style.display = 'block';
-                    // Adicionar evento de clique para abrir no YouTube
+                    // Adicionar evento de clique para tentar reproduzir inline
                     trimestreMobileFallback.addEventListener('click', function() {
-                        window.open('https://youtube.com/shorts/te9eFEEVqKQ?si=dInX3vVQ4xiUd-nF', '_blank');
+                        playVideoOnMobile('trimestre');
                     });
                 }
                 if (trimestreMobileControls) trimestreMobileControls.style.display = 'flex';
@@ -3626,9 +3679,9 @@
                 if (classeJovemPcContainer) classeJovemPcContainer.style.display = 'none';
                 if (classeJovemMobileFallback) {
                     classeJovemMobileFallback.style.display = 'block';
-                    // Adicionar evento de clique para abrir no YouTube
+                    // Adicionar evento de clique para tentar reproduzir inline
                     classeJovemMobileFallback.addEventListener('click', function() {
-                        window.open('https://youtube.com/shorts/kIB-BtFmb-Y?feature=share', '_blank');
+                        playVideoOnMobile('classeJovem');
                     });
                 }
                 if (classeJovemMobileControls) classeJovemMobileControls.style.display = 'flex';
