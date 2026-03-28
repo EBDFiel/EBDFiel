@@ -74,11 +74,11 @@
             z-index: 1000;
         }
         .header-container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 1rem; }
-        .logo-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+        .logo { display: flex; align-items: center; gap: 1rem; cursor: pointer; }
+        .logo-icon { width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
         .logo-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
-        .logo-text h1 { font-size: 1.6rem; font-weight: 600; background: linear-gradient(to right, #fff, #b3e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .logo-text p { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+        .logo-text h1 { font-size: 1.8rem; font-weight: 600; background: linear-gradient(to right, #fff, #b3e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text p { font-size: 0.9rem; color: rgba(255,255,255,0.6); }
         nav ul { display: flex; list-style: none; gap: 2rem; }
         nav a { color: white; text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
         nav a:hover { color: #ffb347; }
@@ -233,12 +233,92 @@
         .lesson-date { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1rem; }
         .lesson-description { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
         .lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-        .lesson-tag { background: rgba(255,180,70,0.2); color: #ffb347; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.8rem; }
         .view-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 50px; background: linear-gradient(135deg, #00b4d8, #0077b6); color: white; border: none; cursor: pointer; transition: 0.3s; }
         .view-btn:hover:not(:disabled) { transform: translateY(-3px); }
         .view-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .available-badge { position: absolute; top: 1rem; right: 1rem; background: #28a745; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
         .preparation-badge { position: absolute; top: 1rem; right: 1rem; background: #ff9800; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
+
+        /* Painel admin */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e293b;
+            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 80vh;
+            width: 800px;
+            z-index: 3000;
+            overflow-y: auto;
+            padding: 1.5rem;
+            color: white;
+            border: 1px solid #ffb347;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .admin-panel h3 {
+            color: #ffb347;
+            margin-bottom: 1rem;
+        }
+        .admin-panel .close-admin {
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .admin-panel .lesson-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .admin-panel .lesson-info {
+            flex: 1;
+        }
+        .admin-panel .toggle-btn {
+            background: #334155;
+            border: none;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .admin-panel .toggle-btn.active {
+            background: #28a745;
+        }
+        .admin-panel .toggle-btn.blocked {
+            background: #dc2626;
+        }
+        .admin-buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        .admin-buttons button {
+            background: #ffb347;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .admin-panel-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2999;
+        }
 
         /* Sobre */
         .about-section {
@@ -274,7 +354,7 @@
         .social-icons a:hover { background: #ffb347; color: #1e2f4a; }
         .copyright { text-align: center; padding-top: 2rem; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
 
-        /* Modal claro (como antes) */
+        /* Modal claro */
         .modal {
             display: none;
             position: fixed;
@@ -381,6 +461,8 @@
             .class-section { padding: 1.5rem; }
             .about-content { grid-template-columns: 1fr; }
             .tab-btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
+            .logo-icon { width: 60px; height: 60px; }
+            .logo-text h1 { font-size: 1.4rem; }
         }
         .fade-in { animation: fadeIn 0.5s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -389,7 +471,7 @@
 <body>
     <canvas id="particles"></canvas>
     <div class="social-topbar"><div class="social-topbar-container"><div class="social-text"><i class="fas fa-hashtag"></i> Siga-nos:</div><div class="social-icons-top"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div></div></div>
-    <header><div class="header-container"><div class="logo"><div class="logo-icon"><img src="https://i.imgur.com/vsNu5IC.png" alt="Logo" class="logo-img"></div><div class="logo-text"><h1>EBD Fiel</h1><p>Fiel à Palavra</p></div></div><button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button><nav id="mainNav"><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li><li><a href="#about">Sobre</a></li></ul></nav></div></header>
+    <header><div class="header-container"><div class="logo" id="logo"><div class="logo-icon"><img src="https://i.imgur.com/vsNu5IC.png" alt="Logo" class="logo-img"></div><div class="logo-text"><h1>EBD Fiel</h1><p>Fiel à Palavra</p></div></div><button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button><nav id="mainNav"><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li><li><a href="#about">Sobre</a></li></ul></nav></div></header>
     <div class="container">
         <section class="hero" id="home"><div class="hero-content"><h2>Escola Bíblica Dominical</h2><p>Estudos profundos e relevantes para o crescimento espiritual. Material fiel às Escrituras.</p><a href="#adult-class" class="cta-button">Explorar Lições <i class="fas fa-arrow-down"></i></a></div></section>
         <section class="class-section" id="adult-class"><div class="class-section-title"><i class="fas fa-users"></i><h2>Classe Adultos</h2></div><div class="class-description"><p>Lições para adultos com estudos bíblicos profundos e aplicações práticas.</p></div>
@@ -409,30 +491,62 @@
     <footer><div class="footer-content"><div class="footer-column"><h3>EBD Fiel</h3><p>Material bíblico fiel.</p><div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div><div class="footer-column"><h3>Links</h3><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li></ul></div></div><div class="copyright"><p>&copy; 2026 EBD Fiel - Todos os direitos reservados.</p></div></footer>
     <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"><div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando...</div></div></div></div>
 
+    <!-- Painel Admin -->
+    <div id="adminOverlay" class="admin-panel-overlay"></div>
+    <div id="adminPanel" class="admin-panel">
+        <button class="close-admin" id="closeAdminBtn">&times;</button>
+        <h3>Administração de Disponibilidade</h3>
+        <div id="adminList"></div>
+        <div class="admin-buttons">
+            <button id="adminUnlockAll">Liberar Todas</button>
+            <button id="adminBlockAll">Bloquear Todas</button>
+        </div>
+        <p style="font-size:0.8rem; margin-top:1rem;">* As alterações são salvas no seu navegador e têm prioridade sobre as datas.</p>
+    </div>
+
     <script>
         let adultLessons = [], youthLessons = [];
+        let allLessons = []; // array com todos os objetos { id, tipo, trimestre, numero, titulo, data }
+        let adminOverrides = {}; // objeto com chave "tipo:id" ou "tipo-trimestre-numero" -> true/false
 
-        // Função para converter data no formato "dd/mm/aaaa" para objeto Date
+        // Carregar overrides do localStorage
+        function loadOverrides() {
+            const stored = localStorage.getItem('ebd_admin_overrides');
+            if (stored) {
+                try {
+                    adminOverrides = JSON.parse(stored);
+                } catch(e) { adminOverrides = {}; }
+            } else {
+                adminOverrides = {};
+            }
+        }
+        function saveOverrides() {
+            localStorage.setItem('ebd_admin_overrides', JSON.stringify(adminOverrides));
+        }
+
+        // Verifica disponibilidade: prioridade para override, senão baseado na data
+        function isLessonAvailable(lesson) {
+            const key = `${lesson.tipo}:${lesson.id}`;
+            if (adminOverrides.hasOwnProperty(key)) {
+                return adminOverrides[key];
+            }
+            // fallback: data
+            const releaseDate = getReleaseDate(lesson.data);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            return today >= releaseDate;
+        }
+
+        // Funções de data
         function parseDate(dateStr) {
             const parts = dateStr.split('/');
             return new Date(parts[2], parts[1]-1, parts[0]);
         }
-
-        // Função que retorna a data de liberação (segunda-feira anterior ao domingo da lição)
-        function getReleaseDate(lessonDateStr) {
-            const lessonDate = parseDate(lessonDateStr);
-            // Subtrair 6 dias para obter a segunda anterior
-            const releaseDate = new Date(lessonDate);
-            releaseDate.setDate(lessonDate.getDate() - 6);
-            return releaseDate;
-        }
-
-        // Verifica se a lição está disponível (hoje >= data de liberação)
-        function isLessonAvailable(lessonDateStr) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            const release = getReleaseDate(lessonDateStr);
-            return today >= release;
+        function getReleaseDate(dateStr) {
+            const lessonDate = parseDate(dateStr);
+            const release = new Date(lessonDate);
+            release.setDate(lessonDate.getDate() - 6);
+            return release;
         }
 
         async function carregarDados() {
@@ -441,8 +555,23 @@
                 const data = await response.json();
                 adultLessons = data.adult || [];
                 youthLessons = data.youth || [];
+                // Construir allLessons com ids únicos
+                allLessons = [];
+                let nextId = 1;
+                adultLessons.forEach(l => {
+                    l.id = nextId++;
+                    l.tipo = 'adult';
+                    allLessons.push(l);
+                });
+                youthLessons.forEach(l => {
+                    l.id = nextId++;
+                    l.tipo = 'youth';
+                    allLessons.push(l);
+                });
                 criarAbas('adult', adultLessons);
                 criarAbas('youth', youthLessons);
+                // Construir admin panel
+                construirAdminPanel();
             } catch (error) {
                 console.error('Erro ao carregar lessons.json:', error);
                 document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições. Verifique se o arquivo lessons.json está presente.</div>';
@@ -487,7 +616,7 @@
             }
             container.innerHTML = '';
             lista.forEach(licao => {
-                const available = isLessonAvailable(licao.data);
+                const available = isLessonAvailable(licao);
                 const badgeClass = available ? 'available-badge' : 'preparation-badge';
                 const badgeText = available ? 'Disponível' : 'Em preparação';
 
@@ -504,7 +633,6 @@
                         <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${licao.data || ''}</div>
                         <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
                         <div class="lesson-footer">
-                            <span class="lesson-tag">${tipo === 'adult' ? 'Estudo Bíblico' : 'CONECTAR'}</span>
                             ${available ? 
                                 `<button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>` :
                                 `<button class="view-btn" disabled><i class="fas fa-clock"></i> Em breve</button>`
@@ -514,6 +642,108 @@
                 `;
                 container.appendChild(card);
             });
+        }
+
+        // Admin panel
+        function construirAdminPanel() {
+            const container = document.getElementById('adminList');
+            if (!container) return;
+            container.innerHTML = '';
+            allLessons.forEach(lesson => {
+                const key = `${lesson.tipo}:${lesson.id}`;
+                const isAvailable = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : (() => {
+                    const release = getReleaseDate(lesson.data);
+                    const today = new Date(); today.setHours(0,0,0,0);
+                    return today >= release;
+                })();
+                const row = document.createElement('div');
+                row.className = 'lesson-row';
+                row.innerHTML = `
+                    <div class="lesson-info">
+                        <strong>${lesson.tipo === 'adult' ? 'Adultos' : 'Jovens'}</strong> | ${lesson.trimestre}º Trim | Lição ${lesson.numero}: ${lesson.titulo}
+                    </div>
+                    <button class="toggle-btn ${isAvailable ? 'active' : 'blocked'}" data-key="${key}">${isAvailable ? 'Liberada' : 'Bloqueada'}</button>
+                `;
+                container.appendChild(row);
+            });
+            // Adicionar eventos nos botões
+            document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const key = btn.dataset.key;
+                    const current = adminOverrides[key] !== undefined ? adminOverrides[key] : (() => {
+                        const lesson = allLessons.find(l => `${l.tipo}:${l.id}` === key);
+                        const release = getReleaseDate(lesson.data);
+                        const today = new Date(); today.setHours(0,0,0,0);
+                        return today >= release;
+                    })();
+                    adminOverrides[key] = !current;
+                    saveOverrides();
+                    // Re-renderizar todas as telas
+                    recarregarTodasAsListas();
+                    construirAdminPanel(); // atualiza o painel
+                });
+            });
+        }
+
+        function recarregarTodasAsListas() {
+            // Atualiza as abas atuais
+            const activeAdultTrim = document.querySelector('#adultTabs .tab-btn.active')?.dataset.trim;
+            if (activeAdultTrim) {
+                renderizarLicoes('adult', adultLessons.filter(l => l.trimestre == activeAdultTrim));
+            } else {
+                // Se não houver ativa, recria abas (mantém)
+                criarAbas('adult', adultLessons);
+            }
+            const activeYouthTrim = document.querySelector('#youthTabs .tab-btn.active')?.dataset.trim;
+            if (activeYouthTrim) {
+                renderizarLicoes('youth', youthLessons.filter(l => l.trimestre == activeYouthTrim));
+            } else {
+                criarAbas('youth', youthLessons);
+            }
+        }
+
+        // Admin unlock all / block all
+        function unlockAll() {
+            allLessons.forEach(lesson => {
+                const key = `${lesson.tipo}:${lesson.id}`;
+                adminOverrides[key] = true;
+            });
+            saveOverrides();
+            recarregarTodasAsListas();
+            construirAdminPanel();
+        }
+        function blockAll() {
+            allLessons.forEach(lesson => {
+                const key = `${lesson.tipo}:${lesson.id}`;
+                adminOverrides[key] = false;
+            });
+            saveOverrides();
+            recarregarTodasAsListas();
+            construirAdminPanel();
+        }
+
+        // Abrir/fechar painel admin
+        function mostrarAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'block';
+            document.getElementById('adminPanel').style.display = 'block';
+            construirAdminPanel(); // atualizar lista antes de mostrar
+        }
+        function fecharAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
+        // Contador de cliques no logo
+        let clickCount = 0;
+        let clickTimeout;
+        function handleLogoClick() {
+            clickCount++;
+            if (clickTimeout) clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
+            if (clickCount >= 5) {
+                clickCount = 0;
+                mostrarAdminPanel();
+            }
         }
 
         async function abrirModal(licao) {
@@ -583,6 +813,21 @@
             if (e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
         });
 
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOverrides();
+            carregarDados();
+
+            const logo = document.getElementById('logo');
+            logo.addEventListener('click', handleLogoClick);
+
+            const closeAdmin = document.getElementById('closeAdminBtn');
+            closeAdmin.addEventListener('click', fecharAdminPanel);
+            document.getElementById('adminOverlay').addEventListener('click', fecharAdminPanel);
+            document.getElementById('adminUnlockAll').addEventListener('click', unlockAll);
+            document.getElementById('adminBlockAll').addEventListener('click', blockAll);
+        });
+
         // Partículas
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
@@ -601,8 +846,6 @@
         const nav = document.getElementById('mainNav');
         mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; });
         document.querySelectorAll('#mainNav a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('active'); mobileBtn.innerHTML = '<i class="fas fa-bars"></i>'; }));
-
-        carregarDados();
     </script>
 </body>
 </html>
