@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* TODOS OS ESTILOS ANTERIORES (MANTIDOS) – por economia de espaço, mantemos os mesmos estilos */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -310,6 +311,9 @@
     </div>
 
     <script>
+        // CÓDIGO JAVASCRIPT (MANTIDO IGUAL AO ANTERIOR, COM A MODIFICAÇÃO NA GERAÇÃO DO HTML DA LIÇÃO)
+        // As variáveis e funções são as mesmas, apenas adicionamos o bloco social ao final do conteúdo de adultos.
+        // (Incluído na função gerarConteudoHtml)
         let adultLessons = [], youthLessons = [];
         let allLessons = [];
         let adminOverrides = {};
@@ -428,7 +432,6 @@
                 });
                 containerTabs.appendChild(btn);
             });
-            // Inicialmente nenhuma aba ativa; grid vazia
             document.getElementById(`${tipo}LessonsContainer`).innerHTML = '';
         }
 
@@ -470,7 +473,7 @@
                 container.appendChild(card);
             });
 
-            // Evento de 5 cliques para editar com senha
+            // 5 cliques para editar com senha
             document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
                 let clickCount = 0;
                 let clickTimeout;
@@ -548,7 +551,6 @@
             const leiturasText = (lesson.leituras || []).map(l => `${l.dia} | ${l.versiculo} | ${l.texto}`).join('\n');
             document.getElementById('editLeituras').value = leiturasText;
             document.getElementById('editConteudo').value = lesson.conteudo || '';
-
             modal.style.display = 'block';
             document.getElementById('saveEditBtn').onclick = () => {
                 const novosObjetivos = document.getElementById('editObjetivos').value.split('\n').filter(l => l.trim() !== '');
@@ -599,7 +601,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Abrir lição em nova guia (com suporte aos estilos de apoio pedagógico)
+        // Geração da nova guia com bloco social para adultos
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
@@ -615,6 +617,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>${licao.titulo} - EBD Fiel</title>
                 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
                 <style>
                     body {
                         font-family: 'Inter', sans-serif;
@@ -687,6 +690,38 @@
                         margin: 1.5rem 0;
                         border-radius: 12px;
                     }
+                    .social-footer {
+                        margin-top: 2rem;
+                        padding-top: 1rem;
+                        border-top: 1px solid #e2e8f0;
+                        text-align: center;
+                    }
+                    .social-links {
+                        display: flex;
+                        justify-content: center;
+                        gap: 1rem;
+                        flex-wrap: wrap;
+                        margin: 1rem 0;
+                    }
+                    .social-links a {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        background: #f1f5f9;
+                        padding: 0.5rem 1rem;
+                        border-radius: 30px;
+                        text-decoration: none;
+                        color: #1e293b;
+                        transition: 0.2s;
+                    }
+                    .social-links a:hover {
+                        background: #e2e8f0;
+                        transform: translateY(-2px);
+                    }
+                    .whatsapp-link {
+                        background: #25D366 !important;
+                        color: white !important;
+                    }
                     @media (max-width: 768px) {
                         body { padding: 1rem; }
                         .container { padding: 1rem; }
@@ -702,7 +737,6 @@
                         Data: ${licao.data || ''}
                     </div>`;
 
-            // Campos principais (se existirem, exibir)
             if (licao.texto_aureo && licao.texto_aureo.versiculo) {
                 html += `<div class="verse-box">
                             <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
@@ -725,10 +759,24 @@
                 html += `<div class="modal-section-title">📅 Leituras Complementares</div>
                          <div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
             }
-
-            // Conteúdo principal (já pode conter as seções como apoio pedagógico, aplicação prática, etc.)
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
+
+            // Adicionar bloco social APENAS para lições de adultos
+            if (licao.tipo === 'adult') {
+                html += `<div class="social-footer">
+                            <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
+                            <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas e fortaleça a nossa Escola Bíblica Dominical.</p>
+                            <p>Aproveite e acesse os links abaixo para nos acompanhar em todas as nossas redes:</p>
+                            <div class="social-links">
+                                <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                                <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                                <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+                                <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                <a href="https://chat.whatsapp.com/Lh4cvZW1DPMJ5ctHYWyyMC" target="_blank" class="whatsapp-link"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a>
+                            </div>
+                        </div>`;
+            }
 
             html += `</div></body></html>`;
             return html;
