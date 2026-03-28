@@ -122,8 +122,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .tab-btn.active {
-            background: #ffa01e;
-            color: #fff;
+            background: #28a745;
+            color: white;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .lessons-grid {
@@ -256,7 +256,6 @@
         <section class="class-section" id="adult-class"><div class="class-section-title"><i class="fas fa-users"></i><h2>Classe Adultos</h2></div><div class="class-description"><p>Lições para adultos com estudos bíblicos profundos e aplicações práticas.</p></div>
         <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo do Trimestre</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
         <div class="quiz-section"><h3><i class="fas fa-brain"></i> Quiz Adultos</h3><p>Teste seu conhecimento sobre as lições de forma interativa.</p><a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
-        <!-- Mensagem discreta acima das abas -->
         <div class="trim-hint">📖 Selecione um trimestre para visualizar as lições</div>
         <div class="trim-tabs" id="adultTabs"></div>
         <div class="lessons-grid" id="adultLessonsContainer"></div>
@@ -600,7 +599,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Abrir lição em nova guia (sem margens extras)
+        // Abrir lição em nova guia
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
