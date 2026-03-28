@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* TODOS OS ESTILOS ANTERIORES (MANTIDOS) – por economia de espaço, mantemos os mesmos estilos */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -792,21 +793,19 @@
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
 
-            // Bloco social apenas para adultos (conforme solicitado anteriormente)
-            if (!isYouth) {
-                html += `<div class="social-footer">
-                            <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
-                            <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas e fortaleça a nossa Escola Bíblica Dominical.</p>
-                            <p>Aproveite e acesse os links abaixo para nos acompanhar em todas as nossas redes:</p>
-                            <div class="social-links">
-                                <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-                                <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
-                                <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
-                                <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a href="https://chat.whatsapp.com/Lh4cvZW1DPMJ5ctHYWyyMC" target="_blank" class="whatsapp-link"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a>
-                            </div>
-                        </div>`;
-            }
+            // Bloco social agora é adicionado para TODAS as lições (adultos e jovens)
+            html += `<div class="social-footer">
+                        <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
+                        <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas e fortaleça a nossa Escola Bíblica Dominical.</p>
+                        <p>Aproveite e acesse os links abaixo para nos acompanhar em todas as nossas redes:</p>
+                        <div class="social-links">
+                            <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+                            <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+                            <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+                            <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
+                            <a href="https://chat.whatsapp.com/Lh4cvZW1DPMJ5ctHYWyyMC" target="_blank" class="whatsapp-link"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a>
+                        </div>
+                    </div>`;
 
             html += `</div></body></html>`;
             return html;
