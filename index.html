@@ -449,12 +449,14 @@
                 const badgeClass = available ? 'available-badge' : 'preparation-badge';
                 const badgeText = available ? 'Disponível' : 'Em preparação';
 
-                // Gera uma descrição resumida a partir do conteúdo HTML
+                // Gera descrição: prioriza conteúdo HTML, depois verdade aplicada
                 let descricao = '';
                 if (licao.conteudo) {
                     // Remove tags HTML e pega os primeiros 100 caracteres
                     const textoPuro = licao.conteudo.replace(/<[^>]*>/g, '').trim();
                     descricao = textoPuro.substring(0, 100);
+                    // Se a descrição ficou vazia (caso o conteúdo só tenha tags), usa fallback
+                    if (!descricao) descricao = 'Clique para ver o conteúdo da lição.';
                 } else if (licao.verdade_aplicada) {
                     descricao = licao.verdade_aplicada.substring(0, 100);
                 } else {
