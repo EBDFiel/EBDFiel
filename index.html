@@ -280,7 +280,7 @@
         .admin-panel .lesson-info {
             flex: 1;
         }
-        .admin-panel .toggle-btn {
+        .admin-panel .toggle-btn, .admin-panel .edit-btn {
             background: #334155;
             border: none;
             color: white;
@@ -288,6 +288,7 @@
             border-radius: 30px;
             cursor: pointer;
             transition: 0.2s;
+            margin-left: 0.5rem;
         }
         .admin-panel .toggle-btn.active {
             background: #28a745;
@@ -295,11 +296,16 @@
         .admin-panel .toggle-btn.blocked {
             background: #dc2626;
         }
+        .admin-panel .edit-btn {
+            background: #ffb347;
+            color: #1e293b;
+        }
         .admin-buttons {
             margin-top: 1rem;
             display: flex;
             gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
         .admin-buttons button {
             background: #ffb347;
@@ -318,6 +324,60 @@
             height: 100%;
             background: rgba(0,0,0,0.8);
             z-index: 2999;
+        }
+
+        /* Modal de edição */
+        .edit-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e293b;
+            border-radius: 20px;
+            max-width: 90vw;
+            max-height: 85vh;
+            width: 800px;
+            z-index: 4000;
+            overflow-y: auto;
+            padding: 1.5rem;
+            color: white;
+            border: 1px solid #ffb347;
+        }
+        .edit-modal h3 {
+            color: #ffb347;
+            margin-bottom: 1rem;
+        }
+        .edit-modal .close-edit {
+            float: right;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .edit-modal input, .edit-modal textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border: none;
+            background: #334155;
+            color: white;
+        }
+        .edit-modal label {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+        }
+        .edit-modal .save-btn {
+            background: #ffb347;
+            color: #1e293b;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-top: 1rem;
         }
 
         /* Sobre */
@@ -495,46 +555,70 @@
     <div id="adminOverlay" class="admin-panel-overlay"></div>
     <div id="adminPanel" class="admin-panel">
         <button class="close-admin" id="closeAdminBtn">&times;</button>
-        <h3>Administração de Disponibilidade</h3>
+        <h3>Administração de Disponibilidade e Conteúdo</h3>
         <div id="adminList"></div>
         <div class="admin-buttons">
             <button id="adminUnlockAll">Liberar Todas</button>
             <button id="adminBlockAll">Bloquear Todas</button>
+            <button id="adminResetAll">Resetar Conteúdos</button>
+            <button id="adminExport">Exportar JSON</button>
         </div>
-        <p style="font-size:0.8rem; margin-top:1rem;">* As alterações são salvas no seu navegador e têm prioridade sobre as datas.</p>
+        <p style="font-size:0.8rem; margin-top:1rem;">* Alterações de disponibilidade e conteúdo são salvas no navegador. "Resetar Conteúdos" restaura os originais.</p>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="editModal" class="edit-modal">
+        <button class="close-edit" id="closeEditBtn">&times;</button>
+        <h3 id="editModalTitle">Editar Lição</h3>
+        <label>Título:</label>
+        <input type="text" id="editTitulo">
+        <label>Texto Áureo (versículo):</label>
+        <input type="text" id="editAureoVersiculo">
+        <label>Texto Áureo (texto):</label>
+        <textarea id="editAureoTexto" rows="2"></textarea>
+        <label>Verdade Aplicada:</label>
+        <textarea id="editVerdade" rows="2"></textarea>
+        <label>Objetivos (um por linha):</label>
+        <textarea id="editObjetivos" rows="4"></textarea>
+        <label>Leituras (formato: Dia | Versículo | Texto, um por linha):</label>
+        <textarea id="editLeituras" rows="4" placeholder="Ex: Segunda | Pv 17.17 | Devemos cultivar amizade verdadeira"></textarea>
+        <label>Conteúdo (HTML):</label>
+        <textarea id="editConteudo" rows="8"></textarea>
+        <button class="save-btn" id="saveEditBtn">Salvar Alterações</button>
     </div>
 
     <script>
         let adultLessons = [], youthLessons = [];
-        let allLessons = []; // array com todos os objetos { id, tipo, trimestre, numero, titulo, data }
-        let adminOverrides = {}; // objeto com chave "tipo:id" ou "tipo-trimestre-numero" -> true/false
+        let allLessons = [];
+        let adminOverrides = {};      // disponibilidade manual
+        let contentOverrides = {};     // conteúdo editado (chave: "tipo:id" -> objeto com campos modificados)
 
-        // Carregar overrides do localStorage
+        // Funções de localStorage
         function loadOverrides() {
             const stored = localStorage.getItem('ebd_admin_overrides');
-            if (stored) {
-                try {
-                    adminOverrides = JSON.parse(stored);
-                } catch(e) { adminOverrides = {}; }
-            } else {
-                adminOverrides = {};
-            }
+            if (stored) try { adminOverrides = JSON.parse(stored); } catch(e) { adminOverrides = {}; }
+            const storedContent = localStorage.getItem('ebd_content_overrides');
+            if (storedContent) try { contentOverrides = JSON.parse(storedContent); } catch(e) { contentOverrides = {}; }
         }
         function saveOverrides() {
             localStorage.setItem('ebd_admin_overrides', JSON.stringify(adminOverrides));
+            localStorage.setItem('ebd_content_overrides', JSON.stringify(contentOverrides));
         }
 
-        // Verifica disponibilidade: prioridade para override, senão baseado na data
-        function isLessonAvailable(lesson) {
+        // Aplica overrides de conteúdo em uma lição original
+        function applyContentOverrides(lesson) {
             const key = `${lesson.tipo}:${lesson.id}`;
-            if (adminOverrides.hasOwnProperty(key)) {
-                return adminOverrides[key];
+            if (contentOverrides[key]) {
+                return { ...lesson, ...contentOverrides[key] };
             }
-            // fallback: data
-            const releaseDate = getReleaseDate(lesson.data);
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            return today >= releaseDate;
+            return lesson;
+        }
+
+        // Obter lista final de lições com overrides de conteúdo
+        function getFinalLessons() {
+            const adults = adultLessons.map(l => applyContentOverrides(l));
+            const youths = youthLessons.map(l => applyContentOverrides(l));
+            return { adults, youths };
         }
 
         // Funções de data
@@ -549,40 +633,44 @@
             return release;
         }
 
+        function isLessonAvailable(lesson) {
+            const key = `${lesson.tipo}:${lesson.id}`;
+            if (adminOverrides.hasOwnProperty(key)) {
+                return adminOverrides[key];
+            }
+            const today = new Date(); today.setHours(0,0,0,0);
+            return today >= getReleaseDate(lesson.data);
+        }
+
         async function carregarDados() {
             try {
                 const response = await fetch('lessons.json');
                 const data = await response.json();
                 adultLessons = data.adult || [];
                 youthLessons = data.youth || [];
-                // Construir allLessons com ids únicos
-                allLessons = [];
+                // Atribuir ids e tipo
                 let nextId = 1;
-                adultLessons.forEach(l => {
-                    l.id = nextId++;
-                    l.tipo = 'adult';
-                    allLessons.push(l);
-                });
-                youthLessons.forEach(l => {
-                    l.id = nextId++;
-                    l.tipo = 'youth';
-                    allLessons.push(l);
-                });
-                criarAbas('adult', adultLessons);
-                criarAbas('youth', youthLessons);
-                // Construir admin panel
-                construirAdminPanel();
+                adultLessons.forEach(l => { l.id = nextId++; l.tipo = 'adult'; });
+                youthLessons.forEach(l => { l.id = nextId++; l.tipo = 'youth'; });
+                allLessons = [...adultLessons, ...youthLessons];
+                renderAll();
             } catch (error) {
                 console.error('Erro ao carregar lessons.json:', error);
-                document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições. Verifique se o arquivo lessons.json está presente.</div>';
+                document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições. Verifique o arquivo lessons.json.</div>';
                 document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições.</div>';
             }
+        }
+
+        function renderAll() {
+            const { adults, youths } = getFinalLessons();
+            criarAbas('adult', adults);
+            criarAbas('youth', youths);
+            construirAdminPanel();
         }
 
         function criarAbas(tipo, lista) {
             const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a,b)=>a-b);
             const containerTabs = document.getElementById(`${tipo}Tabs`);
-            const containerLessons = document.getElementById(`${tipo}LessonsContainer`);
             if (!containerTabs) return;
             containerTabs.innerHTML = '';
             trimestres.forEach(trim => {
@@ -603,7 +691,7 @@
                 if (primeiroBtn) primeiroBtn.classList.add('active');
                 renderizarLicoes(tipo, lista.filter(l => l.trimestre == primeiro));
             } else {
-                containerLessons.innerHTML = '<div class="empty-message">📖 Nenhuma lição cadastrada.</div>';
+                document.getElementById(`${tipo}LessonsContainer`).innerHTML = '<div class="empty-message">📖 Nenhuma lição cadastrada.</div>';
             }
         }
 
@@ -651,101 +739,104 @@
             container.innerHTML = '';
             allLessons.forEach(lesson => {
                 const key = `${lesson.tipo}:${lesson.id}`;
-                const isAvailable = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : (() => {
-                    const release = getReleaseDate(lesson.data);
-                    const today = new Date(); today.setHours(0,0,0,0);
-                    return today >= release;
-                })();
+                const isAvailable = adminOverrides.hasOwnProperty(key) ? adminOverrides[key] : isLessonAvailable(lesson);
                 const row = document.createElement('div');
                 row.className = 'lesson-row';
                 row.innerHTML = `
                     <div class="lesson-info">
                         <strong>${lesson.tipo === 'adult' ? 'Adultos' : 'Jovens'}</strong> | ${lesson.trimestre}º Trim | Lição ${lesson.numero}: ${lesson.titulo}
                     </div>
-                    <button class="toggle-btn ${isAvailable ? 'active' : 'blocked'}" data-key="${key}">${isAvailable ? 'Liberada' : 'Bloqueada'}</button>
+                    <div>
+                        <button class="toggle-btn ${isAvailable ? 'active' : 'blocked'}" data-key="${key}">${isAvailable ? 'Liberada' : 'Bloqueada'}</button>
+                        <button class="edit-btn" data-key="${key}">Editar</button>
+                    </div>
                 `;
                 container.appendChild(row);
             });
-            // Adicionar eventos nos botões
+            // Eventos dos botões
             document.querySelectorAll('#adminList .toggle-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const key = btn.dataset.key;
-                    const current = adminOverrides[key] !== undefined ? adminOverrides[key] : (() => {
-                        const lesson = allLessons.find(l => `${l.tipo}:${l.id}` === key);
-                        const release = getReleaseDate(lesson.data);
-                        const today = new Date(); today.setHours(0,0,0,0);
-                        return today >= release;
-                    })();
+                    const current = adminOverrides[key] !== undefined ? adminOverrides[key] : isLessonAvailable(allLessons.find(l => `${l.tipo}:${l.id}` === key));
                     adminOverrides[key] = !current;
                     saveOverrides();
-                    // Re-renderizar todas as telas
-                    recarregarTodasAsListas();
-                    construirAdminPanel(); // atualiza o painel
+                    renderAll();
+                });
+            });
+            document.querySelectorAll('#adminList .edit-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const key = btn.dataset.key;
+                    const lesson = allLessons.find(l => `${l.tipo}:${l.id}` === key);
+                    if (lesson) abrirEditModal(lesson);
                 });
             });
         }
 
-        function recarregarTodasAsListas() {
-            // Atualiza as abas atuais
-            const activeAdultTrim = document.querySelector('#adultTabs .tab-btn.active')?.dataset.trim;
-            if (activeAdultTrim) {
-                renderizarLicoes('adult', adultLessons.filter(l => l.trimestre == activeAdultTrim));
-            } else {
-                // Se não houver ativa, recria abas (mantém)
-                criarAbas('adult', adultLessons);
-            }
-            const activeYouthTrim = document.querySelector('#youthTabs .tab-btn.active')?.dataset.trim;
-            if (activeYouthTrim) {
-                renderizarLicoes('youth', youthLessons.filter(l => l.trimestre == activeYouthTrim));
-            } else {
-                criarAbas('youth', youthLessons);
-            }
-        }
+        function abrirEditModal(lesson) {
+            const modal = document.getElementById('editModal');
+            const modalTitle = document.getElementById('editModalTitle');
+            modalTitle.innerText = `Editar: ${lesson.titulo}`;
+            document.getElementById('editTitulo').value = lesson.titulo || '';
+            document.getElementById('editAureoVersiculo').value = lesson.texto_aureo?.versiculo || '';
+            document.getElementById('editAureoTexto').value = lesson.texto_aureo?.texto || '';
+            document.getElementById('editVerdade').value = lesson.verdade_aplicada || '';
+            document.getElementById('editObjetivos').value = (lesson.objetivos || []).join('\n');
+            const leiturasText = (lesson.leituras || []).map(l => `${l.dia} | ${l.versiculo} | ${l.texto}`).join('\n');
+            document.getElementById('editLeituras').value = leiturasText;
+            document.getElementById('editConteudo').value = lesson.conteudo || '';
 
-        // Admin unlock all / block all
-        function unlockAll() {
-            allLessons.forEach(lesson => {
+            modal.style.display = 'block';
+            document.getElementById('saveEditBtn').onclick = () => {
+                // Coletar dados
+                const novosObjetivos = document.getElementById('editObjetivos').value.split('\n').filter(l => l.trim() !== '');
+                const leiturasLinhas = document.getElementById('editLeituras').value.split('\n').filter(l => l.trim() !== '');
+                const novasLeituras = leiturasLinhas.map(line => {
+                    const parts = line.split('|').map(p => p.trim());
+                    if (parts.length >= 3) return { dia: parts[0], versiculo: parts[1], texto: parts[2] };
+                    return null;
+                }).filter(l => l !== null);
+                const updated = {
+                    titulo: document.getElementById('editTitulo').value,
+                    texto_aureo: {
+                        versiculo: document.getElementById('editAureoVersiculo').value,
+                        texto: document.getElementById('editAureoTexto').value
+                    },
+                    verdade_aplicada: document.getElementById('editVerdade').value,
+                    objetivos: novosObjetivos,
+                    leituras: novasLeituras,
+                    conteudo: document.getElementById('editConteudo').value
+                };
                 const key = `${lesson.tipo}:${lesson.id}`;
-                adminOverrides[key] = true;
-            });
-            saveOverrides();
-            recarregarTodasAsListas();
-            construirAdminPanel();
-        }
-        function blockAll() {
-            allLessons.forEach(lesson => {
-                const key = `${lesson.tipo}:${lesson.id}`;
-                adminOverrides[key] = false;
-            });
-            saveOverrides();
-            recarregarTodasAsListas();
-            construirAdminPanel();
+                contentOverrides[key] = updated;
+                saveOverrides();
+                renderAll();
+                modal.style.display = 'none';
+            };
         }
 
-        // Abrir/fechar painel admin
-        function mostrarAdminPanel() {
-            document.getElementById('adminOverlay').style.display = 'block';
-            document.getElementById('adminPanel').style.display = 'block';
-            construirAdminPanel(); // atualizar lista antes de mostrar
-        }
-        function fecharAdminPanel() {
-            document.getElementById('adminOverlay').style.display = 'none';
-            document.getElementById('adminPanel').style.display = 'none';
-        }
-
-        // Contador de cliques no logo
-        let clickCount = 0;
-        let clickTimeout;
-        function handleLogoClick() {
-            clickCount++;
-            if (clickTimeout) clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
-            if (clickCount >= 5) {
-                clickCount = 0;
-                mostrarAdminPanel();
+        function resetAllContent() {
+            if (confirm('Isso apagará todas as edições de conteúdo e disponibilidade. Deseja continuar?')) {
+                contentOverrides = {};
+                adminOverrides = {};
+                saveOverrides();
+                renderAll();
             }
         }
 
+        function exportJSON() {
+            const { adults, youths } = getFinalLessons();
+            const exportData = { adult: adults, youth: youths };
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const blob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lessons_export.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Modal de visualização
         async function abrirModal(licao) {
             const modal = document.getElementById('lessonModal');
             const modalTitle = document.getElementById('modalTitle');
@@ -761,15 +852,15 @@
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
                     conteudoHtml = await response.text();
                 } catch (err) {
-                    console.error('Erro ao carregar conteúdo externo:', err);
-                    conteudoHtml = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>Não foi possível acessar o conteúdo em: ${licao.conteudo_url}</div>`;
+                    conteudoHtml = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>URL: ${licao.conteudo_url}</div>`;
                 }
             } else if (licao.conteudo) {
                 conteudoHtml = licao.conteudo;
             } else {
-                conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong><br>Esta lição ainda não possui texto cadastrado.</div>';
+                conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong></div>';
             }
 
+            // Se não for URL externa, formatar com os campos editáveis
             if (!licao.conteudo_url && licao.conteudo) {
                 let html = '';
                 if (licao.texto_aureo) {
@@ -799,6 +890,7 @@
             }
         }
 
+        // Eventos globais
         document.addEventListener('click', (e) => {
             if (e.target.closest('.view-btn') && !e.target.closest('.view-btn').disabled) {
                 const btn = e.target.closest('.view-btn');
@@ -813,19 +905,53 @@
             if (e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
         });
 
+        // Admin UI
+        let clickCount = 0, clickTimeout;
+        function handleLogoClick() {
+            clickCount++;
+            if (clickTimeout) clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
+            if (clickCount >= 5) {
+                clickCount = 0;
+                document.getElementById('adminOverlay').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                construirAdminPanel();
+            }
+        }
+
+        function fecharAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+        }
+
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
             loadOverrides();
             carregarDados();
-
             const logo = document.getElementById('logo');
             logo.addEventListener('click', handleLogoClick);
-
-            const closeAdmin = document.getElementById('closeAdminBtn');
-            closeAdmin.addEventListener('click', fecharAdminPanel);
+            document.getElementById('closeAdminBtn').addEventListener('click', fecharAdminPanel);
             document.getElementById('adminOverlay').addEventListener('click', fecharAdminPanel);
-            document.getElementById('adminUnlockAll').addEventListener('click', unlockAll);
-            document.getElementById('adminBlockAll').addEventListener('click', blockAll);
+            document.getElementById('adminUnlockAll').addEventListener('click', () => {
+                allLessons.forEach(l => { adminOverrides[`${l.tipo}:${l.id}`] = true; });
+                saveOverrides();
+                renderAll();
+            });
+            document.getElementById('adminBlockAll').addEventListener('click', () => {
+                allLessons.forEach(l => { adminOverrides[`${l.tipo}:${l.id}`] = false; });
+                saveOverrides();
+                renderAll();
+            });
+            document.getElementById('adminResetAll').addEventListener('click', resetAllContent);
+            document.getElementById('adminExport').addEventListener('click', exportJSON);
+            document.getElementById('closeEditBtn').addEventListener('click', () => {
+                document.getElementById('editModal').style.display = 'none';
+            });
+            window.addEventListener('click', (e) => {
+                if (e.target === document.getElementById('editModal')) {
+                    document.getElementById('editModal').style.display = 'none';
+                }
+            });
         });
 
         // Partículas
