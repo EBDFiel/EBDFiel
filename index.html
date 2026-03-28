@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Mantido todo o CSS anterior, exceto os estilos do modal que não serão mais usados.
-           Para economia de espaço, mantemos o mesmo CSS original (já incluso no código anterior). */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -96,18 +94,37 @@
             background: linear-gradient(135deg, #00b4d8, #0077b6); color: white;
             padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s;
         }
+        .trim-hint {
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.5px;
+        }
         .trim-tabs {
-            display: flex; justify-content: center; gap: 1rem; margin: 2rem 0 2rem; flex-wrap: wrap;
+            display: flex; justify-content: center; gap: 1rem; margin: 0 0 2rem; flex-wrap: wrap;
         }
         .tab-btn {
-            padding: 0.8rem 2rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 60px; color: white; font-weight: 600; font-size: 1.1rem; cursor: pointer;
-            transition: all 0.3s ease; backdrop-filter: blur(5px);
+            padding: 0.8rem 2rem;
+            background: #ffb347;
+            border: none;
+            border-radius: 60px;
+            color: #1e2f4a;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        .tab-btn:hover { background: rgba(255,180,70,0.3); border-color: #ffb347; transform: translateY(-2px); }
+        .tab-btn:hover {
+            background: #ffaa33;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
         .tab-btn.active {
-            background: linear-gradient(135deg, #ffb347, #ff8c00); color: #1e2f4a;
-            border-color: transparent; box-shadow: 0 8px 20px rgba(255,140,0,0.3);
+            background: #ffa01e;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
         .lessons-grid {
             display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -239,14 +256,19 @@
         <section class="class-section" id="adult-class"><div class="class-section-title"><i class="fas fa-users"></i><h2>Classe Adultos</h2></div><div class="class-description"><p>Lições para adultos com estudos bíblicos profundos e aplicações práticas.</p></div>
         <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo do Trimestre</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
         <div class="quiz-section"><h3><i class="fas fa-brain"></i> Quiz Adultos</h3><p>Teste seu conhecimento sobre as lições de forma interativa.</p><a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
+        <!-- Mensagem discreta acima das abas -->
+        <div class="trim-hint">📖 Selecione um trimestre para visualizar as lições</div>
         <div class="trim-tabs" id="adultTabs"></div>
-        <div class="lessons-grid" id="adultLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
+        <div class="lessons-grid" id="adultLessonsContainer"></div>
+        </section>
 
         <section class="class-section" id="youth-class"><div class="class-section-title"><i class="fas fa-fire-alt"></i><h2>Classe Jovens - Conectar</h2></div><div class="class-description"><p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas.</p></div>
         <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo da Classe Jovem</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
         <div class="quiz-section"><h3><i class="fas fa-users"></i> Quiz Jovens</h3><p>Teste seu conhecimento com quizzes específicos para jovens.</p><a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
+        <div class="trim-hint">📖 Selecione um trimestre para visualizar as lições</div>
         <div class="trim-tabs" id="youthTabs"></div>
-        <div class="lessons-grid" id="youthLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
+        <div class="lessons-grid" id="youthLessonsContainer"></div>
+        </section>
 
         <section class="about-section" id="about"><div class="about-content"><div class="about-text"><h3>Sobre a EBD Fiel</h3><p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais.</p><div class="about-features"><div class="feature"><div class="feature-icon"><i class="fas fa-book-open"></i></div><div class="feature-text"><h4>Estudo Exegético</h4><p>Análise cuidadosa do texto</p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-users"></i></div><div class="feature-text"><h4>Para Todos</h4><p>Jovens e Adultos</p></div></div></div></div><div class="about-image"><div class="about-image-content" style="background:linear-gradient(135deg,#ffb347,#ff8c00); padding:2rem; border-radius:30px; text-align:center; color:white;"><i class="fas fa-bible" style="font-size:3rem;"></i><h3>"Examinai as Escrituras"</h3><p>João 5:39</p></div></div></div></section>
     </div>
@@ -374,7 +396,7 @@
                 if (activeTrim) {
                     renderizarLicoes('adult', adults.filter(l => l.trimestre == activeTrim));
                 } else {
-                    document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div>';
+                    document.getElementById('adultLessonsContainer').innerHTML = '';
                 }
             }
             const youthTabsContainer = document.getElementById('youthTabs');
@@ -383,7 +405,7 @@
                 if (activeTrim) {
                     renderizarLicoes('youth', youths.filter(l => l.trimestre == activeTrim));
                 } else {
-                    document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div>';
+                    document.getElementById('youthLessonsContainer').innerHTML = '';
                 }
             }
         }
@@ -407,7 +429,8 @@
                 });
                 containerTabs.appendChild(btn);
             });
-            document.getElementById(`${tipo}LessonsContainer`).innerHTML = '<div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div>';
+            // Inicialmente nenhuma aba ativa; grid vazia
+            document.getElementById(`${tipo}LessonsContainer`).innerHTML = '';
         }
 
         function renderizarLicoes(tipo, lista) {
@@ -577,9 +600,8 @@
             URL.revokeObjectURL(url);
         }
 
-        // Abrir lição em nova guia
+        // Abrir lição em nova guia (sem margens extras)
         function abrirNovaGuia(licao) {
-            // Construir o HTML da nova guia
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
             newWindow.document.write(conteudoHtml);
@@ -587,7 +609,6 @@
         }
 
         function gerarConteudoHtml(licao) {
-            // Cabeçalho da nova página
             let html = `<!DOCTYPE html>
             <html lang="pt-BR">
             <head>
@@ -653,9 +674,6 @@
                         border-bottom: 1px solid #e2e8f0;
                         padding-bottom: 1rem;
                     }
-                    p, li, blockquote {
-                        margin-bottom: 1rem;
-                    }
                     .conclusion-box {
                         background: #f1f5f9;
                         border-left: 5px solid #ffb347;
@@ -678,42 +696,30 @@
                         Data: ${licao.data || ''}
                     </div>`;
 
-            // Adicionar Texto Áureo
             if (licao.texto_aureo && licao.texto_aureo.versiculo) {
                 html += `<div class="verse-box">
                             <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
                          </div>`;
             }
-
-            // Verdade Aplicada
             if (licao.verdade_aplicada) {
                 html += `<div class="verse-box">
                             <strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}
                          </div>`;
             }
-
-            // Objetivos
             if (licao.objetivos && licao.objetivos.length) {
                 html += `<div class="modal-section-title">🎯 Objetivos da Lição</div>
                          <ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
             }
-
-            // Textos de Referência (se houver)
             if (licao.textos_referencia) {
                 html += `<div class="modal-section-title">📖 Textos de Referência</div>
                          <p>${licao.textos_referencia}</p>`;
             }
-
-            // Leituras
             if (licao.leituras && licao.leituras.length) {
                 html += `<div class="modal-section-title">📅 Leituras Complementares</div>
                          <div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
             }
-
-            // Conteúdo principal
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
-
             html += `</div></body></html>`;
             return html;
         }
