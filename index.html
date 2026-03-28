@@ -169,6 +169,9 @@
         .close-modal { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s; }
         .close-modal:hover { background: rgba(255,255,255,0.1); }
         .modal-body { padding: 2rem; }
+        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 3rem; }
+        .loading-spinner i { font-size: 2rem; color: #ffb347; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .modal-section-title { color: #ffb347; font-size: 1.5rem; margin: 1.5rem 0 1rem; border-left: 4px solid #ffb347; padding-left: 1rem; }
         .verse-box, .conclusion-box { background: rgba(0,0,0,0.4); border-left: 5px solid #ffb347; padding: 1.5rem; border-radius: 15px; margin: 1rem 0; }
         .objectives-list li { margin-bottom: 0.5rem; margin-left: 1.5rem; }
@@ -212,7 +215,7 @@
         <section class="about-section" id="about"><div class="about-content"><div class="about-text"><h3>Sobre a EBD Fiel</h3><p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais.</p><div class="about-features"><div class="feature"><div class="feature-icon"><i class="fas fa-book-open"></i></div><div class="feature-text"><h4>Estudo Exegético</h4><p>Análise cuidadosa do texto</p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-users"></i></div><div class="feature-text"><h4>Para Todos</h4><p>Jovens e Adultos</p></div></div></div></div><div class="about-image"><div class="about-image-content" style="background:linear-gradient(135deg,#ffb347,#ff8c00); padding:2rem; border-radius:30px;"><i class="fas fa-bible" style="font-size:3rem;"></i><h3>"Examinai as Escrituras"</h3><p>João 5:39</p></div></div></div></section>
     </div>
     <footer><div class="footer-content"><div class="footer-column"><h3>EBD Fiel</h3><p>Material bíblico fiel.</p><div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div><div class="footer-column"><h3>Links</h3><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li></ul></div></div><div class="copyright"><p>&copy; 2026 EBD Fiel - Todos os direitos reservados.</p></div></footer>
-    <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"></div></div></div>
+    <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"><div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando...</div></div></div></div>
 
     <script>
         let adultLessons = [], youthLessons = [];
@@ -283,7 +286,7 @@
                         <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
                         <div class="lesson-footer">
                             <span class="lesson-tag">${tipo === 'adult' ? 'Estudo Bíblico' : 'CONECTAR'}</span>
-                            <button class="view-btn" data-tipo="${tipo}" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>
+                            <button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>
                         </div>
                     </div>
                 `;
@@ -291,43 +294,69 @@
             });
         }
 
-        function abrirModal(licao, tipo) {
+        async function abrirModal(licao) {
             const modal = document.getElementById('lessonModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalBody = document.getElementById('modalBody');
             modalTitle.innerText = `Lição ${licao.numero}: ${licao.titulo}`;
-            let html = '';
-            if (tipo === 'adult') {
-                const leituras = (licao.leituras || []).map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('');
-                html = `
-                    <div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo?.versiculo || ''}):</strong> “${licao.texto_aureo?.texto || ''}”</div>
-                    <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada || ''}</div>
-                    <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${(licao.objetivos || []).map(obj => `<li>${obj}</li>`).join('')}</ul>
-                    <div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia || ''}</p>
-                    <div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${leituras || '<p>Não informado</p>'}</div>
-                    <div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo || ''}
-                    <div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>
-                `;
-            } else {
-                html = `
-                    <div class="verse-box"><strong>📖 Versículo do Dia (${licao.versiculo_dia || ''}):</strong> “${licao.versiculo_dia_texto || 'Do Senhor é a terra e a sua plenitude'}”</div>
-                    <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada || ''}</div>
-                    <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${(licao.objetivos || []).map(obj => `<li>${obj}</li>`).join('')}</ul>
-                    <div class="modal-section-title">🙏 Momento de Oração</div><p>${licao.momento_oracao || ''}</p>
-                    <div class="modal-section-title">📖 Conteúdo</div>${licao.conteudo || ''}
-                    <div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>
-                `;
-            }
-            modalBody.innerHTML = html;
+            modalBody.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando lição...</div>';
             modal.style.display = 'flex';
+
+            // Verificar se há URL externa para conteúdo
+            let conteudoHtml = '';
+            if (licao.conteudo_url) {
+                try {
+                    const response = await fetch(licao.conteudo_url);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    conteudoHtml = await response.text();
+                } catch (err) {
+                    console.error('Erro ao carregar conteúdo externo:', err);
+                    conteudoHtml = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>Não foi possível acessar o conteúdo em: ${licao.conteudo_url}</div>`;
+                }
+            } else if (licao.conteudo) {
+                conteudoHtml = licao.conteudo;
+            } else {
+                conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong><br>Esta lição ainda não possui texto cadastrado.</div>';
+            }
+
+            // Se for URL externa, assumimos que o arquivo já contém HTML estruturado.
+            // Se for conteúdo interno (antigo), aplicamos a formatação padrão.
+            if (!licao.conteudo_url && licao.conteudo) {
+                // Formatação antiga (para compatibilidade)
+                let html = '';
+                if (licao.texto_aureo) {
+                    html += `<div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”</div>`;
+                }
+                if (licao.verdade_aplicada) {
+                    html += `<div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}</div>`;
+                }
+                if (licao.objetivos && licao.objetivos.length) {
+                    html += `<div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
+                }
+                if (licao.textos_referencia) {
+                    html += `<div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia}</p>`;
+                }
+                if (licao.leituras && licao.leituras.length) {
+                    html += `<div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
+                }
+                html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo}`;
+                if (licao.tipo === 'adult') {
+                    html += `<div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>`;
+                } else {
+                    html += `<div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>`;
+                }
+                modalBody.innerHTML = html;
+            } else {
+                // Conteúdo externo (ou já em HTML) – apenas injetamos
+                modalBody.innerHTML = conteudoHtml;
+            }
         }
 
         document.addEventListener('click', (e) => {
             if (e.target.closest('.view-btn')) {
                 const btn = e.target.closest('.view-btn');
-                const tipo = btn.dataset.tipo;
                 const licao = JSON.parse(btn.dataset.licao);
-                abrirModal(licao, tipo);
+                abrirModal(licao);
             }
             if (e.target.closest('.close-modal')) {
                 document.getElementById('lessonModal').style.display = 'none';
