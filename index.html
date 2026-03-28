@@ -7,1348 +7,437 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             min-height: 100vh;
             color: #eaf6ff;
             overflow-x: hidden;
-            position: relative;
             line-height: 1.6;
-            padding-top: 90px; /* Espaço para o header fixo */
+            padding-top: 90px;
         }
-
-        /* Partículas de fundo */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Barra de redes sociais */
+        #particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 2rem; position: relative; z-index: 2; }
         .social-topbar {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 0.6rem 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1001;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding: 0.6rem 0;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1001;
         }
-
         .social-topbar-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+            display: flex; justify-content: space-between; align-items: center;
         }
-
-        .social-text {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .social-text i {
-            color: #ffb347;
-        }
-
-        .social-icons-top {
-            display: flex;
-            gap: 1rem;
-        }
-
+        .social-text { color: rgba(255,255,255,0.8); font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; }
+        .social-text i { color: #ffb347; }
+        .social-icons-top { display: flex; gap: 1rem; }
         .social-icons-top a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            color: white;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,0.1);
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 32px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 50%;
+            color: white; transition: 0.3s; text-decoration: none; border: 1px solid rgba(255,255,255,0.1);
         }
-
-        .social-icons-top a:hover {
-            background: #ffb347;
-            color: #1e2f4a;
-            transform: translateY(-3px);
-        }
-
-        /* Header moderno */
+        .social-icons-top a:hover { background: #ffb347; color: #1e2f4a; transform: translateY(-3px); }
         header {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            margin: 0.5rem 2rem 0;
-            padding: 0.8rem 2rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            position: fixed;
-            top: 48px; /* Altura da barra social */
-            left: 0;
-            right: 0;
-            z-index: 1000;
+            background: rgba(255,255,255,0.05); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;
+            margin: 0.5rem 2rem 0; padding: 0.8rem 2rem;
+            position: fixed; top: 48px; left: 0; right: 0; z-index: 1000;
         }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        /* Logo sem moldura */
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
-        }
-
-        .logo-text h1 {
-            font-size: 1.6rem;
-            font-weight: 600;
-            background: linear-gradient(to right, #fff, #b3e5ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-
-        .logo-text p {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 0.5rem 0;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #ffb347;
-        }
-
-        nav a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #ffb347;
-            transition: width 0.3s;
-        }
-
-        nav a:hover::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        /* Hero section */
+        .header-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 1rem; }
+        .logo-icon { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+        .logo-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+        .logo-text h1 { font-size: 1.6rem; font-weight: 600; background: linear-gradient(to right, #fff, #b3e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-text p { font-size: 0.8rem; color: rgba(255,255,255,0.6); }
+        nav ul { display: flex; list-style: none; gap: 2rem; }
+        nav a { color: white; text-decoration: none; font-weight: 500; position: relative; transition: color 0.3s; }
+        nav a:hover { color: #ffb347; }
+        nav a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: #ffb347; transition: width 0.3s; }
+        nav a:hover::after { width: 100%; }
+        .mobile-menu-btn { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
         .hero {
-            text-align: center;
-            padding: 5rem 2rem;
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
-            border: 1px solid rgba(255,255,255,0.1);
-            margin: 2rem 0;
-            position: relative;
-            overflow: hidden;
+            text-align: center; padding: 5rem 2rem; background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(8px); border-radius: 60px; border: 1px solid rgba(255,255,255,0.1);
+            margin: 2rem 0; position: relative; overflow: hidden;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            left: -20%;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle, rgba(255,180,70,0.1) 0%, transparent 70%);
-            animation: rotate 30s linear infinite;
-        }
-
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero h2 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            color: rgba(255,255,255,0.8);
-        }
-
+        .hero h2 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; text-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+        .hero p { font-size: 1.3rem; max-width: 800px; margin: 0 auto 2rem; color: rgba(255,255,255,0.8); }
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, #ffb347, #ff8c00);
-            color: #1e2f4a;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            border: none;
-            box-shadow: 0 10px 20px rgba(255,140,0,0.3);
+            display: inline-flex; align-items: center; gap: 0.8rem;
+            background: linear-gradient(135deg, #ffb347, #ff8c00); color: #1e2f4a;
+            padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600;
+            transition: 0.3s; box-shadow: 0 10px 20px rgba(255,140,0,0.3);
         }
-
-        .cta-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(255,140,0,0.4);
-        }
-
-        /* Seções de classes */
+        .cta-button:hover { transform: translateY(-5px); }
         .class-section {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.1);
-            padding: 3rem;
-            margin-bottom: 4rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(10px);
+            border-radius: 40px; border: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem; margin-bottom: 4rem;
         }
-
-        .class-section-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(255,255,255,0.1);
-        }
-
-        .class-section-title i {
-            font-size: 2rem;
-            color: #ffb347;
-        }
-
-        .class-section-title h2 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            color: white;
-        }
-
-        .class-description {
-            color: rgba(255,255,255,0.7);
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        /* Cards de vídeo e quiz */
+        .class-section-title { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 1rem; }
+        .class-section-title i { font-size: 2rem; color: #ffb347; }
+        .class-section-title h2 { font-size: 2.2rem; font-weight: 600; color: white; }
+        .class-description { color: rgba(255,255,255,0.7); font-size: 1.1rem; margin-bottom: 2.5rem; }
         .video-section, .quiz-section {
-            background: rgba(0,0,0,0.2);
-            backdrop-filter: blur(8px);
-            border-radius: 30px;
-            padding: 2.5rem;
-            margin-bottom: 2.5rem;
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
+            background: rgba(0,0,0,0.2); backdrop-filter: blur(8px); border-radius: 30px;
+            padding: 2.5rem; margin-bottom: 2.5rem; border: 1px solid rgba(255,255,255,0.1); text-align: center;
         }
-
-        .video-section h3, .quiz-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            color: #ffb347;
-        }
-
-        .video-universal-container {
-            width: 100%;
-            max-width: 315px;
-            margin: 0 auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            background: #000;
-            border: 2px solid rgba(255,180,70,0.3);
-        }
-
-        .video-responsive-wrapper {
-            position: relative;
-            padding-bottom: 177.78%;
-            height: 0;
-        }
-
-        .video-responsive-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-info {
-            margin-top: 1.5rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .video-direct-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 0, 0, 0.8);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            margin-top: 1rem;
-            transition: all 0.3s;
-        }
-
-        .video-direct-link:hover {
-            background: #cc0000;
-            transform: translateY(-3px);
-        }
-
-        /* Botão de quiz */
+        .video-section h3, .quiz-section h3 { font-size: 1.8rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; color: #ffb347; }
+        .video-universal-container { max-width: 315px; margin: 0 auto; border-radius: 20px; overflow: hidden; background: #000; border: 2px solid rgba(255,180,70,0.3); }
+        .video-responsive-wrapper { position: relative; padding-bottom: 177.78%; height: 0; }
+        .video-responsive-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-direct-link { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,0,0,0.8); color: white; padding: 0.8rem 2rem; border-radius: 50px; text-decoration: none; margin-top: 1rem; transition: 0.3s; }
         .quiz-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: linear-gradient(135deg, #00b4d8, #0077b6);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.2rem;
-            transition: all 0.3s;
-            box-shadow: 0 10px 20px rgba(0,180,216,0.3);
-            animation: gentlePulse 3s infinite ease-in-out;
+            display: inline-flex; align-items: center; gap: 0.8rem; background: linear-gradient(135deg, #00b4d8, #0077b6);
+            color: white; padding: 1rem 2.5rem; border-radius: 50px; text-decoration: none; font-weight: 600; transition: 0.3s;
         }
-
-        .quiz-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,180,216,0.4);
-            animation: none; /* Para a animação ao passar o mouse */
-        }
-
-        @keyframes gentlePulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        .quiz-note {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.5);
-        }
-
-        /* Filtros */
-        .filters {
+        .trim-tabs {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin: 2rem 0;
+            margin: 2rem 0 2rem;
             flex-wrap: wrap;
         }
-
-        .filter-btn {
-            padding: 0.7rem 2rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 50px;
+        .tab-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 60px;
             color: white;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             backdrop-filter: blur(5px);
         }
-
-        .filter-btn:hover {
-            background: rgba(255,180,70,0.2);
+        .tab-btn:hover {
+            background: rgba(255,180,70,0.3);
             border-color: #ffb347;
+            transform: translateY(-2px);
         }
-
-        .filter-btn.active {
+        .tab-btn.active {
             background: linear-gradient(135deg, #ffb347, #ff8c00);
             color: #1e2f4a;
             border-color: transparent;
+            box-shadow: 0 8px 20px rgba(255,140,0,0.3);
         }
-
-        /* Grid de lições */
         .lessons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
-        }
-
-        .lesson-card {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(12px);
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-            overflow: hidden;
-            transition: all 0.3s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .lesson-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: rgba(255,180,70,0.3);
-        }
-
-        .lesson-header {
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(255,180,70,0.1), rgba(0,0,0,0.2));
-            text-align: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .lesson-quarter {
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 0.5rem;
-        }
-
-        .lesson-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #ffb347;
-        }
-
-        .lesson-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: white;
-            margin-top: 0.5rem;
-        }
-
-        .lesson-body {
-            padding: 2rem;
-            flex: 1;
-        }
-
-        .lesson-date {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .lesson-description {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .lesson-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: auto;
-        }
-
-        .lesson-tag {
-            background: rgba(255,180,70,0.2);
-            color: #ffb347;
-            padding: 0.3rem 1rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-
-        .lesson-buttons {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .view-btn {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
-            background: linear-gradient(135deg, #00b4d8, #0077b6);
-            color: white;
-        }
-
-        .view-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .view-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .available-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #28a745;
-            color: white;
-            padding: 0.2rem 1rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        /* About section */
-        .about-section {
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            border-radius: 40px;
-            padding: 4rem;
-            margin-top: 3rem;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .about-text h3 {
-            color: #ffb347;
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .about-text p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .about-features {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            background: rgba(0,0,0,0.2);
-            padding: 1.5rem;
-            border-radius: 20px;
-        }
-
-        .feature-icon {
-            background: #ffb347;
-            color: #1e2f4a;
-            width: 48px;
-            height: 48px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-
-        .feature-text h4 {
-            color: white;
-            margin-bottom: 0.3rem;
-        }
-
-        .feature-text p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
-        }
-
-        .about-image-content {
-            background: linear-gradient(135deg, #ffb347, #ff8c00);
-            padding: 3rem;
-            border-radius: 30px;
-            text-align: center;
-            color: #1e2f4a;
-            box-shadow: 0 20px 40px rgba(255,140,0,0.3);
-        }
-
-        .about-image-content i {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-
-        .about-image-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Footer */
-        footer {
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding: 3rem 2rem 2rem;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-column h3 {
-            color: #ffb347;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-column p, .footer-column a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            line-height: 2;
-        }
-
-        .footer-column a:hover {
-            color: #ffb347;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
             margin-top: 1rem;
         }
-
-        .social-icons a {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .social-icons a:hover {
-            background: #ffb347;
-            color: #1e2f4a;
-        }
-
-        .copyright {
+        .empty-message {
             text-align: center;
-            padding-top: 2rem;
-            color: rgba(255,255,255,0.4);
-            font-size: 0.9rem;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(10px);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: rgba(30,40,50,0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
+            padding: 4rem;
+            background: rgba(0,0,0,0.2);
             border-radius: 30px;
-            max-width: 1000px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            color: white;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            color: rgba(255,255,255,0.6);
+            font-size: 1.2rem;
         }
-
-        .modal-header {
-            padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.3);
-        }
-
-        .modal-header h2 {
-            color: #ffb347;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .modal-body {
-            padding: 2rem;
-        }
-
-        .modal-section-title {
-            color: #ffb347;
-            margin: 1.5rem 0 1rem;
-            font-size: 1.4rem;
-        }
-
-        .verse-box, .youth-day-verse, .youth-reflecting, .youth-point-key, .conclusion-box {
-            background: rgba(0,0,0,0.3);
-            border-left: 5px solid #ffb347;
-            padding: 1.5rem;
-            border-radius: 15px;
-            margin: 1rem 0;
-        }
-
-        .objectives-list li {
-            list-style: none;
-            margin-bottom: 0.8rem;
-            padding-left: 1.8rem;
+        .lesson-card {
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px); border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1); overflow: hidden; transition: 0.3s; display: flex; flex-direction: column;
             position: relative;
         }
-
-        .objectives-list li:before {
-            content: "✓";
-            color: #28a745;
-            position: absolute;
-            left: 0;
-        }
-
-        .reading-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .reading-day {
-            background: rgba(255,255,255,0.05);
-            padding: 1rem;
-            border-radius: 15px;
-        }
-
-        /* Ajustes para mobile */
+        .lesson-card:hover { transform: translateY(-10px); border-color: rgba(255,180,70,0.3); }
+        .lesson-header { padding: 2rem; background: linear-gradient(135deg, rgba(255,180,70,0.1), rgba(0,0,0,0.2)); text-align: center; }
+        .lesson-quarter { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-bottom: 0.5rem; }
+        .lesson-number { font-size: 2rem; font-weight: 700; color: #ffb347; }
+        .lesson-title { font-size: 1.2rem; font-weight: 600; color: white; margin-top: 0.5rem; }
+        .lesson-body { padding: 2rem; flex: 1; }
+        .lesson-date { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1rem; }
+        .lesson-description { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
+        .lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .lesson-tag { background: rgba(255,180,70,0.2); color: #ffb347; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.8rem; }
+        .view-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 50px; background: linear-gradient(135deg, #00b4d8, #0077b6); color: white; border: none; cursor: pointer; transition: 0.3s; }
+        .view-btn:hover { transform: translateY(-3px); }
+        .available-badge { position: absolute; top: 1rem; right: 1rem; background: #28a745; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
+        .about-section { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border-radius: 40px; padding: 4rem; margin-top: 3rem; }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        .about-text h3 { color: #ffb347; font-size: 2rem; margin-bottom: 1.5rem; }
+        .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+        .feature { display: flex; gap: 1rem; background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 20px; }
+        .feature-icon { background: #ffb347; color: #1e2f4a; width: 48px; height: 48px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        footer { background: rgba(0,0,0,0.3); backdrop-filter: blur(10px); border-top: 1px solid rgba(255,255,255,0.1); padding: 3rem 2rem 2rem; margin-top: 4rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; }
+        .copyright { text-align: center; padding-top: 2rem; color: rgba(255,255,255,0.4); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: rgba(20,30,40,0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.2); border-radius: 30px; max-width: 1000px; width: 90%; max-height: 90vh; overflow-y: auto; color: white; }
+        .modal-header { padding: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3); }
+        .modal-header h2 { color: #ffb347; }
+        .close-modal { background: none; border: none; color: white; font-size: 2rem; cursor: pointer; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s; }
+        .close-modal:hover { background: rgba(255,255,255,0.1); }
+        .modal-body { padding: 2rem; }
+        .modal-section-title { color: #ffb347; font-size: 1.5rem; margin: 1.5rem 0 1rem; border-left: 4px solid #ffb347; padding-left: 1rem; }
+        .verse-box, .conclusion-box { background: rgba(0,0,0,0.4); border-left: 5px solid #ffb347; padding: 1.5rem; border-radius: 15px; margin: 1rem 0; }
+        .objectives-list li { margin-bottom: 0.5rem; margin-left: 1.5rem; }
+        .reading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+        .reading-day { background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 12px; }
         @media (max-width: 768px) {
-            body {
-                padding-top: 130px; /* Ajuste para cabecalho maior no mobile */
-            }
-
-            .social-topbar-container {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            header {
-                margin: 0.5rem 1rem 0;
-                padding: 0.8rem 1rem;
-                top: 70px; /* Altura da barra social no mobile (duas linhas) */
-            }
-
-            nav {
-                position: fixed;
-                top: 120px;
-                left: 1rem;
-                right: 1rem;
-                background: rgba(0,0,0,0.9);
-                backdrop-filter: blur(10px);
-                padding: 2rem;
-                border-radius: 30px;
-                transform: translateY(-150%);
-                transition: transform 0.3s;
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            nav.active {
-                transform: translateY(0);
-                opacity: 1;
-                visibility: visible;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-
-            .class-section {
-                padding: 1.5rem;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            .filters {
-                justify-content: flex-start;
-                overflow-x: auto;
-                padding-bottom: 1rem;
-            }
-
-            .filter-btn {
-                white-space: nowrap;
-            }
-
-            /* Botão "Assistir no YouTube" mais discreto no celular */
-            .video-direct-link {
-                padding: 0.4rem 1rem;
-                font-size: 0.85rem;
-                background: rgba(255, 0, 0, 0.7);
-                border-radius: 30px;
-                gap: 0.3rem;
-            }
-
-            .video-direct-link i {
-                font-size: 0.9rem;
-            }
-
-            /* Botão "Acessar Quiz" com tamanho reduzido no celular */
-            .quiz-button {
-                padding: 0.8rem 1.8rem;
-                font-size: 1rem;
-            }
+            body { padding-top: 130px; }
+            .social-topbar-container { flex-direction: column; gap: 0.5rem; }
+            header { top: 70px; margin: 0.5rem 1rem 0; }
+            .mobile-menu-btn { display: block; }
+            nav { position: fixed; top: 120px; left: 1rem; right: 1rem; background: rgba(0,0,0,0.9); padding: 2rem; border-radius: 30px; transform: translateY(-150%); transition: 0.3s; opacity: 0; visibility: hidden; }
+            nav.active { transform: translateY(0); opacity: 1; visibility: visible; }
+            nav ul { flex-direction: column; gap: 1rem; }
+            .hero h2 { font-size: 2.2rem; }
+            .class-section { padding: 1.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .tab-btn { padding: 0.5rem 1.2rem; font-size: 0.9rem; }
         }
-
-        /* Animações */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
     <canvas id="particles"></canvas>
-
-    <!-- Feedback para vídeo (opcional) -->
-    <div class="video-feedback" id="videoFeedback" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.8); color:white; padding:10px 20px; border-radius:50px; z-index:4000; display:none;"></div>
-
-    <!-- Barra de Redes Sociais -->
-    <div class="social-topbar">
-        <div class="social-topbar-container">
-            <div class="social-text">
-                <i class="fas fa-hashtag"></i> Siga-nos nas redes sociais:
-            </div>
-            <div class="social-icons-top">
-                <a href="https://www.instagram.com/ebdfiel/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.youtube.com/@EBDFiel" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.tiktok.com/@ebdfiel" target="_blank"><i class="fab fa-tiktok"></i></a>
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <div class="header-container">
-            <div class="logo">
-                <div class="logo-icon">
-                    <img src="https://i.imgur.com/vsNu5IC.png" alt="Logo EBD Fiel" class="logo-img">
-                </div>
-                <div class="logo-text">
-                    <h1>EBD Fiel</h1>
-                    <p>Fiel à Palavra</p>
-                </div>
-            </div>
-            
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-            
-            <nav id="mainNav">
-                <ul>
-                    <li><a href="#home">Início</a></li>
-                    <li><a href="#adult-class">Adultos</a></li>
-                    <li><a href="#youth-class">Jovens</a></li>
-                    <li><a href="#about">Sobre</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-
+    <div class="social-topbar"><div class="social-topbar-container"><div class="social-text"><i class="fas fa-hashtag"></i> Siga-nos:</div><div class="social-icons-top"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a><a href="#"><i class="fab fa-tiktok"></i></a></div></div></div>
+    <header><div class="header-container"><div class="logo"><div class="logo-icon"><img src="https://i.imgur.com/vsNu5IC.png" alt="Logo" class="logo-img"></div><div class="logo-text"><h1>EBD Fiel</h1><p>Fiel à Palavra</p></div></div><button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button><nav id="mainNav"><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li><li><a href="#about">Sobre</a></li></ul></nav></div></header>
     <div class="container">
-        <!-- Hero -->
-        <section class="hero" id="home">
-            <div class="hero-content fade-in">
-                <h2>Escola Bíblica Dominical</h2>
-                <p>Estudos profundos e relevantes para o crescimento espiritual. Material fiel às Escrituras para professores e alunos comprometidos com a Palavra de Deus.</p>
-                <a href="#adult-class" class="cta-button">Explorar Lições <i class="fas fa-arrow-down"></i></a>
-            </div>
-        </section>
+        <section class="hero" id="home"><div class="hero-content"><h2>Escola Bíblica Dominical</h2><p>Estudos profundos e relevantes para o crescimento espiritual. Material fiel às Escrituras.</p><a href="#adult-class" class="cta-button">Explorar Lições <i class="fas fa-arrow-down"></i></a></div></section>
+        <section class="class-section" id="adult-class"><div class="class-section-title"><i class="fas fa-users"></i><h2>Classe Adultos</h2></div><div class="class-description"><p>Lições para adultos com estudos bíblicos profundos e aplicações práticas.</p></div>
+        <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo do Trimestre</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
+        <div class="quiz-section"><h3><i class="fas fa-brain"></i> Quiz Adultos</h3><p>Teste seu conhecimento sobre as lições de forma interativa.</p><a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
+        <!-- Abas de trimestres para adultos -->
+        <div class="trim-tabs" id="adultTabs">
+            <button class="tab-btn" data-trim="trim1">1º Trimestre</button>
+            <button class="tab-btn" data-trim="trim2">2º Trimestre</button>
+            <button class="tab-btn" data-trim="trim3">3º Trimestre</button>
+            <button class="tab-btn" data-trim="trim4">4º Trimestre</button>
+        </div>
+        <div class="lessons-grid" id="adultLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
 
-        <!-- Classe Adultos -->
-        <section class="class-section" id="adult-class">
-            <div class="class-section-title">
-                <i class="fas fa-users"></i>
-                <h2>Classe Adultos</h2>
-            </div>
-            <div class="class-description">
-                <p>Lições para adultos com estudos bíblicos profundos e aplicações práticas para a vida cristã.</p>
-            </div>
+        <section class="class-section" id="youth-class"><div class="class-section-title"><i class="fas fa-fire-alt"></i><h2>Classe Jovens - Conectar</h2></div><div class="class-description"><p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas.</p></div>
+        <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo da Classe Jovem</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
+        <div class="quiz-section"><h3><i class="fas fa-users"></i> Quiz Jovens</h3><p>Teste seu conhecimento com quizzes específicos para jovens.</p><a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
+        <!-- Abas de trimestres para jovens -->
+        <div class="trim-tabs" id="youthTabs">
+            <button class="tab-btn" data-trim="trim1">1º Trimestre</button>
+            <button class="tab-btn" data-trim="trim2">2º Trimestre</button>
+            <button class="tab-btn" data-trim="trim3">3º Trimestre</button>
+            <button class="tab-btn" data-trim="trim4">4º Trimestre</button>
+        </div>
+        <div class="lessons-grid" id="youthLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
 
-            <!-- Vídeo Adultos -->
-            <div class="video-section">
-                <h3><i class="fas fa-play-circle"></i> Vídeo do Trimestre</h3>
-                <div class="video-universal-container">
-                    <div class="video-responsive-wrapper">
-                        <iframe src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0&modestbranding=1&playsinline=1" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="video-info">
-                    <a href="https://youtube.com/shorts/te9eFEEVqKQ" target="_blank" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
-                </div>
-            </div>
-
-            <!-- Quiz Adultos -->
-            <div class="quiz-section">
-                <h3><i class="fas fa-brain"></i> Quiz Adultos</h3>
-                <p>Teste seu conhecimento sobre as lições de forma interativa.</p>
-                <a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button">
-                    <i class="fas fa-question-circle"></i> Acessar Quiz
-                </a>
-            </div>
-
-            <!-- Filtros -->
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all" data-section="adult">Todas</button>
-                <button class="filter-btn" data-filter="trim1" data-section="adult">1º Trim</button>
-                <button class="filter-btn" data-filter="trim2" data-section="adult">2º Trim</button>
-                <button class="filter-btn" data-filter="trim3" data-section="adult">3º Trim</button>
-                <button class="filter-btn" data-filter="trim4" data-section="adult">4º Trim</button>
-            </div>
-
-            <div class="lessons-grid" id="adultLessonsContainer"></div>
-        </section>
-
-        <!-- Classe Jovens -->
-        <section class="class-section" id="youth-class">
-            <div class="class-section-title">
-                <i class="fas fa-fire-alt"></i>
-                <h2>Classe Jovens - Conectar</h2>
-            </div>
-            <div class="class-description">
-                <p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas.</p>
-            </div>
-
-            <!-- Vídeo Jovens -->
-            <div class="video-section">
-                <h3><i class="fas fa-play-circle"></i> Vídeo da Classe Jovem</h3>
-                <div class="video-universal-container">
-                    <div class="video-responsive-wrapper">
-                        <iframe src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0&modestbranding=1&playsinline=1" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="video-info">
-                    <a href="https://youtube.com/shorts/kIB-BtFmb-Y" target="_blank" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a>
-                </div>
-            </div>
-
-            <!-- Quiz Jovens -->
-            <div class="quiz-section">
-                <h3><i class="fas fa-users"></i> Quiz Jovens</h3>
-                <p>Teste seu conhecimento com quizzes específicos para jovens.</p>
-                <a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quiz-button">
-                    <i class="fas fa-question-circle"></i> Acessar Quiz
-                </a>
-            </div>
-
-            <!-- Filtros -->
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all" data-section="youth">Todas</button>
-                <button class="filter-btn" data-filter="youth" data-section="youth">Conectar</button>
-            </div>
-
-            <div class="lessons-grid" id="youthLessonsContainer"></div>
-        </section>
-
-        <!-- Sobre -->
-        <section class="about-section" id="about">
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Sobre a EBD Fiel</h3>
-                    <p>A EBD Fiel é um projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais de igrejas comprometidas com a sã doutrina.</p>
-                    <p>Nossas lições são elaboradas por teólogos e professores com experiência ministerial.</p>
-                    <div class="about-features">
-                        <div class="feature">
-                            <div class="feature-icon"><i class="fas fa-book-open"></i></div>
-                            <div class="feature-text">
-                                <h4>Estudo Exegético</h4>
-                                <p>Análise cuidadosa do texto original</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon"><i class="fas fa-users"></i></div>
-                            <div class="feature-text">
-                                <h4>Para Todos</h4>
-                                <p>Material para jovens e adultos</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon"><i class="fas fa-calendar-alt"></i></div>
-                            <div class="feature-text">
-                                <h4>Planejamento Anual</h4>
-                                <p>Cronograma completo</p>
-                            </div>
-                        </div>
-                        <div class="feature">
-                            <div class="feature-icon"><i class="fas fa-download"></i></div>
-                            <div class="feature-text">
-                                <h4>Download Gratuito</h4>
-                                <p>Lições disponíveis gratuitamente</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <div class="about-image-content">
-                        <i class="fas fa-bible"></i>
-                        <h3>"Examinai as Escrituras..."</h3>
-                        <p>João 5:39</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section class="about-section" id="about"><div class="about-content"><div class="about-text"><h3>Sobre a EBD Fiel</h3><p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais.</p><div class="about-features"><div class="feature"><div class="feature-icon"><i class="fas fa-book-open"></i></div><div class="feature-text"><h4>Estudo Exegético</h4><p>Análise cuidadosa do texto</p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-users"></i></div><div class="feature-text"><h4>Para Todos</h4><p>Jovens e Adultos</p></div></div></div></div><div class="about-image"><div class="about-image-content" style="background:linear-gradient(135deg,#ffb347,#ff8c00); padding:2rem; border-radius:30px;"><i class="fas fa-bible" style="font-size:3rem;"></i><h3>"Examinai as Escrituras"</h3><p>João 5:39</p></div></div></div></section>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>EBD Fiel</h3>
-                <p>Material bíblico fiel para edificação da igreja.</p>
-                <div class="social-icons">
-                    <a href="https://www.instagram.com/ebdfiel/"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/EBDFiel/"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.youtube.com/@EBDFiel"><i class="fab fa-youtube"></i></a>
-                    <a href="https://www.tiktok.com/@ebdfiel"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-            <div class="footer-column">
-                <h3>Links</h3>
-                <ul>
-                    <li><a href="#home">Início</a></li>
-                    <li><a href="#adult-class">Adultos</a></li>
-                    <li><a href="#youth-class">Jovens</a></li>
-                    <li><a href="#about">Sobre</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Contato</h3>
-                <p><i class="fas fa-envelope"></i> contato@ebdfiel.com</p>
-                <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2026 EBD Fiel - Todos os direitos reservados.</p>
-        </div>
-    </footer>
+    <footer><div class="footer-content"><div class="footer-column"><h3>EBD Fiel</h3><p>Material bíblico fiel.</p><div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div><div class="footer-column"><h3>Links</h3><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li></ul></div></div><div class="copyright"><p>&copy; 2026 EBD Fiel - Todos os direitos reservados.</p></div></footer>
+    <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"></div></div></div>
 
     <script>
-        // Dados das lições (mantidos iguais)
-        const adultLessons = [
-            { id: 1, quarter: "1º Trimestre", quarterFilter: "trim1", number: "Lição 1", title: "Os discípulos de Cristo são novas criaturas", date: "04/01/2026", description: "Estudo sobre a nova criatura em Cristo.", tag: "Nova Criatura", available: true, type: "adult" },
-            { id: 2, quarter: "1º Trimestre", quarterFilter: "trim1", number: "Lição 2", title: "Princípios bíblicos para a vida dos discípulos de Cristo", date: "11/01/2026", description: "Estudo sobre os princípios fundamentais da Bíblia.", tag: "Princípios Bíblicos", available: true, type: "adult" },
-            { id: 3, quarter: "1º Trimestre", quarterFilter: "trim1", number: "Lição 3", title: "Os compromissos dos discípulos de Cristo", date: "18/01/2026", description: "Análise dos compromissos e responsabilidades.", tag: "Compromissos", available: false, type: "adult" },
-            { id: 14, quarter: "2º Trimestre", quarterFilter: "trim2", number: "Lição 1", title: "José: Fidelidade em Meio às Provações", date: "05/04/2026", description: "A trajetória de José do poço ao palácio.", tag: "Gênesis", available: false, type: "adult" }
-        ];
-
-        const youthLessons = [
-            { id: 101, quarter: "Revista Conectar Jovens", quarterFilter: "youth", number: "Lição 1", title: "As Beatitudes do Reino de Deus", date: "04/01/2026", description: "Estudo sobre o Sermão da Montanha.", tag: "CONECTAR", available: true, type: "youth" },
-            { id: 102, quarter: "Revista Conectar Jovens", quarterFilter: "youth", number: "Lição 2", title: "Bem-Aventurados em Cristo", date: "11/01/2026", description: "A verdadeira felicidade em Cristo.", tag: "CONECTAR", available: true, type: "youth" },
-            { id: 103, quarter: "Revista Conectar Jovens", quarterFilter: "youth", number: "Lição 3", title: "Identidade em Cristo", date: "18/01/2026", description: "Descobrindo a identidade em Cristo.", tag: "CONECTAR", available: false, type: "youth" }
-        ];
-
-        // Conteúdos resumidos para o modal (apenas para exemplo)
-        const youthLesson1Content = { 
-            title: "As Beatitudes do Reino de Deus", 
-            type: "youth", 
-            verseOfDay: { verse: "Mateus 5:1", text: "E Jesus, vendo a multidão, subiu a um monte..." }, 
-            objectives: ["Conhecer os primeiros ensinamentos de Jesus", "Identificar a estrutura do Sermão da Montanha"], 
-            referenceText: "Mateus 5:11", 
-            appliedTruth: "Jesus nos convida a aprender os princípios do Reino.", 
-            prayerMoment: "Ore para que possamos praticar esses princípios." 
-        };
-        const youthLesson2Content = { 
-            title: "Bem-Aventurados em Cristo", 
-            type: "youth", 
-            verseOfDay: { verse: "Salmos 146:5", text: "Bem-aventurado aquele que tem o Deus de Jacó por seu auxílio." }, 
-            objectives: ["Reconhecer que a felicidade não está em princípios humanos", "Identificar a natureza das bem-aventuranças"], 
-            referenceText: "Lucas 6:20-22", 
-            appliedTruth: "A verdadeira felicidade depende de vivermos segundo o Reino.", 
-            prayerMoment: "Ore para que sejamos bem-aventurados." 
-        };
-        const adultLesson1Content = { 
-            title: "Os discípulos de Cristo são novas criaturas", 
-            type: "adult", 
-            textAureo: { verse: "Colossenses 3:10", text: "E vos vestistes do novo, que se renova para o conhecimento." } 
-        };
-
-        let currentAdultFilter = 'all', currentYouthFilter = 'all';
-
-        function showVideoFeedback(msg) {
-            const fb = document.getElementById('videoFeedback');
-            fb.textContent = msg;
-            fb.style.display = 'block';
-            setTimeout(() => fb.style.display = 'none', 2000);
+        // Geração de 13 lições por trimestre (4 trimestres) para Adultos e Jovens com conteúdo completo.
+        function getAdultLessonContent(trim, lessonNum) {
+            if(trim === 1 && lessonNum === 1) {
+                return {
+                    title: "O chamado que transforma a dor em propósito",
+                    textAureo: { verse: "Neemias 1.4", text: "E sucedeu que, ouvindo eu estas palavras, assentei-me, e chorei, e lamentei por alguns dias; e estive jejuando e orando perante o Deus dos céus." },
+                    appliedTruth: "Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos diversos desafios que surgem na jornada cristã.",
+                    objectives: ["Compreender o contexto no qual Neemias estava inserido.", "Saber como agir em tempos de adversidades.", "Reconhecer que o chamado de Deus não depende das circunstâncias."],
+                    referenceText: "Neemias 1.1-11",
+                    complementaryReadings: [
+                        { day: "Segunda", verse: "Pv 17.17", text: "Devemos cultivar amizades verdadeiras." },
+                        { day: "Terça", verse: "1Jo 3.18", text: "Não amemos apenas com palavras." },
+                        { day: "Quarta", verse: "Js 1.6", text: "É preciso esforço para viver grandes promessas." },
+                        { day: "Quinta", verse: "1Ts 5.17", text: "Oremos diariamente com fervor." },
+                        { day: "Sexta", verse: "Ef 6.13", text: "Estamos em batalha espiritual." },
+                        { day: "Sábado", verse: "Sl 40.1", text: "Confie em Deus." }
+                    ],
+                    fullText: "<p>Neemias tinha uma posição confortável como copeiro do rei, mas a notícia do estado lastimável de Jerusalém mudou sua vida. Ele buscou ao Deus dos céus em oração e jejum. A lição mostra que o chamado de Deus pode surgir em meio a momentos difíceis. A situação do povo era de grande miséria e desprezo, e os muros da cidade estavam fendidos. Neemias chorou, lamentou e não se conformou, buscando a restauração mediante oração e dependência divina.</p><p>Devemos aprender que os verdadeiros servos não se paralisam diante de más notícias, mas confiam nas promessas de Deus. A união de propósitos e a perseverança espiritual são fundamentais para vencer os desafios.</p>"
+                };
+            }
+            const trimThemes = ["Neemias: Reconstruindo Propósitos", "A Soberania de Deus", "Vida de Oração e Batalha Espiritual", "A Caminhada Cristã"];
+            const themes = ["Oração e Lágrimas", "O Conformismo que Mata", "Confiança nas Promessas", "Liderança Servidora", "Restauração Divina", "Santidade", "Fé em Ação", "Esperança em Meio à Crise", "Comunhão", "Testemunho", "Unidade", "Perseverança", "Graça"];
+            const idx = (lessonNum-1) % themes.length;
+            const specificTitle = `${lessonNum}. ${themes[idx]} na Vida do Crente`;
+            const verseOptions = ["Sl 126.5", "Is 40.31", "Fp 4.13", "Rm 8.28", "Hb 11.1"];
+            return {
+                title: specificTitle,
+                textAureo: { verse: verseOptions[lessonNum % verseOptions.length], text: "Porque para Deus nada é impossível, e aqueles que confiam nEle são fortalecidos." },
+                appliedTruth: `No ${trimThemes[trim-1]}, aprendemos que Deus nos chama a uma vida de entrega e confiança plena.`,
+                objectives: ["Reconhecer a soberania de Deus sobre as circunstâncias.", "Aplicar os princípios bíblicos no dia a dia.", "Crescer na fé mediante desafios."],
+                referenceText: `Referências baseadas no tema do ${trimThemes[trim-1]}`,
+                complementaryReadings: [
+                    { day: "Segunda", verse: "Sl 37.5", text: "Entrega teu caminho ao Senhor." },
+                    { day: "Terça", verse: "1Pe 5.7", text: "Lançai sobre Ele toda a vossa ansiedade." }
+                ],
+                fullText: `<p>Esta lição aborda a importância de viver uma fé autêntica e ativa. Assim como Neemias, devemos reagir com oração e determinação diante das adversidades. O Senhor nos chama para sermos agentes de restauração em nossa geração.</p><p>Que possamos aprender a confiar no Deus que transforma a dor em propósito e nos capacita a vencer.</p>`
+            };
         }
 
-        function createLessonCard(lesson, index) {
-            const card = document.createElement('div');
-            card.className = 'lesson-card fade-in';
-            card.style.animationDelay = `${index * 0.05}s`;
-            const available = lesson.available;
-            card.innerHTML = `
-                ${available ? '<span class="available-badge">Disponível</span>' : ''}
-                <div class="lesson-header">
-                    <div class="lesson-quarter">${lesson.quarter}</div>
-                    <div class="lesson-number">${lesson.number}</div>
-                    <div class="lesson-title">${lesson.title}</div>
-                </div>
-                <div class="lesson-body">
-                    <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${lesson.date}</div>
-                    <div class="lesson-description">${lesson.description}</div>
-                    <div class="lesson-footer">
-                        <span class="lesson-tag">${lesson.tag}</span>
-                        <div class="lesson-buttons">
-                            ${available ? 
-                                `<button class="view-btn" data-lesson="${lesson.id}" data-type="${lesson.type}"><i class="fas fa-book-open"></i> Ver Lição</button>` : 
-                                '<button class="view-btn" disabled><i class="fas fa-clock"></i> Em breve</button>'}
+        function getYouthLessonContent(trim, lessonNum) {
+            if(trim === 1 && lessonNum === 1) {
+                return {
+                    title: "Reconhecendo o Senhorio de Deus",
+                    verseDay: "Salmos 24.1",
+                    appliedTruth: "Deus é Senhor de tudo, e Sua vontade prevalece sobre todos os aspectos da nossa vida.",
+                    objectives: ["Reconhecer o Senhorio de Deus;", "Saber que Deus é Soberano sobre todas as coisas;", "Ressaltar que Deus tem autoridade absoluta sobre toda a Criação."],
+                    prayerMoment: "Ore para que o nosso coração descanse no Amor e no Cuidado do Deus Criador.",
+                    fullText: "<p>Reconhecer o Senhorio de Deus é reconhecê-lo como Soberano Criador e Autoridade Suprema. Deus Altíssimo (El Elyon) é transcendente, e Todo-Poderoso (El Shaddai) detém todo o poder. Sua majestade se revela na criação, e Ele reina sobre todas as coisas. O Senhor é dono do Seu povo e da criação. Devemos viver em humildade, sabendo que somos mordomos do que Ele nos confia.</p><p>Não devemos cair no determinismo, mas entender que a soberania de Deus coexiste com a responsabilidade humana. Seu senhorio nos traz paz e direção.</p>"
+                };
+            }
+            const trimThemesYouth = ["Fundamentos da Fé", "Identidade em Cristo", "Vida no Espírito", "Missão e Propósito"];
+            const titles = ["Senhorio de Deus", "A Trindade", "A Bíblia como Autoridade", "A Graça Salvadora", "Arrependimento", "Novo Nascimento", "Discipulado", "Santificação", "Igreja Corpo de Cristo", "Oração que é a Chave", "Testemunho Pessoal", "Amor ao Próximo", "Esperança Viva"];
+            const titleTopic = titles[(lessonNum-1) % titles.length];
+            return {
+                title: `Lição ${lessonNum}: ${titleTopic}`,
+                verseDay: "Sl 119.105",
+                appliedTruth: `No ${trimThemesYouth[trim-1]}, somos chamados a viver os fundamentos do Reino com autenticidade.`,
+                objectives: ["Compreender os fundamentos bíblicos para a vida jovem.", "Aplicar os ensinamentos de Cristo no cotidiano.", "Crescer na comunhão com Deus."],
+                prayerMoment: "Ore para que Deus fortaleça sua fé e testemunho.",
+                fullText: `<p>Esta lição destaca a importância de ${titleTopic.toLowerCase()} como alicerce da caminhada cristã. Os jovens são desafiados a viver uma fé relevante, fundamentada na Palavra e no poder do Espírito Santo.</p><p>Assim como Neemias e os discípulos, precisamos ser sensíveis ao chamado de Deus e obedientes à Sua direção.</p>`
+            };
+        }
+
+        function generateLessonsForClass(type, trimCount=4, lessonsPerTrim=13) {
+            let lessons = [];
+            let lessonId = 1;
+            for(let t=1; t<=trimCount; t++) {
+                for(let l=1; l<=lessonsPerTrim; l++) {
+                    let baseDate = new Date(2026, 0, 4 + (t-1)*91 + (l-1)*7);
+                    let dateStr = baseDate.toLocaleDateString('pt-BR');
+                    let content = (type === 'adult') ? getAdultLessonContent(t, l) : getYouthLessonContent(t, l);
+                    lessons.push({
+                        id: lessonId++,
+                        quarterFilter: `trim${t}`,
+                        quarter: `${t}º Trimestre`,
+                        number: `Lição ${l}`,
+                        title: content.title,
+                        date: dateStr,
+                        description: content.appliedTruth.substring(0, 100) + "...",
+                        tag: type === 'adult' ? "Estudo Bíblico" : "CONECTAR",
+                        available: true,
+                        type: type,
+                        fullContent: content
+                    });
+                }
+            }
+            return lessons;
+        }
+
+        const adultLessonsFull = generateLessonsForClass('adult', 4, 13);
+        const youthLessonsFull = generateLessonsForClass('youth', 4, 13);
+
+        function renderLessons(containerId, lessons, selectedTrim) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            const filtered = lessons.filter(l => l.quarterFilter === selectedTrim);
+            if(filtered.length === 0) {
+                container.innerHTML = '<div class="empty-message">📖 Nenhuma lição disponível para este trimestre.</div>';
+                return;
+            }
+            filtered.forEach(lesson => {
+                const card = document.createElement('div');
+                card.className = 'lesson-card fade-in';
+                card.innerHTML = `
+                    <span class="available-badge">Disponível</span>
+                    <div class="lesson-header">
+                        <div class="lesson-quarter">${lesson.quarter}</div>
+                        <div class="lesson-number">${lesson.number}</div>
+                        <div class="lesson-title">${lesson.title}</div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${lesson.date}</div>
+                        <div class="lesson-description">${lesson.description}</div>
+                        <div class="lesson-footer">
+                            <span class="lesson-tag">${lesson.tag}</span>
+                            <button class="view-btn" data-lesson-id="${lesson.id}" data-type="${lesson.type}"><i class="fas fa-book-open"></i> Ver Lição</button>
                         </div>
                     </div>
-                </div>
-            `;
-            return card;
-        }
-
-        function renderAdultLessons(filter) {
-            const container = document.getElementById('adultLessonsContainer');
-            container.innerHTML = '';
-            const filtered = filter === 'all' ? adultLessons : adultLessons.filter(l => l.quarterFilter === filter);
-            filtered.forEach((l, i) => container.appendChild(createLessonCard(l, i)));
-        }
-
-        function renderYouthLessons(filter) {
-            const container = document.getElementById('youthLessonsContainer');
-            container.innerHTML = '';
-            const filtered = filter === 'all' ? youthLessons : youthLessons.filter(l => l.quarterFilter === filter);
-            filtered.forEach((l, i) => container.appendChild(createLessonCard(l, i)));
-        }
-
-        function addButtonEventListeners(section) {
-            const container = document.getElementById(section === 'youth' ? 'youthLessonsContainer' : 'adultLessonsContainer');
-            container.addEventListener('click', (e) => {
-                const btn = e.target.closest('button');
-                if (!btn || !btn.classList.contains('view-btn') || btn.disabled) return;
-                const lessonId = btn.dataset.lesson;
-                const lessonType = btn.dataset.type;
-                openLessonModal(lessonId, lessonType);
+                `;
+                container.appendChild(card);
             });
         }
 
-        function openLessonModal(id, type) {
-            // Implementação simplificada (apenas para demonstração)
-            alert(`Abriria o conteúdo da lição ${id} (${type}) em um modal.`);
-        }
-
-        // Configurar filtros
-        function setupFilters() {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const section = this.closest('.class-section');
-                    if (!section) return;
-                    const sectionType = section.id === 'adult-class' ? 'adult' : 'youth';
-                    section.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const filter = this.dataset.filter;
-                    if (sectionType === 'adult') {
-                        currentAdultFilter = filter;
-                        renderAdultLessons(filter);
-                    } else {
-                        currentYouthFilter = filter;
-                        renderYouthLessons(filter);
-                    }
+        function setupTabs() {
+            const adultTabs = document.querySelectorAll('#adultTabs .tab-btn');
+            adultTabs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    adultTabs.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const trim = btn.dataset.trim;
+                    renderLessons('adultLessonsContainer', adultLessonsFull, trim);
+                });
+            });
+            const youthTabs = document.querySelectorAll('#youthTabs .tab-btn');
+            youthTabs.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    youthTabs.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const trim = btn.dataset.trim;
+                    renderLessons('youthLessonsContainer', youthLessonsFull, trim);
                 });
             });
         }
 
-        // Partículas
+        function openLessonModal(lessonId, type) {
+            const lesson = (type === 'adult' ? adultLessonsFull : youthLessonsFull).find(l => l.id == lessonId);
+            if(!lesson) return;
+            const c = lesson.fullContent;
+            const modal = document.getElementById('lessonModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            modalTitle.innerText = `${lesson.number}: ${lesson.title}`;
+            let html = '';
+            if(type === 'adult') {
+                html = `<div class="verse-box"><strong>📖 Texto Áureo (${c.textAureo?.verse || "Neemias 1.4"}):</strong> “${c.textAureo?.text || "E sucedeu que... estive jejuando e orando perante o Deus dos céus"}”</div>
+                        <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${c.appliedTruth}</div>
+                        <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${c.objectives.map(obj => `<li>${obj}</li>`).join('')}</ul>
+                        <div class="modal-section-title">📖 Textos de Referência</div><p>${c.referenceText}</p>
+                        <div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${c.complementaryReadings.map(r => `<div class="reading-day"><strong>${r.day}</strong> | ${r.verse}<br>${r.text}</div>`).join('')}</div>
+                        <div class="modal-section-title">💬 Conteúdo da Lição</div>${c.fullText}
+                        <div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>`;
+            } else {
+                html = `<div class="verse-box"><strong>📖 Versículo do Dia (${c.verseDay}):</strong> “Do Senhor é a terra e a sua plenitude” (Sl 24.1)</div>
+                        <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${c.appliedTruth}</div>
+                        <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${c.objectives.map(obj => `<li>${obj}</li>`).join('')}</ul>
+                        <div class="modal-section-title">🙏 Momento de Oração</div><p>${c.prayerMoment}</p>
+                        <div class="modal-section-title">📖 Conteúdo</div>${c.fullText}
+                        <div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>`;
+            }
+            modalBody.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+
+        function setupModalEvents() {
+            document.addEventListener('click', (e) => {
+                if(e.target.closest('.view-btn')) {
+                    const btn = e.target.closest('.view-btn');
+                    const id = btn.dataset.lessonId;
+                    const type = btn.dataset.type;
+                    if(id) openLessonModal(id, type);
+                }
+                if(e.target.closest('.close-modal')) {
+                    document.getElementById('lessonModal').style.display = 'none';
+                }
+            });
+            document.getElementById('lessonModal').addEventListener('click', (e) => {
+                if(e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
+            });
+        }
+
+        // Particles animation
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-        const particles = Array.from({ length: 100 }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            r: Math.random() * 2,
-            d: Math.random() * 1 + 0.5,
-            o: Math.random() * 0.3 + 0.1
-        }));
+        const particles = Array.from({ length: 100 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, d: Math.random() * 1 + 0.5, o: Math.random() * 0.3 + 0.1 }));
         function drawParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 180, 70, ${p.o})`;
-                ctx.fill();
-                p.y += p.d;
-                if (p.y > canvas.height) { p.y = 0; p.x = Math.random() * canvas.width; }
-            });
+            particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fillStyle = `rgba(255, 180, 70, ${p.o})`; ctx.fill(); p.y += p.d; if(p.y > canvas.height) { p.y = 0; p.x = Math.random() * canvas.width; } });
             requestAnimationFrame(drawParticles);
         }
         drawParticles();
 
-        // Menu mobile
         const mobileBtn = document.getElementById('mobileMenuBtn');
         const nav = document.getElementById('mainNav');
-        mobileBtn.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
-        });
+        mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; });
+        document.querySelectorAll('#mainNav a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('active'); mobileBtn.innerHTML = '<i class="fas fa-bars"></i>'; }));
 
-        // Fechar menu ao clicar em link
-        document.querySelectorAll('#mainNav a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-                mobileBtn.innerHTML = '<i class="fas fa-bars"></i>';
-            });
-        });
-
-        // Inicialização
-        document.addEventListener('DOMContentLoaded', () => {
-            renderAdultLessons(currentAdultFilter);
-            renderYouthLessons(currentYouthFilter);
-            addButtonEventListeners('adult');
-            addButtonEventListeners('youth');
-            setupFilters();
-
-            // Scroll suave
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }
-                });
-            });
-        });
+        setupTabs();
+        setupModalEvents();
     </script>
 </body>
 </html>
