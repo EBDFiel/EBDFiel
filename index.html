@@ -223,6 +223,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            cursor: pointer; /* indica que pode ter ação (5 cliques) */
         }
         .lesson-card:hover { transform: translateY(-10px); border-color: rgba(255,180,70,0.3); }
         .lesson-header { padding: 2rem; background: linear-gradient(135deg, rgba(255,180,70,0.1), rgba(0,0,0,0.2)); text-align: center; }
@@ -710,6 +711,8 @@
 
                 const card = document.createElement('div');
                 card.className = 'lesson-card fade-in';
+                card.setAttribute('data-lesson-id', licao.id);
+                card.setAttribute('data-lesson-tipo', licao.tipo);
                 card.innerHTML = `
                     <span class="${badgeClass}">${badgeText}</span>
                     <div class="lesson-header">
@@ -729,6 +732,27 @@
                     </div>
                 `;
                 container.appendChild(card);
+            });
+
+            // Adicionar evento de 5 cliques nos cards
+            document.querySelectorAll('.lesson-card').forEach(card => {
+                let clickCount = 0;
+                let clickTimeout;
+                card.addEventListener('click', (e) => {
+                    // Ignorar se clicou no botão ou dentro do botão
+                    if (e.target.closest('.view-btn')) return;
+
+                    clickCount++;
+                    if (clickTimeout) clearTimeout(clickTimeout);
+                    clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
+                    if (clickCount >= 5) {
+                        clickCount = 0;
+                        const lessonId = card.getAttribute('data-lesson-id');
+                        const lessonTipo = card.getAttribute('data-lesson-tipo');
+                        const lesson = allLessons.find(l => l.id == lessonId && l.tipo === lessonTipo);
+                        if (lesson) abrirEditModal(lesson);
+                    }
+                });
             });
         }
 
@@ -906,13 +930,13 @@
         });
 
         // Admin UI
-        let clickCount = 0, clickTimeout;
+        let clickCountLogo = 0, clickTimeoutLogo;
         function handleLogoClick() {
-            clickCount++;
-            if (clickTimeout) clearTimeout(clickTimeout);
-            clickTimeout = setTimeout(() => { clickCount = 0; }, 1000);
-            if (clickCount >= 5) {
-                clickCount = 0;
+            clickCountLogo++;
+            if (clickTimeoutLogo) clearTimeout(clickTimeoutLogo);
+            clickTimeoutLogo = setTimeout(() => { clickCountLogo = 0; }, 1000);
+            if (clickCountLogo >= 5) {
+                clickCountLogo = 0;
                 document.getElementById('adminOverlay').style.display = 'block';
                 document.getElementById('adminPanel').style.display = 'block';
                 construirAdminPanel();
