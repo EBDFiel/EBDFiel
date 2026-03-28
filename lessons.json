@@ -281,24 +281,24 @@
     {
       "trimestre": 2,
       "numero": 1,
-      "titulo": "NEEMIAS: CHAMADO EM TEMPOS DE ADVERSIDADE",
+      "titulo": "Neemias: Chamado em Tempos de Adversidade",
       "data": "05/04/2026",
-      "texto_aureo": {
-        "versiculo": "Neemias 1.4",
-        "texto": "E sucedeu que, ouvindo eu estas palavras, assentei-me, e chorei, e lamentei por alguns dias; e estive jejuando e orando perante o Deus dos céus."
-      },
+      "conteudo_url": "licoes/2trim-adulto-licao1.html",
       "verdade_aplicada": "Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos diversos desafios que surgem na jornada cristã.",
       "objetivos": [
         "Compreender o contexto no qual Neemias estava inserido.",
-        "Saber como agir em tempos de adversidades."
+        "Saber como agir em tempos de adversidades.",
         "Reconhecer que o chamado de Deus não depende das circunstâncias."
       ],
-      "textos_referencia": "Isaías 46.9-11",
+      "textos_referencia": "Neemias 1.1-11",
       "leituras": [
-        { "dia": "Segunda", "versiculo": "Jó 42.2", "texto": "Sei que tudo podes." },
-        { "dia": "Terça", "versiculo": "Dn 4.35", "texto": "Ele faz segundo a sua vontade." }
-      ],
-      "conteudo": "<p>Deus é o Rei soberano sobre toda a criação. Nada acontece fora do seu controle. Mesmo diante das dificuldades, podemos confiar que Ele tem um propósito e que Seu reino prevalece. A soberania de Deus nos traz paz e segurança.</p>"
+        { "dia": "Segunda", "versiculo": "Pv 17.17", "texto": "Devemos cultivar amizade verdadeira" },
+        { "dia": "Terça", "versiculo": "1Jo 3.18", "texto": "Não amemos apenas com palavras" },
+        { "dia": "Quarta", "versiculo": "Js 1.6", "texto": "É preciso esforço para viver grandes promessas" },
+        { "dia": "Quinta", "versiculo": "1Ts 5.17", "texto": "Orai diariamente com fervor" },
+        { "dia": "Sexta", "versiculo": "Ef 6.13", "texto": "Estamos em batalha espiritual" },
+        { "dia": "Sábado", "versiculo": "Sl 40.1", "texto": "Confie em Deus" }
+      ]
     },
     {
       "trimestre": 2,
