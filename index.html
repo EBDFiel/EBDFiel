@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* TODOS OS ESTILOS ANTERIORES (MANTIDOS) – por economia de espaço, mantemos os mesmos estilos */
+        /* ========== ESTILOS PRINCIPAIS (MANTIDOS) ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -192,11 +192,13 @@
         }
         .edit-modal h3 { color: #ffb347; margin-bottom: 1rem; }
         .edit-modal .close-edit { float: right; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
-        .edit-modal input, .edit-modal textarea {
+        .edit-modal label { display: block; margin-top: 0.5rem; font-weight: bold; }
+        .edit-modal textarea {
             width: 100%; padding: 0.5rem; margin: 0.5rem 0; border-radius: 8px;
             border: none; background: #334155; color: white;
+            font-family: monospace;
+            font-size: 0.9rem;
         }
-        .edit-modal label { display: block; margin-top: 0.5rem; font-weight: bold; }
         .edit-modal .save-btn {
             background: #ffb347; color: #1e293b; border: none; padding: 0.5rem 1rem;
             border-radius: 30px; cursor: pointer; margin-top: 1rem;
@@ -289,24 +291,12 @@
         <p style="font-size:0.8rem; margin-top:1rem;">* Alterações de disponibilidade e conteúdo são salvas no navegador. "Resetar Conteúdos" restaura os originais.</p>
     </div>
 
-    <!-- Modal de Edição -->
+    <!-- Modal de Edição Simplificado -->
     <div id="editModal" class="edit-modal">
         <button class="close-edit" id="closeEditBtn">&times;</button>
         <h3 id="editModalTitle">Editar Lição</h3>
-        <label>Título:</label>
-        <input type="text" id="editTitulo">
-        <label>Texto Áureo (versículo):</label>
-        <input type="text" id="editAureoVersiculo">
-        <label>Texto Áureo (texto):</label>
-        <textarea id="editAureoTexto" rows="2"></textarea>
-        <label>Verdade Aplicada:</label>
-        <textarea id="editVerdade" rows="2"></textarea>
-        <label>Objetivos (um por linha):</label>
-        <textarea id="editObjetivos" rows="4"></textarea>
-        <label>Leituras (formato: Dia | Versículo | Texto, um por linha):</label>
-        <textarea id="editLeituras" rows="4" placeholder="Ex: Segunda | Pv 17.17 | Devemos cultivar amizade verdadeira"></textarea>
-        <label>Conteúdo (HTML):</label>
-        <textarea id="editConteudo" rows="12"></textarea>
+        <label>📄 Conteúdo (HTML):</label>
+        <textarea id="editConteudo" rows="18" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em &lt;h1&gt;...&lt;/h1&gt;.&#10;Exemplo:&#10;&lt;h1&gt;Título da Lição&lt;/h1&gt;&#10;&lt;p&gt;Texto da lição...&lt;/p&gt;&#10;...&#10;Para as classes de adultos e jovens, você pode usar os blocos já prontos (support-box, practice-box, etc.)."></textarea>
         <button class="save-btn" id="saveEditBtn">Salvar Alterações</button>
     </div>
 
@@ -334,10 +324,30 @@
             localStorage.setItem('ebd_content_overrides', JSON.stringify(contentOverrides));
         }
 
+        // Aplica overrides de conteúdo
         function applyContentOverrides(lesson) {
             const key = `${lesson.tipo}:${lesson.id}`;
             if (contentOverrides[key]) {
-                return { ...lesson, ...contentOverrides[key] };
+                const override = contentOverrides[key];
+                // Se o override tiver apenas "conteudo" (HTML), usamos ele e extraímos título
+                if (override.conteudo !== undefined) {
+                    const newLesson = { ...lesson };
+                    newLesson.conteudo = override.conteudo;
+                    // Extrair título do HTML (primeiro h1)
+                    const titleMatch = newLesson.conteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                    if (titleMatch && titleMatch[1]) {
+                        newLesson.titulo = titleMatch[1].trim();
+                    } else {
+                        // Se não houver h1, mantém o título original ou usa um padrão
+                        newLesson.titulo = override.titulo || lesson.titulo;
+                    }
+                    // Manter os campos originais para compatibilidade (texto_aureo, etc.) se existirem
+                    // Não os sobrescrevemos com undefined
+                    return newLesson;
+                } else {
+                    // Para compatibilidade com edições antigas (campos separados)
+                    return { ...lesson, ...override };
+                }
             }
             return lesson;
         }
@@ -540,35 +550,32 @@
             const modal = document.getElementById('editModal');
             const modalTitle = document.getElementById('editModalTitle');
             modalTitle.innerText = `Editar: ${lesson.titulo}`;
-            document.getElementById('editTitulo').value = lesson.titulo || '';
-            document.getElementById('editAureoVersiculo').value = lesson.texto_aureo?.versiculo || '';
-            document.getElementById('editAureoTexto').value = lesson.texto_aureo?.texto || '';
-            document.getElementById('editVerdade').value = lesson.verdade_aplicada || '';
-            document.getElementById('editObjetivos').value = (lesson.objetivos || []).join('\n');
-            const leiturasText = (lesson.leituras || []).map(l => `${l.dia} | ${l.versiculo} | ${l.texto}`).join('\n');
-            document.getElementById('editLeituras').value = leiturasText;
-            document.getElementById('editConteudo').value = lesson.conteudo || '';
+            // Carregar o conteúdo atual (se houver override, usa ele; senão usa o conteudo original)
+            const key = `${lesson.tipo}:${lesson.id}`;
+            let conteudoAtual = '';
+            if (contentOverrides[key] && contentOverrides[key].conteudo !== undefined) {
+                conteudoAtual = contentOverrides[key].conteudo;
+            } else if (lesson.conteudo) {
+                conteudoAtual = lesson.conteudo;
+            } else {
+                // Se não tem conteúdo, podemos tentar gerar a partir dos campos antigos?
+                // Para simplificar, deixamos vazio.
+                conteudoAtual = '';
+            }
+            document.getElementById('editConteudo').value = conteudoAtual;
             modal.style.display = 'block';
             document.getElementById('saveEditBtn').onclick = () => {
-                const novosObjetivos = document.getElementById('editObjetivos').value.split('\n').filter(l => l.trim() !== '');
-                const leiturasLinhas = document.getElementById('editLeituras').value.split('\n').filter(l => l.trim() !== '');
-                const novasLeituras = leiturasLinhas.map(line => {
-                    const parts = line.split('|').map(p => p.trim());
-                    if (parts.length >= 3) return { dia: parts[0], versiculo: parts[1], texto: parts[2] };
-                    return null;
-                }).filter(l => l !== null);
+                const novoConteudo = document.getElementById('editConteudo').value;
+                // Extrair título do HTML
+                let novoTitulo = lesson.titulo;
+                const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
+                if (titleMatch && titleMatch[1]) {
+                    novoTitulo = titleMatch[1].trim();
+                }
                 const updated = {
-                    titulo: document.getElementById('editTitulo').value,
-                    texto_aureo: {
-                        versiculo: document.getElementById('editAureoVersiculo').value,
-                        texto: document.getElementById('editAureoTexto').value
-                    },
-                    verdade_aplicada: document.getElementById('editVerdade').value,
-                    objetivos: novosObjetivos,
-                    leituras: novasLeituras,
-                    conteudo: document.getElementById('editConteudo').value
+                    conteudo: novoConteudo,
+                    titulo: novoTitulo
                 };
-                const key = `${lesson.tipo}:${lesson.id}`;
                 contentOverrides[key] = updated;
                 saveOverrides();
                 renderAll();
@@ -609,11 +616,11 @@
         function gerarConteudoHtml(licao) {
             // Determina cores e estrutura baseada no tipo
             const isYouth = licao.tipo === 'youth';
-            const primaryColor = isYouth ? '#3b82f6' : '#ffb347';      // azul para jovens, laranja para adultos
-            const supportColor = isYouth ? '#eef2ff' : '#f1f5f9';      // fundo apoio pedagógico
-            const supportBorder = isYouth ? '#3b82f6' : '#ffb347';      // borda apoio pedagógico
-            const practiceColor = isYouth ? '#dcfce7' : '#fef3c7';      // fundo aplicação prática
-            const practiceBorder = isYouth ? '#22c55e' : '#f59e0b';      // borda aplicação prática
+            const primaryColor = isYouth ? '#3b82f6' : '#ffb347';
+            const supportColor = isYouth ? '#eef2ff' : '#f1f5f9';
+            const supportBorder = isYouth ? '#3b82f6' : '#ffb347';
+            const practiceColor = isYouth ? '#dcfce7' : '#fef3c7';
+            const practiceBorder = isYouth ? '#22c55e' : '#f59e0b';
 
             let html = `<!DOCTYPE html>
             <html lang="pt-BR">
@@ -736,65 +743,8 @@
                     <div class="lesson-header-logo">
                         <img src="https://i.imgur.com/B1CSSvW.png" alt="EBD Fiel Logo">
                     </div>
-                    <h1>${licao.titulo}</h1>
-                    <div class="lesson-meta">
-                        <strong>${licao.trimestre}º Trimestre | Lição ${licao.numero}</strong><br>
-                        Data: ${licao.data || ''}
-                    </div>`;
-
-            // Campos comuns
-            if (licao.texto_aureo && licao.texto_aureo.versiculo) {
-                html += `<div class="verse-box">
-                            <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
-                         </div>`;
-            }
-            if (licao.verdade_aplicada) {
-                html += `<div class="verse-box">
-                            <strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}
-                         </div>`;
-            }
-            if (licao.objetivos && licao.objetivos.length) {
-                html += `<div class="modal-section-title">🎯 Objetivos da Lição</div>
-                         <ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
-            }
-
-            // Campos específicos para jovens
-            if (isYouth) {
-                if (licao.versiculo_dia) {
-                    html += `<div class="verse-box">
-                                <strong>📖 Versículo do Dia (${licao.versiculo_dia}):</strong> “${licao.versiculo_dia_texto || ''}”
-                             </div>`;
-                }
-                if (licao.textos_referencia) {
-                    html += `<div class="modal-section-title">📖 Texto de Referência</div>
-                             <p>${licao.textos_referencia}</p>`;
-                } else if (licao.textos_referencia_jovem) {
-                    html += `<div class="modal-section-title">📖 Texto de Referência</div>
-                             <p>${licao.textos_referencia_jovem}</p>`;
-                }
-                if (licao.momento_oracao) {
-                    html += `<div class="verse-box">
-                                <strong>🙏 Momento de Oração:</strong> ${licao.momento_oracao}
-                             </div>`;
-                }
-            } else {
-                // Adultos: exibe textos de referência padrão
-                if (licao.textos_referencia) {
-                    html += `<div class="modal-section-title">📖 Textos de Referência</div>
-                             <p>${licao.textos_referencia}</p>`;
-                }
-                if (licao.leituras && licao.leituras.length) {
-                    html += `<div class="modal-section-title">📅 Leituras Complementares</div>
-                             <div class="reading-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin:1rem 0;">${licao.leituras.map(r => `<div class="reading-day" style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.8rem; border-radius:12px;"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
-                }
-            }
-
-            // Conteúdo principal (já pode conter os blocos de apoio e aplicação)
-            html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
-                     ${licao.conteudo || ''}`;
-
-            // Bloco social agora é adicionado para TODAS as lições (adultos e jovens)
-            html += `<div class="social-footer">
+                    ${licao.conteudo ? licao.conteudo : '<p><em>Conteúdo não disponível.</em></p>'}
+                    <div class="social-footer">
                         <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
                         <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas e fortaleça a nossa Escola Bíblica Dominical.</p>
                         <p>Aproveite e acesse os links abaixo para nos acompanhar em todas as nossas redes:</p>
@@ -805,9 +755,10 @@
                             <a href="https://www.facebook.com/EBDFiel/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a>
                             <a href="https://chat.whatsapp.com/Lh4cvZW1DPMJ5ctHYWyyMC" target="_blank" class="whatsapp-link"><i class="fab fa-whatsapp"></i> Grupo de WhatsApp</a>
                         </div>
-                    </div>`;
-
-            html += `</div></body></html>`;
+                    </div>
+                </div>
+            </body>
+            </html>`;
             return html;
         }
 
