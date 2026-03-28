@@ -200,25 +200,13 @@
         <section class="class-section" id="adult-class"><div class="class-section-title"><i class="fas fa-users"></i><h2>Classe Adultos</h2></div><div class="class-description"><p>Lições para adultos com estudos bíblicos profundos e aplicações práticas.</p></div>
         <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo do Trimestre</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/te9eFEEVqKQ?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
         <div class="quiz-section"><h3><i class="fas fa-brain"></i> Quiz Adultos</h3><p>Teste seu conhecimento sobre as lições de forma interativa.</p><a href="https://ebdfiel.github.io/Quizzes-ClaseAdultos-2026/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
-        <!-- Abas de trimestres para adultos -->
-        <div class="trim-tabs" id="adultTabs">
-            <button class="tab-btn" data-trim="trim1">1º Trimestre</button>
-            <button class="tab-btn" data-trim="trim2">2º Trimestre</button>
-            <button class="tab-btn" data-trim="trim3">3º Trimestre</button>
-            <button class="tab-btn" data-trim="trim4">4º Trimestre</button>
-        </div>
+        <div class="trim-tabs" id="adultTabs"></div>
         <div class="lessons-grid" id="adultLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
 
         <section class="class-section" id="youth-class"><div class="class-section-title"><i class="fas fa-fire-alt"></i><h2>Classe Jovens - Conectar</h2></div><div class="class-description"><p>Lições especiais para o público jovem, com linguagem atual e aplicações práticas.</p></div>
         <div class="video-section"><h3><i class="fas fa-play-circle"></i> Vídeo da Classe Jovem</h3><div class="video-universal-container"><div class="video-responsive-wrapper"><iframe src="https://www.youtube.com/embed/kIB-BtFmb-Y?rel=0" allowfullscreen></iframe></div></div><div class="video-info"><a href="#" class="video-direct-link"><i class="fab fa-youtube"></i> Assistir no YouTube</a></div></div>
         <div class="quiz-section"><h3><i class="fas fa-users"></i> Quiz Jovens</h3><p>Teste seu conhecimento com quizzes específicos para jovens.</p><a href="https://ebdfiel.github.io/Quizzes-ConectarJovens-/" target="_blank" class="quiz-button"><i class="fas fa-question-circle"></i> Acessar Quiz</a></div>
-        <!-- Abas de trimestres para jovens -->
-        <div class="trim-tabs" id="youthTabs">
-            <button class="tab-btn" data-trim="trim1">1º Trimestre</button>
-            <button class="tab-btn" data-trim="trim2">2º Trimestre</button>
-            <button class="tab-btn" data-trim="trim3">3º Trimestre</button>
-            <button class="tab-btn" data-trim="trim4">4º Trimestre</button>
-        </div>
+        <div class="trim-tabs" id="youthTabs"></div>
         <div class="lessons-grid" id="youthLessonsContainer"><div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div></div></section>
 
         <section class="about-section" id="about"><div class="about-content"><div class="about-text"><h3>Sobre a EBD Fiel</h3><p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais.</p><div class="about-features"><div class="feature"><div class="feature-icon"><i class="fas fa-book-open"></i></div><div class="feature-text"><h4>Estudo Exegético</h4><p>Análise cuidadosa do texto</p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-users"></i></div><div class="feature-text"><h4>Para Todos</h4><p>Jovens e Adultos</p></div></div></div></div><div class="about-image"><div class="about-image-content" style="background:linear-gradient(135deg,#ffb347,#ff8c00); padding:2rem; border-radius:30px;"><i class="fas fa-bible" style="font-size:3rem;"></i><h3>"Examinai as Escrituras"</h3><p>João 5:39</p></div></div></div></section>
@@ -227,122 +215,75 @@
     <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"></div></div></div>
 
     <script>
-        // Geração de 13 lições por trimestre (4 trimestres) para Adultos e Jovens com conteúdo completo.
-        function getAdultLessonContent(trim, lessonNum) {
-            if(trim === 1 && lessonNum === 1) {
-                return {
-                    title: "O chamado que transforma a dor em propósito",
-                    textAureo: { verse: "Neemias 1.4", text: "E sucedeu que, ouvindo eu estas palavras, assentei-me, e chorei, e lamentei por alguns dias; e estive jejuando e orando perante o Deus dos céus." },
-                    appliedTruth: "Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos diversos desafios que surgem na jornada cristã.",
-                    objectives: ["Compreender o contexto no qual Neemias estava inserido.", "Saber como agir em tempos de adversidades.", "Reconhecer que o chamado de Deus não depende das circunstâncias."],
-                    referenceText: "Neemias 1.1-11",
-                    complementaryReadings: [
-                        { day: "Segunda", verse: "Pv 17.17", text: "Devemos cultivar amizades verdadeiras." },
-                        { day: "Terça", verse: "1Jo 3.18", text: "Não amemos apenas com palavras." },
-                        { day: "Quarta", verse: "Js 1.6", text: "É preciso esforço para viver grandes promessas." },
-                        { day: "Quinta", verse: "1Ts 5.17", text: "Oremos diariamente com fervor." },
-                        { day: "Sexta", verse: "Ef 6.13", text: "Estamos em batalha espiritual." },
-                        { day: "Sábado", verse: "Sl 40.1", text: "Confie em Deus." }
-                    ],
-                    fullText: "<p>Neemias tinha uma posição confortável como copeiro do rei, mas a notícia do estado lastimável de Jerusalém mudou sua vida. Ele buscou ao Deus dos céus em oração e jejum. A lição mostra que o chamado de Deus pode surgir em meio a momentos difíceis. A situação do povo era de grande miséria e desprezo, e os muros da cidade estavam fendidos. Neemias chorou, lamentou e não se conformou, buscando a restauração mediante oração e dependência divina.</p><p>Devemos aprender que os verdadeiros servos não se paralisam diante de más notícias, mas confiam nas promessas de Deus. A união de propósitos e a perseverança espiritual são fundamentais para vencer os desafios.</p>"
-                };
+        let adultLessons = [], youthLessons = [];
+
+        async function carregarDados() {
+            try {
+                const response = await fetch('lessons.json');
+                const data = await response.json();
+                adultLessons = data.adult || [];
+                youthLessons = data.youth || [];
+                criarAbas('adult', adultLessons);
+                criarAbas('youth', youthLessons);
+            } catch (error) {
+                console.error('Erro ao carregar lessons.json:', error);
+                document.getElementById('adultLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições. Verifique se o arquivo lessons.json está presente.</div>';
+                document.getElementById('youthLessonsContainer').innerHTML = '<div class="empty-message">❌ Erro ao carregar lições.</div>';
             }
-            const trimThemes = ["Neemias: Reconstruindo Propósitos", "A Soberania de Deus", "Vida de Oração e Batalha Espiritual", "A Caminhada Cristã"];
-            const themes = ["Oração e Lágrimas", "O Conformismo que Mata", "Confiança nas Promessas", "Liderança Servidora", "Restauração Divina", "Santidade", "Fé em Ação", "Esperança em Meio à Crise", "Comunhão", "Testemunho", "Unidade", "Perseverança", "Graça"];
-            const idx = (lessonNum-1) % themes.length;
-            const specificTitle = `${lessonNum}. ${themes[idx]} na Vida do Crente`;
-            const verseOptions = ["Sl 126.5", "Is 40.31", "Fp 4.13", "Rm 8.28", "Hb 11.1"];
-            return {
-                title: specificTitle,
-                textAureo: { verse: verseOptions[lessonNum % verseOptions.length], text: "Porque para Deus nada é impossível, e aqueles que confiam nEle são fortalecidos." },
-                appliedTruth: `No ${trimThemes[trim-1]}, aprendemos que Deus nos chama a uma vida de entrega e confiança plena.`,
-                objectives: ["Reconhecer a soberania de Deus sobre as circunstâncias.", "Aplicar os princípios bíblicos no dia a dia.", "Crescer na fé mediante desafios."],
-                referenceText: `Referências baseadas no tema do ${trimThemes[trim-1]}`,
-                complementaryReadings: [
-                    { day: "Segunda", verse: "Sl 37.5", text: "Entrega teu caminho ao Senhor." },
-                    { day: "Terça", verse: "1Pe 5.7", text: "Lançai sobre Ele toda a vossa ansiedade." }
-                ],
-                fullText: `<p>Esta lição aborda a importância de viver uma fé autêntica e ativa. Assim como Neemias, devemos reagir com oração e determinação diante das adversidades. O Senhor nos chama para sermos agentes de restauração em nossa geração.</p><p>Que possamos aprender a confiar no Deus que transforma a dor em propósito e nos capacita a vencer.</p>`
-            };
         }
 
-        function getYouthLessonContent(trim, lessonNum) {
-            if(trim === 1 && lessonNum === 1) {
-                return {
-                    title: "Reconhecendo o Senhorio de Deus",
-                    verseDay: "Salmos 24.1",
-                    appliedTruth: "Deus é Senhor de tudo, e Sua vontade prevalece sobre todos os aspectos da nossa vida.",
-                    objectives: ["Reconhecer o Senhorio de Deus;", "Saber que Deus é Soberano sobre todas as coisas;", "Ressaltar que Deus tem autoridade absoluta sobre toda a Criação."],
-                    prayerMoment: "Ore para que o nosso coração descanse no Amor e no Cuidado do Deus Criador.",
-                    fullText: "<p>Reconhecer o Senhorio de Deus é reconhecê-lo como Soberano Criador e Autoridade Suprema. Deus Altíssimo (El Elyon) é transcendente, e Todo-Poderoso (El Shaddai) detém todo o poder. Sua majestade se revela na criação, e Ele reina sobre todas as coisas. O Senhor é dono do Seu povo e da criação. Devemos viver em humildade, sabendo que somos mordomos do que Ele nos confia.</p><p>Não devemos cair no determinismo, mas entender que a soberania de Deus coexiste com a responsabilidade humana. Seu senhorio nos traz paz e direção.</p>"
-                };
+        function criarAbas(tipo, lista) {
+            const trimestres = [...new Set(lista.map(l => l.trimestre))].sort((a,b)=>a-b);
+            const containerTabs = document.getElementById(`${tipo}Tabs`);
+            const containerLessons = document.getElementById(`${tipo}LessonsContainer`);
+            if (!containerTabs) return;
+            containerTabs.innerHTML = '';
+            trimestres.forEach(trim => {
+                const btn = document.createElement('button');
+                btn.className = 'tab-btn';
+                btn.textContent = `${trim}º Trimestre`;
+                btn.dataset.trim = trim;
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll(`#${tipo}Tabs .tab-btn`).forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    renderizarLicoes(tipo, lista.filter(l => l.trimestre == trim));
+                });
+                containerTabs.appendChild(btn);
+            });
+            if (trimestres.length > 0) {
+                const primeiro = trimestres[0];
+                const primeiroBtn = containerTabs.querySelector('.tab-btn');
+                if (primeiroBtn) primeiroBtn.classList.add('active');
+                renderizarLicoes(tipo, lista.filter(l => l.trimestre == primeiro));
+            } else {
+                containerLessons.innerHTML = '<div class="empty-message">📖 Nenhuma lição cadastrada.</div>';
             }
-            const trimThemesYouth = ["Fundamentos da Fé", "Identidade em Cristo", "Vida no Espírito", "Missão e Propósito"];
-            const titles = ["Senhorio de Deus", "A Trindade", "A Bíblia como Autoridade", "A Graça Salvadora", "Arrependimento", "Novo Nascimento", "Discipulado", "Santificação", "Igreja Corpo de Cristo", "Oração que é a Chave", "Testemunho Pessoal", "Amor ao Próximo", "Esperança Viva"];
-            const titleTopic = titles[(lessonNum-1) % titles.length];
-            return {
-                title: `Lição ${lessonNum}: ${titleTopic}`,
-                verseDay: "Sl 119.105",
-                appliedTruth: `No ${trimThemesYouth[trim-1]}, somos chamados a viver os fundamentos do Reino com autenticidade.`,
-                objectives: ["Compreender os fundamentos bíblicos para a vida jovem.", "Aplicar os ensinamentos de Cristo no cotidiano.", "Crescer na comunhão com Deus."],
-                prayerMoment: "Ore para que Deus fortaleça sua fé e testemunho.",
-                fullText: `<p>Esta lição destaca a importância de ${titleTopic.toLowerCase()} como alicerce da caminhada cristã. Os jovens são desafiados a viver uma fé relevante, fundamentada na Palavra e no poder do Espírito Santo.</p><p>Assim como Neemias e os discípulos, precisamos ser sensíveis ao chamado de Deus e obedientes à Sua direção.</p>`
-            };
         }
 
-        function generateLessonsForClass(type, trimCount=4, lessonsPerTrim=13) {
-            let lessons = [];
-            let lessonId = 1;
-            for(let t=1; t<=trimCount; t++) {
-                for(let l=1; l<=lessonsPerTrim; l++) {
-                    let baseDate = new Date(2026, 0, 4 + (t-1)*91 + (l-1)*7);
-                    let dateStr = baseDate.toLocaleDateString('pt-BR');
-                    let content = (type === 'adult') ? getAdultLessonContent(t, l) : getYouthLessonContent(t, l);
-                    lessons.push({
-                        id: lessonId++,
-                        quarterFilter: `trim${t}`,
-                        quarter: `${t}º Trimestre`,
-                        number: `Lição ${l}`,
-                        title: content.title,
-                        date: dateStr,
-                        description: content.appliedTruth.substring(0, 100) + "...",
-                        tag: type === 'adult' ? "Estudo Bíblico" : "CONECTAR",
-                        available: true,
-                        type: type,
-                        fullContent: content
-                    });
-                }
-            }
-            return lessons;
-        }
-
-        const adultLessonsFull = generateLessonsForClass('adult', 4, 13);
-        const youthLessonsFull = generateLessonsForClass('youth', 4, 13);
-
-        function renderLessons(containerId, lessons, selectedTrim) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = '';
-            const filtered = lessons.filter(l => l.quarterFilter === selectedTrim);
-            if(filtered.length === 0) {
+        function renderizarLicoes(tipo, lista) {
+            const container = document.getElementById(`${tipo}LessonsContainer`);
+            if (!container) return;
+            if (lista.length === 0) {
                 container.innerHTML = '<div class="empty-message">📖 Nenhuma lição disponível para este trimestre.</div>';
                 return;
             }
-            filtered.forEach(lesson => {
+            container.innerHTML = '';
+            lista.forEach(licao => {
                 const card = document.createElement('div');
                 card.className = 'lesson-card fade-in';
                 card.innerHTML = `
                     <span class="available-badge">Disponível</span>
                     <div class="lesson-header">
-                        <div class="lesson-quarter">${lesson.quarter}</div>
-                        <div class="lesson-number">${lesson.number}</div>
-                        <div class="lesson-title">${lesson.title}</div>
+                        <div class="lesson-quarter">${licao.trimestre}º Trimestre</div>
+                        <div class="lesson-number">Lição ${licao.numero}</div>
+                        <div class="lesson-title">${licao.titulo}</div>
                     </div>
                     <div class="lesson-body">
-                        <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${lesson.date}</div>
-                        <div class="lesson-description">${lesson.description}</div>
+                        <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${licao.data || ''}</div>
+                        <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
                         <div class="lesson-footer">
-                            <span class="lesson-tag">${lesson.tag}</span>
-                            <button class="view-btn" data-lesson-id="${lesson.id}" data-type="${lesson.type}"><i class="fas fa-book-open"></i> Ver Lição</button>
+                            <span class="lesson-tag">${tipo === 'adult' ? 'Estudo Bíblico' : 'CONECTAR'}</span>
+                            <button class="view-btn" data-tipo="${tipo}" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>
                         </div>
                     </div>
                 `;
@@ -350,74 +291,53 @@
             });
         }
 
-        function setupTabs() {
-            const adultTabs = document.querySelectorAll('#adultTabs .tab-btn');
-            adultTabs.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    adultTabs.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const trim = btn.dataset.trim;
-                    renderLessons('adultLessonsContainer', adultLessonsFull, trim);
-                });
-            });
-            const youthTabs = document.querySelectorAll('#youthTabs .tab-btn');
-            youthTabs.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    youthTabs.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    const trim = btn.dataset.trim;
-                    renderLessons('youthLessonsContainer', youthLessonsFull, trim);
-                });
-            });
-        }
-
-        function openLessonModal(lessonId, type) {
-            const lesson = (type === 'adult' ? adultLessonsFull : youthLessonsFull).find(l => l.id == lessonId);
-            if(!lesson) return;
-            const c = lesson.fullContent;
+        function abrirModal(licao, tipo) {
             const modal = document.getElementById('lessonModal');
             const modalTitle = document.getElementById('modalTitle');
             const modalBody = document.getElementById('modalBody');
-            modalTitle.innerText = `${lesson.number}: ${lesson.title}`;
+            modalTitle.innerText = `Lição ${licao.numero}: ${licao.titulo}`;
             let html = '';
-            if(type === 'adult') {
-                html = `<div class="verse-box"><strong>📖 Texto Áureo (${c.textAureo?.verse || "Neemias 1.4"}):</strong> “${c.textAureo?.text || "E sucedeu que... estive jejuando e orando perante o Deus dos céus"}”</div>
-                        <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${c.appliedTruth}</div>
-                        <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${c.objectives.map(obj => `<li>${obj}</li>`).join('')}</ul>
-                        <div class="modal-section-title">📖 Textos de Referência</div><p>${c.referenceText}</p>
-                        <div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${c.complementaryReadings.map(r => `<div class="reading-day"><strong>${r.day}</strong> | ${r.verse}<br>${r.text}</div>`).join('')}</div>
-                        <div class="modal-section-title">💬 Conteúdo da Lição</div>${c.fullText}
-                        <div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>`;
+            if (tipo === 'adult') {
+                const leituras = (licao.leituras || []).map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('');
+                html = `
+                    <div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo?.versiculo || ''}):</strong> “${licao.texto_aureo?.texto || ''}”</div>
+                    <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada || ''}</div>
+                    <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${(licao.objetivos || []).map(obj => `<li>${obj}</li>`).join('')}</ul>
+                    <div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia || ''}</p>
+                    <div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${leituras || '<p>Não informado</p>'}</div>
+                    <div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo || ''}
+                    <div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>
+                `;
             } else {
-                html = `<div class="verse-box"><strong>📖 Versículo do Dia (${c.verseDay}):</strong> “Do Senhor é a terra e a sua plenitude” (Sl 24.1)</div>
-                        <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${c.appliedTruth}</div>
-                        <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${c.objectives.map(obj => `<li>${obj}</li>`).join('')}</ul>
-                        <div class="modal-section-title">🙏 Momento de Oração</div><p>${c.prayerMoment}</p>
-                        <div class="modal-section-title">📖 Conteúdo</div>${c.fullText}
-                        <div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>`;
+                html = `
+                    <div class="verse-box"><strong>📖 Versículo do Dia (${licao.versiculo_dia || ''}):</strong> “${licao.versiculo_dia_texto || 'Do Senhor é a terra e a sua plenitude'}”</div>
+                    <div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada || ''}</div>
+                    <div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${(licao.objetivos || []).map(obj => `<li>${obj}</li>`).join('')}</ul>
+                    <div class="modal-section-title">🙏 Momento de Oração</div><p>${licao.momento_oracao || ''}</p>
+                    <div class="modal-section-title">📖 Conteúdo</div>${licao.conteudo || ''}
+                    <div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>
+                `;
             }
             modalBody.innerHTML = html;
             modal.style.display = 'flex';
         }
 
-        function setupModalEvents() {
-            document.addEventListener('click', (e) => {
-                if(e.target.closest('.view-btn')) {
-                    const btn = e.target.closest('.view-btn');
-                    const id = btn.dataset.lessonId;
-                    const type = btn.dataset.type;
-                    if(id) openLessonModal(id, type);
-                }
-                if(e.target.closest('.close-modal')) {
-                    document.getElementById('lessonModal').style.display = 'none';
-                }
-            });
-            document.getElementById('lessonModal').addEventListener('click', (e) => {
-                if(e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
-            });
-        }
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.view-btn')) {
+                const btn = e.target.closest('.view-btn');
+                const tipo = btn.dataset.tipo;
+                const licao = JSON.parse(btn.dataset.licao);
+                abrirModal(licao, tipo);
+            }
+            if (e.target.closest('.close-modal')) {
+                document.getElementById('lessonModal').style.display = 'none';
+            }
+        });
+        document.getElementById('lessonModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
+        });
 
-        // Particles animation
+        // Partículas
         const canvas = document.getElementById('particles');
         const ctx = canvas.getContext('2d');
         function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
@@ -436,8 +356,7 @@
         mobileBtn.addEventListener('click', () => { nav.classList.toggle('active'); mobileBtn.innerHTML = nav.classList.contains('active') ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; });
         document.querySelectorAll('#mainNav a').forEach(link => link.addEventListener('click', () => { nav.classList.remove('active'); mobileBtn.innerHTML = '<i class="fas fa-bars"></i>'; }));
 
-        setupTabs();
-        setupModalEvents();
+        carregarDados();
     </script>
 </body>
 </html>
