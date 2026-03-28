@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ========== ESTILOS PRINCIPAIS ========== */
+        /* ========== ESTILOS ========== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -280,23 +280,24 @@
     <div id="adminOverlay" class="admin-panel-overlay"></div>
     <div id="adminPanel" class="admin-panel">
         <button class="close-admin" id="closeAdminBtn">&times;</button>
-        <h3>Administração de Disponibilidade e Conteúdo</h3>
+        <h3>Administração</h3>
         <div id="adminList"></div>
         <div class="admin-buttons">
             <button id="adminUnlockAll">Liberar Todas</button>
             <button id="adminBlockAll">Bloquear Todas</button>
             <button id="adminResetAll">Resetar Conteúdos</button>
+            <button id="adminClearStorage">🔴 LIMPAR TODOS OS DADOS</button>
             <button id="adminExport">Exportar JSON</button>
         </div>
-        <p style="font-size:0.8rem; margin-top:1rem;">* Alterações de disponibilidade e conteúdo são salvas no navegador. "Resetar Conteúdos" restaura os originais.</p>
+        <p style="font-size:0.8rem; margin-top:1rem;">* Se o card mostrar texto errado, clique em "LIMPAR TODOS OS DADOS" e recarregue.</p>
     </div>
 
-    <!-- Modal de Edição Simplificado -->
+    <!-- Modal de Edição -->
     <div id="editModal" class="edit-modal">
         <button class="close-edit" id="closeEditBtn">&times;</button>
         <h3 id="editModalTitle">Editar Lição</h3>
         <label>📄 Conteúdo (HTML):</label>
-        <textarea id="editConteudo" rows="18" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em &lt;h1&gt;...&lt;/h1&gt;.&#10;Exemplo:&#10;&lt;h1&gt;Título da Lição&lt;/h1&gt;&#10;&lt;p&gt;Texto da lição...&lt;/p&gt;&#10;...&#10;Para as classes de adultos e jovens, você pode usar os blocos já prontos (support-box, practice-box, etc.)."></textarea>
+        <textarea id="editConteudo" rows="18" placeholder="Cole aqui todo o conteúdo da lição, incluindo o título em &lt;h1&gt;...&lt;/h1&gt;"></textarea>
         <button class="save-btn" id="saveEditBtn">Salvar Alterações</button>
     </div>
 
@@ -435,7 +436,6 @@
             document.getElementById(`${tipo}LessonsContainer`).innerHTML = '';
         }
 
-        // ========== FUNÇÃO RENDERIZAR LIÇÕES CORRIGIDA ==========
         function renderizarLicoes(tipo, lista) {
             const container = document.getElementById(`${tipo}LessonsContainer`);
             if (!container) return;
@@ -449,18 +449,14 @@
                 const badgeClass = available ? 'available-badge' : 'preparation-badge';
                 const badgeText = available ? 'Disponível' : 'Em preparação';
 
-                // Gera descrição: prioriza conteúdo HTML, depois verdade aplicada
+                // DESCRIÇÃO: sempre do conteúdo HTML, limpo e truncado
                 let descricao = '';
                 if (licao.conteudo) {
-                    // Remove tags HTML e pega os primeiros 100 caracteres
                     const textoPuro = licao.conteudo.replace(/<[^>]*>/g, '').trim();
                     descricao = textoPuro.substring(0, 100);
-                    // Se a descrição ficou vazia (caso o conteúdo só tenha tags), usa fallback
-                    if (!descricao) descricao = 'Clique para ver o conteúdo da lição.';
-                } else if (licao.verdade_aplicada) {
-                    descricao = licao.verdade_aplicada.substring(0, 100);
+                    if (!descricao) descricao = 'Clique para ver o conteúdo.';
                 } else {
-                    descricao = 'Clique para ver o conteúdo da lição.';
+                    descricao = 'Clique para ver o conteúdo.';
                 }
 
                 const card = document.createElement('div');
@@ -488,7 +484,6 @@
                 container.appendChild(card);
             });
 
-            // 5 cliques para editar com senha
             document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
                 let clickCount = 0;
                 let clickTimeout;
@@ -564,8 +559,6 @@
                 conteudoAtual = contentOverrides[key].conteudo;
             } else if (lesson.conteudo) {
                 conteudoAtual = lesson.conteudo;
-            } else {
-                conteudoAtual = '';
             }
             document.getElementById('editConteudo').value = conteudoAtual;
             modal.style.display = 'block';
@@ -593,6 +586,13 @@
                 adminOverrides = {};
                 saveOverrides();
                 renderAll();
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('🔴 Isso LIMPARÁ TODOS OS DADOS do navegador (edições, disponibilidade, etc.). Recarregará a página. Deseja continuar?')) {
+                localStorage.clear();
+                location.reload();
             }
         }
 
@@ -808,6 +808,7 @@
                 renderAll();
             });
             document.getElementById('adminResetAll').addEventListener('click', resetAllContent);
+            document.getElementById('adminClearStorage').addEventListener('click', clearAllData);
             document.getElementById('adminExport').addEventListener('click', exportJSON);
             document.getElementById('closeEditBtn').addEventListener('click', () => {
                 document.getElementById('editModal').style.display = 'none';
