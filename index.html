@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Todos os estilos permanecem iguais ao anterior, mantidos para economia de espaço.
-           Caso queira, posso reinseri-los integralmente, mas o código final terá os mesmos estilos. */
+        /* Mantido todo o CSS anterior, exceto os estilos do modal que não serão mais usados.
+           Para economia de espaço, mantemos o mesmo CSS original (já incluso no código anterior). */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -206,49 +206,6 @@
         .social-icons a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; transition: 0.3s; }
         .social-icons a:hover { background: #ffb347; color: #1e2f4a; }
         .copyright { text-align: center; padding-top: 2rem; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
-        .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 2000;
-            justify-content: center; align-items: center;
-        }
-        .modal .modal-content {
-            background: white !important; color: #1e293b !important;
-            border: 1px solid #e2e8f0 !important; border-radius: 30px;
-            max-width: 1000px; width: 90%; max-height: 90vh; overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .modal .modal-header {
-            background: #f8fafc !important; border-bottom: 1px solid #e2e8f0 !important;
-            padding: 2rem; display: flex; justify-content: space-between; align-items: center;
-        }
-        .modal .modal-header h2 { color: #ffb347 !important; }
-        .modal .close-modal {
-            background: none; border: none; color: #1e293b !important; font-size: 2rem;
-            cursor: pointer; width: 40px; height: 40px; border-radius: 50%; transition: 0.3s;
-        }
-        .modal .close-modal:hover { background: #e2e8f0 !important; }
-        .modal .modal-body { padding: 2rem; color: #1e293b; }
-        .modal .verse-box, .modal .conclusion-box {
-            background: #f1f5f9 !important; border-left: 5px solid #ffb347 !important;
-            color: #1e293b !important; padding: 1.5rem; border-radius: 15px; margin: 1rem 0;
-        }
-        .modal .modal-section-title {
-            color: #ffb347 !important; font-size: 1.5rem; margin: 1.5rem 0 1rem;
-            border-left: 4px solid #ffb347; padding-left: 1rem;
-        }
-        .modal .reading-day {
-            background: #f8fafc !important; color: #334155 !important;
-            border: 1px solid #e2e8f0; padding: 0.8rem; border-radius: 12px;
-        }
-        .modal .objectives-list li { color: #1e293b; margin-bottom: 0.5rem; margin-left: 1.5rem; }
-        .modal p, .modal li, .modal blockquote { color: #1e293b !important; }
-        .modal blockquote {
-            background: #f1f5f9 !important; border-left: 4px solid #ffb347;
-            padding: 0.5rem 1rem; margin: 1rem 0;
-        }
-        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 3rem; }
-        .loading-spinner i { font-size: 2rem; color: #ffb347; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @media (max-width: 768px) {
             body { padding-top: 130px; }
             .social-topbar-container { flex-direction: column; gap: 0.5rem; }
@@ -294,7 +251,6 @@
         <section class="about-section" id="about"><div class="about-content"><div class="about-text"><h3>Sobre a EBD Fiel</h3><p>Projeto dedicado a fornecer material bíblico de qualidade para as Escolas Bíblicas Dominicais.</p><div class="about-features"><div class="feature"><div class="feature-icon"><i class="fas fa-book-open"></i></div><div class="feature-text"><h4>Estudo Exegético</h4><p>Análise cuidadosa do texto</p></div></div><div class="feature"><div class="feature-icon"><i class="fas fa-users"></i></div><div class="feature-text"><h4>Para Todos</h4><p>Jovens e Adultos</p></div></div></div></div><div class="about-image"><div class="about-image-content" style="background:linear-gradient(135deg,#ffb347,#ff8c00); padding:2rem; border-radius:30px; text-align:center; color:white;"><i class="fas fa-bible" style="font-size:3rem;"></i><h3>"Examinai as Escrituras"</h3><p>João 5:39</p></div></div></div></section>
     </div>
     <footer><div class="footer-content"><div class="footer-column"><h3>EBD Fiel</h3><p>Material bíblico fiel.</p><div class="social-icons"><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div><div class="footer-column"><h3>Links</h3><ul><li><a href="#home">Início</a></li><li><a href="#adult-class">Adultos</a></li><li><a href="#youth-class">Jovens</a></li></ul></div></div><div class="copyright"><p>&copy; 2026 EBD Fiel - Todos os direitos reservados.</p></div></footer>
-    <div id="lessonModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 id="modalTitle"></h2><button class="close-modal">&times;</button></div><div class="modal-body" id="modalBody"><div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando...</div></div></div></div>
 
     <!-- Painel Admin -->
     <div id="adminOverlay" class="admin-panel-overlay"></div>
@@ -338,7 +294,6 @@
         let adminOverrides = {};
         let contentOverrides = {};
 
-        // Senha fixa
         const EDIT_PASSWORD = "4141";
 
         function checkPassword() {
@@ -413,10 +368,8 @@
 
         function renderAll() {
             const { adults, youths } = getFinalLessons();
-            // Reaplica as abas (sem carregar nenhuma lição automaticamente)
             const adultTabsContainer = document.getElementById('adultTabs');
             if (adultTabsContainer && adultTabsContainer.children.length > 0) {
-                // Se já existem abas, atualiza os dados mas não recarrega a grade a menos que uma aba esteja ativa
                 const activeTrim = document.querySelector('#adultTabs .tab-btn.active')?.dataset.trim;
                 if (activeTrim) {
                     renderizarLicoes('adult', adults.filter(l => l.trimestre == activeTrim));
@@ -454,7 +407,6 @@
                 });
                 containerTabs.appendChild(btn);
             });
-            // Não selecionar nenhuma aba automaticamente; manter grid vazia
             document.getElementById(`${tipo}LessonsContainer`).innerHTML = '<div class="empty-message">📖 Selecione um trimestre para visualizar as lições</div>';
         }
 
@@ -496,7 +448,7 @@
                 container.appendChild(card);
             });
 
-            // Adicionar evento de 5 cliques com senha
+            // Evento de 5 cliques para editar com senha
             document.querySelectorAll(`#${tipo}LessonsContainer .lesson-card`).forEach(card => {
                 let clickCount = 0;
                 let clickTimeout;
@@ -625,67 +577,153 @@
             URL.revokeObjectURL(url);
         }
 
-        async function abrirModal(licao) {
-            const modal = document.getElementById('lessonModal');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalBody = document.getElementById('modalBody');
-            modalTitle.innerText = `Lição ${licao.numero}: ${licao.titulo}`;
-            modalBody.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando lição...</div>';
-            modal.style.display = 'flex';
+        // Abrir lição em nova guia
+        function abrirNovaGuia(licao) {
+            // Construir o HTML da nova guia
+            const conteudoHtml = gerarConteudoHtml(licao);
+            const newWindow = window.open();
+            newWindow.document.write(conteudoHtml);
+            newWindow.document.close();
+        }
 
-            let conteudoHtml = '';
-            if (licao.conteudo_url) {
-                try {
-                    const response = await fetch(licao.conteudo_url);
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    conteudoHtml = await response.text();
-                } catch (err) {
-                    conteudoHtml = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>URL: ${licao.conteudo_url}</div>`;
-                }
-            } else if (licao.conteudo) {
-                conteudoHtml = licao.conteudo;
-            } else {
-                conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong></div>';
+        function gerarConteudoHtml(licao) {
+            // Cabeçalho da nova página
+            let html = `<!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>${licao.titulo} - EBD Fiel</title>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                <style>
+                    body {
+                        font-family: 'Inter', sans-serif;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+                        color: #1e293b;
+                        line-height: 1.6;
+                        padding: 2rem;
+                        margin: 0;
+                    }
+                    .container {
+                        max-width: 900px;
+                        margin: 0 auto;
+                        background: white;
+                        border-radius: 30px;
+                        padding: 2rem;
+                        box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                    }
+                    .verse-box {
+                        background: #f1f5f9;
+                        border-left: 5px solid #ffb347;
+                        padding: 1.5rem;
+                        border-radius: 15px;
+                        margin: 1.5rem 0;
+                    }
+                    .modal-section-title {
+                        color: #ffb347;
+                        font-size: 1.5rem;
+                        margin: 1.5rem 0 1rem;
+                        border-left: 4px solid #ffb347;
+                        padding-left: 1rem;
+                    }
+                    .objectives-list li {
+                        margin-bottom: 0.5rem;
+                        margin-left: 1.5rem;
+                    }
+                    .reading-grid {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                        gap: 1rem;
+                        margin: 1rem 0;
+                    }
+                    .reading-day {
+                        background: #f8fafc;
+                        border: 1px solid #e2e8f0;
+                        padding: 0.8rem;
+                        border-radius: 12px;
+                    }
+                    h1 {
+                        color: #ffb347;
+                        font-size: 2rem;
+                        margin-bottom: 0.5rem;
+                    }
+                    .lesson-meta {
+                        color: #4b5563;
+                        margin-bottom: 2rem;
+                        border-bottom: 1px solid #e2e8f0;
+                        padding-bottom: 1rem;
+                    }
+                    p, li, blockquote {
+                        margin-bottom: 1rem;
+                    }
+                    .conclusion-box {
+                        background: #f1f5f9;
+                        border-left: 5px solid #ffb347;
+                        padding: 1.5rem;
+                        border-radius: 15px;
+                        margin: 1.5rem 0;
+                    }
+                    @media (max-width: 768px) {
+                        body { padding: 1rem; }
+                        .container { padding: 1rem; }
+                        h1 { font-size: 1.5rem; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <h1>${licao.titulo}</h1>
+                    <div class="lesson-meta">
+                        <strong>${licao.trimestre}º Trimestre | Lição ${licao.numero}</strong><br>
+                        Data: ${licao.data || ''}
+                    </div>`;
+
+            // Adicionar Texto Áureo
+            if (licao.texto_aureo && licao.texto_aureo.versiculo) {
+                html += `<div class="verse-box">
+                            <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
+                         </div>`;
             }
 
-            // Se for conteúdo interno, exibir sem adicionar conclusão automática
-            if (!licao.conteudo_url && licao.conteudo) {
-                let html = '';
-                if (licao.texto_aureo) {
-                    html += `<div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”</div>`;
-                }
-                if (licao.verdade_aplicada) {
-                    html += `<div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}</div>`;
-                }
-                if (licao.objetivos && licao.objetivos.length) {
-                    html += `<div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
-                }
-                if (licao.textos_referencia) {
-                    html += `<div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia}</p>`;
-                }
-                if (licao.leituras && licao.leituras.length) {
-                    html += `<div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
-                }
-                html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo}`;
-                // Conclusão removida – não adicionamos mais nada
-                modalBody.innerHTML = html;
-            } else {
-                modalBody.innerHTML = conteudoHtml;
+            // Verdade Aplicada
+            if (licao.verdade_aplicada) {
+                html += `<div class="verse-box">
+                            <strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}
+                         </div>`;
             }
+
+            // Objetivos
+            if (licao.objetivos && licao.objetivos.length) {
+                html += `<div class="modal-section-title">🎯 Objetivos da Lição</div>
+                         <ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
+            }
+
+            // Textos de Referência (se houver)
+            if (licao.textos_referencia) {
+                html += `<div class="modal-section-title">📖 Textos de Referência</div>
+                         <p>${licao.textos_referencia}</p>`;
+            }
+
+            // Leituras
+            if (licao.leituras && licao.leituras.length) {
+                html += `<div class="modal-section-title">📅 Leituras Complementares</div>
+                         <div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
+            }
+
+            // Conteúdo principal
+            html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
+                     ${licao.conteudo || ''}`;
+
+            html += `</div></body></html>`;
+            return html;
         }
 
         document.addEventListener('click', (e) => {
             if (e.target.closest('.view-btn') && !e.target.closest('.view-btn').disabled) {
                 const btn = e.target.closest('.view-btn');
                 const licao = JSON.parse(btn.dataset.licao);
-                abrirModal(licao);
+                abrirNovaGuia(licao);
             }
-            if (e.target.closest('.close-modal')) {
-                document.getElementById('lessonModal').style.display = 'none';
-            }
-        });
-        document.getElementById('lessonModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('lessonModal')) document.getElementById('lessonModal').style.display = 'none';
         });
 
         let clickCountLogo = 0, clickTimeoutLogo;
