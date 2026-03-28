@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Todos os estilos anteriores (mantidos) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -598,7 +597,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Geração da nova guia com logo no cabeçalho
+        // Geração da nova guia com formatação diferenciada para adultos e jovens
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
@@ -607,6 +606,14 @@
         }
 
         function gerarConteudoHtml(licao) {
+            // Determina cores e estrutura baseada no tipo
+            const isYouth = licao.tipo === 'youth';
+            const primaryColor = isYouth ? '#3b82f6' : '#ffb347';      // azul para jovens, laranja para adultos
+            const supportColor = isYouth ? '#eef2ff' : '#f1f5f9';      // fundo apoio pedagógico
+            const supportBorder = isYouth ? '#3b82f6' : '#ffb347';      // borda apoio pedagógico
+            const practiceColor = isYouth ? '#dcfce7' : '#fef3c7';      // fundo aplicação prática
+            const practiceBorder = isYouth ? '#22c55e' : '#f59e0b';      // borda aplicação prática
+
             let html = `<!DOCTYPE html>
             <html lang="pt-BR">
             <head>
@@ -642,36 +649,24 @@
                     }
                     .verse-box {
                         background: #f1f5f9;
-                        border-left: 5px solid #ffb347;
+                        border-left: 5px solid ${primaryColor};
                         padding: 1.5rem;
                         border-radius: 15px;
                         margin: 1.5rem 0;
                     }
                     .modal-section-title {
-                        color: #ffb347;
+                        color: ${primaryColor};
                         font-size: 1.5rem;
                         margin: 1.5rem 0 1rem;
-                        border-left: 4px solid #ffb347;
+                        border-left: 4px solid ${primaryColor};
                         padding-left: 1rem;
                     }
                     .objectives-list li {
                         margin-bottom: 0.5rem;
                         margin-left: 1.5rem;
                     }
-                    .reading-grid {
-                        display: grid;
-                        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                        gap: 1rem;
-                        margin: 1rem 0;
-                    }
-                    .reading-day {
-                        background: #f8fafc;
-                        border: 1px solid #e2e8f0;
-                        padding: 0.8rem;
-                        border-radius: 12px;
-                    }
                     h1 {
-                        color: #ffb347;
+                        color: ${primaryColor};
                         font-size: 2rem;
                         margin: 0.5rem 0 0.5rem;
                     }
@@ -682,15 +677,15 @@
                         padding-bottom: 1rem;
                     }
                     .support-box {
-                        background: #eef2ff;
-                        border-left: 5px solid #3b82f6;
+                        background: ${supportColor};
+                        border-left: 5px solid ${supportBorder};
                         padding: 1rem;
                         margin: 1.5rem 0;
                         border-radius: 12px;
                     }
                     .practice-box {
-                        background: #fef3c7;
-                        border-left: 5px solid #f59e0b;
+                        background: ${practiceColor};
+                        border-left: 5px solid ${practiceBorder};
                         padding: 1rem;
                         margin: 1.5rem 0;
                         border-radius: 12px;
@@ -746,6 +741,7 @@
                         Data: ${licao.data || ''}
                     </div>`;
 
+            // Campos comuns
             if (licao.texto_aureo && licao.texto_aureo.versiculo) {
                 html += `<div class="verse-box">
                             <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
@@ -760,19 +756,44 @@
                 html += `<div class="modal-section-title">🎯 Objetivos da Lição</div>
                          <ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
             }
-            if (licao.textos_referencia) {
-                html += `<div class="modal-section-title">📖 Textos de Referência</div>
-                         <p>${licao.textos_referencia}</p>`;
+
+            // Campos específicos para jovens
+            if (isYouth) {
+                if (licao.versiculo_dia) {
+                    html += `<div class="verse-box">
+                                <strong>📖 Versículo do Dia (${licao.versiculo_dia}):</strong> “${licao.versiculo_dia_texto || ''}”
+                             </div>`;
+                }
+                if (licao.textos_referencia) {
+                    html += `<div class="modal-section-title">📖 Texto de Referência</div>
+                             <p>${licao.textos_referencia}</p>`;
+                } else if (licao.textos_referencia_jovem) {
+                    html += `<div class="modal-section-title">📖 Texto de Referência</div>
+                             <p>${licao.textos_referencia_jovem}</p>`;
+                }
+                if (licao.momento_oracao) {
+                    html += `<div class="verse-box">
+                                <strong>🙏 Momento de Oração:</strong> ${licao.momento_oracao}
+                             </div>`;
+                }
+            } else {
+                // Adultos: exibe textos de referência padrão
+                if (licao.textos_referencia) {
+                    html += `<div class="modal-section-title">📖 Textos de Referência</div>
+                             <p>${licao.textos_referencia}</p>`;
+                }
+                if (licao.leituras && licao.leituras.length) {
+                    html += `<div class="modal-section-title">📅 Leituras Complementares</div>
+                             <div class="reading-grid" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin:1rem 0;">${licao.leituras.map(r => `<div class="reading-day" style="background:#f8fafc; border:1px solid #e2e8f0; padding:0.8rem; border-radius:12px;"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
+                }
             }
-            if (licao.leituras && licao.leituras.length) {
-                html += `<div class="modal-section-title">📅 Leituras Complementares</div>
-                         <div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
-            }
+
+            // Conteúdo principal (já pode conter os blocos de apoio e aplicação)
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
 
-            // Adicionar bloco social apenas para lições de adultos
-            if (licao.tipo === 'adult') {
+            // Bloco social apenas para adultos (conforme solicitado anteriormente)
+            if (!isYouth) {
                 html += `<div class="social-footer">
                             <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
                             <p>A sua participação é muito importante. Ao curtir, comentar e compartilhar, você contribui para que o ensino da Palavra de Deus alcance ainda mais pessoas e fortaleça a nossa Escola Bíblica Dominical.</p>
