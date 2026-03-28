@@ -9,7 +9,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* Tema escuro (padrão) */
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
@@ -236,8 +235,10 @@
         .lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
         .lesson-tag { background: rgba(255,180,70,0.2); color: #ffb347; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.8rem; }
         .view-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 50px; background: linear-gradient(135deg, #00b4d8, #0077b6); color: white; border: none; cursor: pointer; transition: 0.3s; }
-        .view-btn:hover { transform: translateY(-3px); }
+        .view-btn:hover:not(:disabled) { transform: translateY(-3px); }
+        .view-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .available-badge { position: absolute; top: 1rem; right: 1rem; background: #28a745; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
+        .preparation-badge { position: absolute; top: 1rem; right: 1rem; background: #ff9800; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
 
         /* Sobre */
         .about-section {
@@ -273,7 +274,7 @@
         .social-icons a:hover { background: #ffb347; color: #1e2f4a; }
         .copyright { text-align: center; padding-top: 2rem; color: rgba(255,255,255,0.4); font-size: 0.9rem; }
 
-        /* Modal base (escuro por padrão, mas será sobrescrito) */
+        /* Modal claro (como antes) */
         .modal {
             display: none;
             position: fixed;
@@ -287,30 +288,30 @@
             justify-content: center;
             align-items: center;
         }
-        .modal-content {
-            background: rgba(20,30,40,0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.2);
+        .modal .modal-content {
+            background: white !important;
+            color: #1e293b !important;
+            border: 1px solid #e2e8f0 !important;
             border-radius: 30px;
             max-width: 1000px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
-            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-        .modal-header {
+        .modal .modal-header {
+            background: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
             padding: 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(0,0,0,0.3);
         }
-        .modal-header h2 { color: #ffb347; }
-        .close-modal {
+        .modal .modal-header h2 { color: #ffb347 !important; }
+        .modal .close-modal {
             background: none;
             border: none;
-            color: white;
+            color: #1e293b !important;
             font-size: 2rem;
             cursor: pointer;
             width: 40px;
@@ -318,74 +319,41 @@
             border-radius: 50%;
             transition: 0.3s;
         }
-        .close-modal:hover { background: rgba(255,255,255,0.1); }
-        .modal-body { padding: 2rem; }
-        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 3rem; }
-        .loading-spinner i { font-size: 2rem; color: #ffb347; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* Estilos para os elementos dentro do modal (modo escuro original) */
-        .modal-section-title { color: #ffb347; font-size: 1.5rem; margin: 1.5rem 0 1rem; border-left: 4px solid #ffb347; padding-left: 1rem; }
-        .verse-box, .conclusion-box { background: rgba(0,0,0,0.4); border-left: 5px solid #ffb347; padding: 1.5rem; border-radius: 15px; margin: 1rem 0; }
-        .objectives-list li { margin-bottom: 0.5rem; margin-left: 1.5rem; }
-        .reading-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
-        .reading-day { background: rgba(255,255,255,0.05); padding: 0.8rem; border-radius: 12px; }
-
-        /* =========================================== */
-        /* FORÇAR O MODAL EM MODO CLARO                */
-        /* =========================================== */
-        .modal .modal-content {
-            background: white !important;
-            color: #1e293b !important;
-            border: 1px solid #e2e8f0 !important;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        .modal .modal-header {
-            background: #f8fafc !important;
-            border-bottom: 1px solid #e2e8f0 !important;
-        }
-        .modal .modal-header h2 {
-            color: #ffb347 !important;
-        }
-        .modal .close-modal {
-            color: #1e293b !important;
-        }
-        .modal .close-modal:hover {
-            background: #e2e8f0 !important;
-        }
-        .modal .modal-body {
-            color: #1e293b !important;
-        }
-        .modal .verse-box,
-        .modal .conclusion-box {
+        .modal .close-modal:hover { background: #e2e8f0 !important; }
+        .modal .modal-body { padding: 2rem; color: #1e293b; }
+        .modal .verse-box, .modal .conclusion-box {
             background: #f1f5f9 !important;
             border-left: 5px solid #ffb347 !important;
             color: #1e293b !important;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
         }
         .modal .modal-section-title {
             color: #ffb347 !important;
-            border-left-color: #ffb347 !important;
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            border-left: 4px solid #ffb347;
+            padding-left: 1rem;
         }
         .modal .reading-day {
             background: #f8fafc !important;
             color: #334155 !important;
             border: 1px solid #e2e8f0;
+            padding: 0.8rem;
+            border-radius: 12px;
         }
-        .modal .objectives-list li {
-            color: #1e293b !important;
-        }
-        .modal p, .modal li, .modal blockquote {
-            color: #1e293b !important;
-        }
+        .modal .objectives-list li { color: #1e293b; margin-bottom: 0.5rem; margin-left: 1.5rem; }
+        .modal p, .modal li, .modal blockquote { color: #1e293b !important; }
         .modal blockquote {
             background: #f1f5f9 !important;
-            border-left: 4px solid #ffb347 !important;
+            border-left: 4px solid #ffb347;
             padding: 0.5rem 1rem;
             margin: 1rem 0;
         }
-        .modal .loading-spinner i {
-            color: #ffb347 !important;
-        }
+        .loading-spinner { display: flex; justify-content: center; align-items: center; padding: 3rem; }
+        .loading-spinner i { font-size: 2rem; color: #ffb347; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* Responsividade */
         @media (max-width: 768px) {
@@ -444,6 +412,29 @@
     <script>
         let adultLessons = [], youthLessons = [];
 
+        // Função para converter data no formato "dd/mm/aaaa" para objeto Date
+        function parseDate(dateStr) {
+            const parts = dateStr.split('/');
+            return new Date(parts[2], parts[1]-1, parts[0]);
+        }
+
+        // Função que retorna a data de liberação (segunda-feira anterior ao domingo da lição)
+        function getReleaseDate(lessonDateStr) {
+            const lessonDate = parseDate(lessonDateStr);
+            // Subtrair 6 dias para obter a segunda anterior
+            const releaseDate = new Date(lessonDate);
+            releaseDate.setDate(lessonDate.getDate() - 6);
+            return releaseDate;
+        }
+
+        // Verifica se a lição está disponível (hoje >= data de liberação)
+        function isLessonAvailable(lessonDateStr) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const release = getReleaseDate(lessonDateStr);
+            return today >= release;
+        }
+
         async function carregarDados() {
             try {
                 const response = await fetch('lessons.json');
@@ -496,10 +487,14 @@
             }
             container.innerHTML = '';
             lista.forEach(licao => {
+                const available = isLessonAvailable(licao.data);
+                const badgeClass = available ? 'available-badge' : 'preparation-badge';
+                const badgeText = available ? 'Disponível' : 'Em preparação';
+
                 const card = document.createElement('div');
                 card.className = 'lesson-card fade-in';
                 card.innerHTML = `
-                    <span class="available-badge">Disponível</span>
+                    <span class="${badgeClass}">${badgeText}</span>
                     <div class="lesson-header">
                         <div class="lesson-quarter">${licao.trimestre}º Trimestre</div>
                         <div class="lesson-number">Lição ${licao.numero}</div>
@@ -510,7 +505,10 @@
                         <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
                         <div class="lesson-footer">
                             <span class="lesson-tag">${tipo === 'adult' ? 'Estudo Bíblico' : 'CONECTAR'}</span>
-                            <button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>
+                            ${available ? 
+                                `<button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>` :
+                                `<button class="view-btn" disabled><i class="fas fa-clock"></i> Em breve</button>`
+                            }
                         </div>
                     </div>
                 `;
@@ -542,7 +540,6 @@
                 conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong><br>Esta lição ainda não possui texto cadastrado.</div>';
             }
 
-            // Se o conteúdo não for de URL externa, aplicar formatação padrão (caso use o campo "conteudo")
             if (!licao.conteudo_url && licao.conteudo) {
                 let html = '';
                 if (licao.texto_aureo) {
@@ -573,7 +570,7 @@
         }
 
         document.addEventListener('click', (e) => {
-            if (e.target.closest('.view-btn')) {
+            if (e.target.closest('.view-btn') && !e.target.closest('.view-btn').disabled) {
                 const btn = e.target.closest('.view-btn');
                 const licao = JSON.parse(btn.dataset.licao);
                 abrirModal(licao);
