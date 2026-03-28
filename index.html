@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* TODOS OS ESTILOS ANTERIORES (MANTIDOS) – por economia de espaço, mantemos os mesmos estilos */
+        /* Todos os estilos anteriores (mantidos) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
@@ -311,9 +311,6 @@
     </div>
 
     <script>
-        // CÓDIGO JAVASCRIPT (MANTIDO IGUAL AO ANTERIOR, COM A MODIFICAÇÃO NA GERAÇÃO DO HTML DA LIÇÃO)
-        // As variáveis e funções são as mesmas, apenas adicionamos o bloco social ao final do conteúdo de adultos.
-        // (Incluído na função gerarConteudoHtml)
         let adultLessons = [], youthLessons = [];
         let allLessons = [];
         let adminOverrides = {};
@@ -601,7 +598,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Geração da nova guia com bloco social para adultos
+        // Geração da nova guia com logo no cabeçalho
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
@@ -634,6 +631,14 @@
                         border-radius: 30px;
                         padding: 2rem;
                         box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+                    }
+                    .lesson-header-logo {
+                        text-align: center;
+                        margin-bottom: 1rem;
+                    }
+                    .lesson-header-logo img {
+                        max-height: 80px;
+                        width: auto;
                     }
                     .verse-box {
                         background: #f1f5f9;
@@ -668,7 +673,7 @@
                     h1 {
                         color: #ffb347;
                         font-size: 2rem;
-                        margin-bottom: 0.5rem;
+                        margin: 0.5rem 0 0.5rem;
                     }
                     .lesson-meta {
                         color: #4b5563;
@@ -726,11 +731,15 @@
                         body { padding: 1rem; }
                         .container { padding: 1rem; }
                         h1 { font-size: 1.5rem; }
+                        .lesson-header-logo img { max-height: 60px; }
                     }
                 </style>
             </head>
             <body>
                 <div class="container">
+                    <div class="lesson-header-logo">
+                        <img src="https://i.imgur.com/B1CSSvW.png" alt="EBD Fiel Logo">
+                    </div>
                     <h1>${licao.titulo}</h1>
                     <div class="lesson-meta">
                         <strong>${licao.trimestre}º Trimestre | Lição ${licao.numero}</strong><br>
@@ -762,7 +771,7 @@
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
 
-            // Adicionar bloco social APENAS para lições de adultos
+            // Adicionar bloco social apenas para lições de adultos
             if (licao.tipo === 'adult') {
                 html += `<div class="social-footer">
                             <p><strong>Você está sendo edificado por este material? Então venha caminhar conosco também nas redes sociais!</strong></p>
