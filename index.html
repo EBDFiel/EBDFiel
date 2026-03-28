@@ -324,28 +324,21 @@
             localStorage.setItem('ebd_content_overrides', JSON.stringify(contentOverrides));
         }
 
-        // Aplica overrides de conteúdo
         function applyContentOverrides(lesson) {
             const key = `${lesson.tipo}:${lesson.id}`;
             if (contentOverrides[key]) {
                 const override = contentOverrides[key];
-                // Se o override tiver apenas "conteudo" (HTML), usamos ele e extraímos título
                 if (override.conteudo !== undefined) {
                     const newLesson = { ...lesson };
                     newLesson.conteudo = override.conteudo;
-                    // Extrair título do HTML (primeiro h1)
                     const titleMatch = newLesson.conteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
                     if (titleMatch && titleMatch[1]) {
                         newLesson.titulo = titleMatch[1].trim();
                     } else {
-                        // Se não houver h1, mantém o título original ou usa um padrão
                         newLesson.titulo = override.titulo || lesson.titulo;
                     }
-                    // Manter os campos originais para compatibilidade (texto_aureo, etc.) se existirem
-                    // Não os sobrescrevemos com undefined
                     return newLesson;
                 } else {
-                    // Para compatibilidade com edições antigas (campos separados)
                     return { ...lesson, ...override };
                 }
             }
@@ -442,6 +435,7 @@
             document.getElementById(`${tipo}LessonsContainer`).innerHTML = '';
         }
 
+        // ========== FUNÇÃO RENDERIZAR LIÇÕES CORRIGIDA ==========
         function renderizarLicoes(tipo, lista) {
             const container = document.getElementById(`${tipo}LessonsContainer`);
             if (!container) return;
@@ -454,6 +448,18 @@
                 const available = isLessonAvailable(licao);
                 const badgeClass = available ? 'available-badge' : 'preparation-badge';
                 const badgeText = available ? 'Disponível' : 'Em preparação';
+
+                // Gera uma descrição resumida a partir do conteúdo HTML
+                let descricao = '';
+                if (licao.conteudo) {
+                    // Remove tags HTML e pega os primeiros 100 caracteres
+                    const textoPuro = licao.conteudo.replace(/<[^>]*>/g, '').trim();
+                    descricao = textoPuro.substring(0, 100);
+                } else if (licao.verdade_aplicada) {
+                    descricao = licao.verdade_aplicada.substring(0, 100);
+                } else {
+                    descricao = 'Clique para ver o conteúdo da lição.';
+                }
 
                 const card = document.createElement('div');
                 card.className = 'lesson-card fade-in';
@@ -468,7 +474,7 @@
                     </div>
                     <div class="lesson-body">
                         <div class="lesson-date"><i class="far fa-calendar-alt"></i> ${licao.data || ''}</div>
-                        <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
+                        <div class="lesson-description">${descricao}...</div>
                         <div class="lesson-footer">
                             ${available ? 
                                 `<button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>` :
@@ -550,7 +556,6 @@
             const modal = document.getElementById('editModal');
             const modalTitle = document.getElementById('editModalTitle');
             modalTitle.innerText = `Editar: ${lesson.titulo}`;
-            // Carregar o conteúdo atual (se houver override, usa ele; senão usa o conteudo original)
             const key = `${lesson.tipo}:${lesson.id}`;
             let conteudoAtual = '';
             if (contentOverrides[key] && contentOverrides[key].conteudo !== undefined) {
@@ -558,15 +563,12 @@
             } else if (lesson.conteudo) {
                 conteudoAtual = lesson.conteudo;
             } else {
-                // Se não tem conteúdo, podemos tentar gerar a partir dos campos antigos?
-                // Para simplificar, deixamos vazio.
                 conteudoAtual = '';
             }
             document.getElementById('editConteudo').value = conteudoAtual;
             modal.style.display = 'block';
             document.getElementById('saveEditBtn').onclick = () => {
                 const novoConteudo = document.getElementById('editConteudo').value;
-                // Extrair título do HTML
                 let novoTitulo = lesson.titulo;
                 const titleMatch = novoConteudo.match(/<h1[^>]*>(.*?)<\/h1>/i);
                 if (titleMatch && titleMatch[1]) {
@@ -605,7 +607,6 @@
             URL.revokeObjectURL(url);
         }
 
-        // Geração da nova guia com formatação diferenciada para adultos e jovens
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
@@ -614,7 +615,6 @@
         }
 
         function gerarConteudoHtml(licao) {
-            // Determina cores e estrutura baseada no tipo
             const isYouth = licao.tipo === 'youth';
             const primaryColor = isYouth ? '#3b82f6' : '#ffb347';
             const supportColor = isYouth ? '#eef2ff' : '#f1f5f9';
