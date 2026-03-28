@@ -148,10 +148,15 @@
         .lesson-body { padding: 2rem; flex: 1; }
         .lesson-date { display: flex; align-items: center; gap: 0.5rem; color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 1rem; }
         .lesson-description { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; }
-        .lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .lesson-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; flex-wrap: wrap; gap: 0.5rem; }
         .lesson-tag { background: rgba(255,180,70,0.2); color: #ffb347; padding: 0.3rem 1rem; border-radius: 50px; font-size: 0.8rem; }
-        .view-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 50px; background: linear-gradient(135deg, #00b4d8, #0077b6); color: white; border: none; cursor: pointer; transition: 0.3s; }
-        .view-btn:hover { transform: translateY(-3px); }
+        .view-btn, .pdf-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; border-radius: 50px;
+            color: white; border: none; cursor: pointer; transition: 0.3s; text-decoration: none; font-size: 0.9rem;
+        }
+        .view-btn { background: linear-gradient(135deg, #00b4d8, #0077b6); }
+        .pdf-btn { background: linear-gradient(135deg, #dc3545, #b02a37); }
+        .view-btn:hover, .pdf-btn:hover { transform: translateY(-3px); }
         .available-badge { position: absolute; top: 1rem; right: 1rem; background: #28a745; color: white; padding: 0.2rem 1rem; border-radius: 50px; font-size: 0.75rem; }
         .about-section { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border-radius: 40px; padding: 4rem; margin-top: 3rem; }
         .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
@@ -274,6 +279,8 @@
             lista.forEach(licao => {
                 const card = document.createElement('div');
                 card.className = 'lesson-card fade-in';
+                const botoes = `<button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>`;
+                const pdfBtn = licao.pdf_url ? `<a href="${licao.pdf_url}" target="_blank" class="pdf-btn"><i class="fas fa-file-pdf"></i> PDF</a>` : '';
                 card.innerHTML = `
                     <span class="available-badge">Disponível</span>
                     <div class="lesson-header">
@@ -286,7 +293,10 @@
                         <div class="lesson-description">${(licao.verdade_aplicada || '').substring(0, 100)}...</div>
                         <div class="lesson-footer">
                             <span class="lesson-tag">${tipo === 'adult' ? 'Estudo Bíblico' : 'CONECTAR'}</span>
-                            <button class="view-btn" data-licao='${JSON.stringify(licao)}'><i class="fas fa-book-open"></i> Ver Lição</button>
+                            <div class="lesson-buttons" style="display: flex; gap: 0.5rem;">
+                                ${botoes}
+                                ${pdfBtn}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -302,53 +312,28 @@
             modalBody.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-pulse"></i> Carregando lição...</div>';
             modal.style.display = 'flex';
 
-            // Verificar se há URL externa para conteúdo
-            let conteudoHtml = '';
             if (licao.conteudo_url) {
                 try {
                     const response = await fetch(licao.conteudo_url);
                     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                    conteudoHtml = await response.text();
+                    const html = await response.text();
+                    modalBody.innerHTML = html;
                 } catch (err) {
                     console.error('Erro ao carregar conteúdo externo:', err);
-                    conteudoHtml = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>Não foi possível acessar o conteúdo em: ${licao.conteudo_url}</div>`;
+                    modalBody.innerHTML = `<div class="verse-box"><strong>❌ Erro ao carregar lição.</strong><br>Não foi possível acessar o conteúdo em: ${licao.conteudo_url}</div>`;
                 }
             } else if (licao.conteudo) {
-                conteudoHtml = licao.conteudo;
-            } else {
-                conteudoHtml = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong><br>Esta lição ainda não possui texto cadastrado.</div>';
-            }
-
-            // Se for URL externa, assumimos que o arquivo já contém HTML estruturado.
-            // Se for conteúdo interno (antigo), aplicamos a formatação padrão.
-            if (!licao.conteudo_url && licao.conteudo) {
-                // Formatação antiga (para compatibilidade)
+                // Formatação antiga (simplificada)
                 let html = '';
-                if (licao.texto_aureo) {
-                    html += `<div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”</div>`;
-                }
-                if (licao.verdade_aplicada) {
-                    html += `<div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}</div>`;
-                }
-                if (licao.objetivos && licao.objetivos.length) {
-                    html += `<div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
-                }
-                if (licao.textos_referencia) {
-                    html += `<div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia}</p>`;
-                }
-                if (licao.leituras && licao.leituras.length) {
-                    html += `<div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
-                }
-                html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo}`;
-                if (licao.tipo === 'adult') {
-                    html += `<div class="conclusion-box"><strong>Conclusão:</strong> Diante dos desafios, confie em Deus, use as armas espirituais e persevere em oração.</div>`;
-                } else {
-                    html += `<div class="conclusion-box"><strong>Conclusão:</strong> Reconhecer o senhorio de Deus nos leva a uma vida de entrega e propósito eterno.</div>`;
-                }
+                if (licao.texto_aureo) html += `<div class="verse-box"><strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”</div>`;
+                if (licao.verdade_aplicada) html += `<div class="verse-box"><strong>✅ Verdade Aplicada:</strong> ${licao.verdade_aplicada}</div>`;
+                if (licao.objetivos) html += `<div class="modal-section-title">🎯 Objetivos da Lição</div><ul class="objectives-list">${licao.objetivos.map(obj => `<li>${obj}</li>`).join('')}</ul>`;
+                if (licao.textos_referencia) html += `<div class="modal-section-title">📖 Textos de Referência</div><p>${licao.textos_referencia}</p>`;
+                if (licao.leituras) html += `<div class="modal-section-title">📅 Leituras Complementares</div><div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
+                html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>${licao.conteudo || ''}`;
                 modalBody.innerHTML = html;
             } else {
-                // Conteúdo externo (ou já em HTML) – apenas injetamos
-                modalBody.innerHTML = conteudoHtml;
+                modalBody.innerHTML = '<div class="verse-box"><strong>⚠️ Conteúdo não disponível.</strong><br>Esta lição ainda não possui texto cadastrado.</div>';
             }
         }
 
