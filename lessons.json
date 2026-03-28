@@ -1,0 +1,48 @@
+{
+  "adult": [
+    {
+      "trimestre": 1,
+      "numero": 1,
+      "titulo": "O chamado que transforma a dor em propósito",
+      "data": "05/04/2026",
+      "texto_aureo": {
+        "versiculo": "Neemias 1.4",
+        "texto": "E sucedeu que, ouvindo eu estas palavras, assentei-me, e chorei, e lamentei por alguns dias; e estive jejuando e orando perante o Deus dos céus."
+      },
+      "verdade_aplicada": "Devemos ter em mente que dependemos do Senhor e da direção do Espírito Santo no enfrentamento dos diversos desafios que surgem na jornada cristã.",
+      "objetivos": [
+        "Compreender o contexto no qual Neemias estava inserido.",
+        "Saber como agir em tempos de adversidades.",
+        "Reconhecer que o chamado de Deus não depende das circunstâncias."
+      ],
+      "textos_referencia": "Neemias 1.1-11",
+      "leituras": [
+        { "dia": "Segunda", "versiculo": "Pv 17.17", "texto": "Devemos cultivar amizades verdadeiras." },
+        { "dia": "Terça", "versiculo": "1Jo 3.18", "texto": "Não amemos apenas com palavras." },
+        { "dia": "Quarta", "versiculo": "Js 1.6", "texto": "É preciso esforço para viver grandes promessas." },
+        { "dia": "Quinta", "versiculo": "1Ts 5.17", "texto": "Oremos diariamente com fervor." },
+        { "dia": "Sexta", "versiculo": "Ef 6.13", "texto": "Estamos em batalha espiritual." },
+        { "dia": "Sábado", "versiculo": "Sl 40.1", "texto": "Confie em Deus." }
+      ],
+      "conteudo": "<p>Neemias tinha uma posição confortável e respeitada como copeiro do rei e poderia ter permanecido assim, sem grandes preocupações. Porém, a notícia do estado lastimável em que se encontravam Jerusalém e os judeus que viviam lá mudou sua vida. Nesta lição, com a história de Neemias, veremos que o chamado de Deus pode surgir em meio a momentos bastante difíceis.</p><p>Neemias ficou perplexo e abatido ao ouvir o relato de Hanani sobre a situação de miséria em que seu povo e Jerusalém se encontravam. Então, ele buscou o Único capaz de lhe dar direção diante daquela triste realidade: o Deus dos Céus (Ne 1.4).</p><p>A restauração de Jerusalém era também a restauração do povo de Deus e o cumprimento de promessas futuras, visto que Jesus morreu e ressuscitou em Jerusalém (Mt 27 e 28), de onde, em Sua Segunda Vinda, governará o mundo (Is 24.23; Jr 33.9; Zc 14.4-21).</p>"
+    }
+  ],
+  "youth": [
+    {
+      "trimestre": 1,
+      "numero": 1,
+      "titulo": "Reconhecendo o Senhorio de Deus",
+      "data": "05/04/2026",
+      "versiculo_dia": "Salmos 24.1",
+      "versiculo_dia_texto": "Do Senhor é a terra e a sua plenitude, o mundo e aqueles que nele habitam.",
+      "verdade_aplicada": "Deus é Senhor de tudo, e Sua vontade prevalece sobre todos os aspectos da nossa vida.",
+      "objetivos": [
+        "Reconhecer o Senhorio de Deus;",
+        "Saber que Deus é Soberano sobre todas as coisas;",
+        "Ressaltar que Deus tem autoridade absoluta sobre toda a Criação."
+      ],
+      "momento_oracao": "Ore para que o nosso coração descanse no Amor e no Cuidado do Deus Criador.",
+      "conteudo": "<p>Reconhecer o Senhorio de Deus é reconhecê-lo como Soberano Criador e Autoridade Suprema sobre tudo que existe. Essa verdade nos convida a viver com humildade e reverência, alinhados à Sua vontade e em obediência à Sua Palavra. Assim, mostramos publicamente que não somos donos de nada, mas mordomos do que o Senhor coloca sob os nossos cuidados.</p><p>A Soberania de Deus aponta para a Sua autoridade suprema e absoluta sobre tudo que existe: a Criação, a História, os seres humanos e os eventos (Sl 103.19). O Poder de Deus é ilimitado, Sua sabedoria é perfeita, Seu propósito é eterno, e Sua vontade é soberana, por isso nada pode frustrar os Seus planos (Jó 42.2).</p><p>As Sagradas Escrituras se referem ao \"Deus Altíssimo\", em hebraico, El Elyon, que possui o sentido de \"Superior\" ou \"Altamente elevado\". Portanto, Deus é exaltado por Sua condição divina única, que O eleva acima de tudo que existe (Gn 14.19,20; Nm 24.16; Is 14.14).</p>"
+    }
+  ]
+}
