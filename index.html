@@ -305,7 +305,7 @@
         <label>Leituras (formato: Dia | Versículo | Texto, um por linha):</label>
         <textarea id="editLeituras" rows="4" placeholder="Ex: Segunda | Pv 17.17 | Devemos cultivar amizade verdadeira"></textarea>
         <label>Conteúdo (HTML):</label>
-        <textarea id="editConteudo" rows="8"></textarea>
+        <textarea id="editConteudo" rows="12"></textarea>
         <button class="save-btn" id="saveEditBtn">Salvar Alterações</button>
     </div>
 
@@ -599,7 +599,7 @@
             URL.revokeObjectURL(url);
         }
 
-        // Abrir lição em nova guia
+        // Abrir lição em nova guia (com suporte aos estilos de apoio pedagógico)
         function abrirNovaGuia(licao) {
             const conteudoHtml = gerarConteudoHtml(licao);
             const newWindow = window.open();
@@ -673,12 +673,19 @@
                         border-bottom: 1px solid #e2e8f0;
                         padding-bottom: 1rem;
                     }
-                    .conclusion-box {
-                        background: #f1f5f9;
-                        border-left: 5px solid #ffb347;
-                        padding: 1.5rem;
-                        border-radius: 15px;
+                    .support-box {
+                        background: #eef2ff;
+                        border-left: 5px solid #3b82f6;
+                        padding: 1rem;
                         margin: 1.5rem 0;
+                        border-radius: 12px;
+                    }
+                    .practice-box {
+                        background: #fef3c7;
+                        border-left: 5px solid #f59e0b;
+                        padding: 1rem;
+                        margin: 1.5rem 0;
+                        border-radius: 12px;
                     }
                     @media (max-width: 768px) {
                         body { padding: 1rem; }
@@ -695,6 +702,7 @@
                         Data: ${licao.data || ''}
                     </div>`;
 
+            // Campos principais (se existirem, exibir)
             if (licao.texto_aureo && licao.texto_aureo.versiculo) {
                 html += `<div class="verse-box">
                             <strong>📖 Texto Áureo (${licao.texto_aureo.versiculo}):</strong> “${licao.texto_aureo.texto}”
@@ -717,8 +725,11 @@
                 html += `<div class="modal-section-title">📅 Leituras Complementares</div>
                          <div class="reading-grid">${licao.leituras.map(r => `<div class="reading-day"><strong>${r.dia}</strong> | ${r.versiculo}<br>${r.texto}</div>`).join('')}</div>`;
             }
+
+            // Conteúdo principal (já pode conter as seções como apoio pedagógico, aplicação prática, etc.)
             html += `<div class="modal-section-title">💬 Conteúdo da Lição</div>
                      ${licao.conteudo || ''}`;
+
             html += `</div></body></html>`;
             return html;
         }
