@@ -545,9 +545,8 @@
                     </div>
                 `;
                 
-                // Evento de clique no card (toda a área) para abrir a lição em tela cheia
+                // Clique no card inteiro (apenas se disponível)
                 card.addEventListener('click', (e) => {
-                    // Se clicou no botão, o evento do botão já vai tratar, evitamos duplicidade
                     if (e.target.closest('.view-btn')) return;
                     if (available) {
                         abrirModalLicao(licao);
@@ -568,16 +567,15 @@
             });
         }
 
-        // Função que abre o modal em tela cheia com o conteúdo da lição
+        // Função que abre o modal em tela cheia com cores diferenciadas para Apoio Pedagógico e Aplicação Prática
         function abrirModalLicao(licao) {
             const modal = document.getElementById('lessonModal');
             const contentDiv = document.getElementById('lessonModalContent');
             
-            // Gerar o HTML completo da lição (reaproveitando o estilo da página)
+            // Gerar o HTML completo da lição com estilos específicos para as caixas
             const htmlContent = gerarConteudoModalHtml(licao);
             contentDiv.innerHTML = htmlContent;
             
-            // Adicionar classe para travar o scroll do body
             document.body.classList.add('modal-open');
             modal.classList.add('active');
         }
@@ -588,19 +586,54 @@
             document.body.classList.remove('modal-open');
         }
         
-        // Gera o conteúdo da lição para exibir dentro do modal (sem cabeçalho/rodapé duplicado)
+        // Gera o conteúdo da lição com as cores distintas para Apoio Pedagógico e Aplicação Prática
         function gerarConteudoModalHtml(licao) {
             const isYouth = licao.tipo === 'youth';
+            // Cores específicas para cada classe
             const primaryColor = isYouth ? '#3b82f6' : '#ffb347';
-            const supportColor = isYouth ? '#eef2ff' : '#f1f5f9';
+            const supportBg = isYouth ? '#eef2ff' : '#f1f5f9';
             const supportBorder = isYouth ? '#3b82f6' : '#ffb347';
-            const practiceColor = isYouth ? '#dcfce7' : '#fef3c7';
+            const practiceBg = isYouth ? '#dcfce7' : '#fef3c7';
             const practiceBorder = isYouth ? '#22c55e' : '#f59e0b';
             
             let conteudoInterno = licao.conteudo ? licao.conteudo : '<p><em>Conteúdo não disponível.</em></p>';
             
             return `
                 <div style="font-family: 'Inter', sans-serif; color: #1e293b; line-height: 1.6;">
+                    <style>
+                        /* Estilos para as caixas dentro do conteúdo da lição */
+                        .support-box, .apoio-pedagogico {
+                            background: ${supportBg} !important;
+                            border-left: 5px solid ${supportBorder} !important;
+                            padding: 1rem !important;
+                            margin: 1.5rem 0 !important;
+                            border-radius: 12px !important;
+                        }
+                        .practice-box, .aplicacao-pratica {
+                            background: ${practiceBg} !important;
+                            border-left: 5px solid ${practiceBorder} !important;
+                            padding: 1rem !important;
+                            margin: 1.5rem 0 !important;
+                            border-radius: 12px !important;
+                        }
+                        .verse-box {
+                            background: #f1f5f9 !important;
+                            border-left: 5px solid ${primaryColor} !important;
+                            padding: 1.5rem !important;
+                            border-radius: 15px !important;
+                            margin: 1.5rem 0 !important;
+                        }
+                        .modal-section-title {
+                            color: ${primaryColor} !important;
+                            font-size: 1.5rem !important;
+                            margin: 1.5rem 0 1rem !important;
+                            border-left: 4px solid ${primaryColor} !important;
+                            padding-left: 1rem !important;
+                        }
+                        h1, h2, h3 {
+                            color: ${primaryColor} !important;
+                        }
+                    </style>
                     <div style="text-align: center; margin-bottom: 1rem;">
                         <img src="https://i.imgur.com/B1CSSvW.png" alt="EBD Fiel Logo" style="max-height: 80px; width: auto;">
                     </div>
