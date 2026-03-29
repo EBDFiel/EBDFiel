@@ -5,32 +5,416 @@
       "numero": 1,
       "titulo": "O chamado que transforma a dor em propósito",
       "data": "04/01/2026",
-      "verdade_aplicada": "Devemos depender do Senhor.",
-      "conteudo": "<h1>Lição 1: O chamado que transforma a dor em propósito</h1><p>Conteúdo da lição...</p>"
+      "verdade_aplicada": "Devemos ter em mente que dependemos do Senhor.",
+      "conteudo": "<h1>Lição 1: O chamado que transforma a dor em propósito</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 2,
+      "titulo": "Preparando-se para o agir de Deus",
+      "data": "11/01/2026",
+      "verdade_aplicada": "Precisamos nos preparar espiritualmente antes de agir.",
+      "conteudo": "<h1>Lição 2: Preparando‑se para o agir de Deus</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 3,
+      "titulo": "Lidando com vozes contrárias",
+      "data": "18/01/2026",
+      "verdade_aplicada": "Os servos de Deus devem perseverar diante da oposição.",
+      "conteudo": "<h1>Lição 3: Lidando com vozes contrárias</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 4,
+      "titulo": "O poder das palavras",
+      "data": "25/01/2026",
+      "verdade_aplicada": "Nossas palavras têm poder de edificação.",
+      "conteudo": "<h1>Lição 4: O poder das palavras</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 5,
+      "titulo": "Fortalecido pela fé",
+      "data": "01/02/2026",
+      "verdade_aplicada": "A fé em Deus nos capacita a vencer o medo.",
+      "conteudo": "<h1>Lição 5: Fortalecido pela fé</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 6,
+      "titulo": "Discernimento espiritual",
+      "data": "08/02/2026",
+      "verdade_aplicada": "Precisamos de discernimento para não cairmos em armadilhas.",
+      "conteudo": "<h1>Lição 6: Discernimento espiritual</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 7,
+      "titulo": "Unidade: a receita da vitória",
+      "data": "15/02/2026",
+      "verdade_aplicada": "A unidade do povo de Deus é fundamental.",
+      "conteudo": "<h1>Lição 7: Unidade: a receita da vitória</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 8,
+      "titulo": "Fidelidade e temor",
+      "data": "22/02/2026",
+      "verdade_aplicada": "A fidelidade e o temor geram confiança.",
+      "conteudo": "<h1>Lição 8: Fidelidade e temor</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 9,
+      "titulo": "Alegria e gratidão",
+      "data": "01/03/2026",
+      "verdade_aplicada": "A Palavra de Deus traz alegria.",
+      "conteudo": "<h1>Lição 9: Alegria e gratidão</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 10,
+      "titulo": "Arrependimento",
+      "data": "08/03/2026",
+      "verdade_aplicada": "O verdadeiro arrependimento precede a restauração.",
+      "conteudo": "<h1>Lição 10: Arrependimento</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 11,
+      "titulo": "O culto",
+      "data": "15/03/2026",
+      "verdade_aplicada": "O culto é momento de celebrar a Deus.",
+      "conteudo": "<h1>Lição 11: O culto</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 12,
+      "titulo": "Vigilância e oração",
+      "data": "22/03/2026",
+      "verdade_aplicada": "Precisamos vigiar para não nos comprometermos.",
+      "conteudo": "<h1>Lição 12: Vigilância e oração</h1><p>Conteúdo completo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 13,
+      "titulo": "Vitória em Neemias",
+      "data": "29/03/2026",
+      "verdade_aplicada": "A vitória vem de Deus.",
+      "conteudo": "<h1>Lição 13: Vitória em Neemias</h1><p>Conteúdo completo da lição...</p>"
     },
     {
       "trimestre": 2,
       "numero": 1,
       "titulo": "A Soberania de Deus",
       "data": "05/04/2026",
-      "verdade_aplicada": "Deus governa soberanamente.",
+      "verdade_aplicada": "Deus governa soberanamente sobre todas as coisas.",
       "conteudo": "<h1>Lição 1: A Soberania de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 2,
+      "titulo": "A Majestade de Deus",
+      "data": "12/04/2026",
+      "verdade_aplicada": "A majestade de Deus revela Sua grandeza.",
+      "conteudo": "<h1>Lição 2: A Majestade de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 3,
+      "titulo": "O Senhorio de Deus sobre a Criação",
+      "data": "19/04/2026",
+      "verdade_aplicada": "Cristo é o Criador e Sustentador de todas as coisas.",
+      "conteudo": "<h1>Lição 3: O Senhorio de Deus sobre a Criação</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 4,
+      "titulo": "Deus é Rei",
+      "data": "26/04/2026",
+      "verdade_aplicada": "O governo de Deus é eterno e justo.",
+      "conteudo": "<h1>Lição 4: Deus é Rei</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 5,
+      "titulo": "O Reino de Deus",
+      "data": "03/05/2026",
+      "verdade_aplicada": "O Reino de Deus é prioridade para o cristão.",
+      "conteudo": "<h1>Lição 5: O Reino de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 6,
+      "titulo": "Autoridade Absoluta de Deus",
+      "data": "10/05/2026",
+      "verdade_aplicada": "Cristo tem autoridade suprema.",
+      "conteudo": "<h1>Lição 6: Autoridade Absoluta de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 7,
+      "titulo": "O Deus Altíssimo",
+      "data": "17/05/2026",
+      "verdade_aplicada": "Deus é o Altíssimo, acima de todo poder.",
+      "conteudo": "<h1>Lição 7: O Deus Altíssimo</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 8,
+      "titulo": "O Deus Todo-Poderoso",
+      "data": "24/05/2026",
+      "verdade_aplicada": "Deus tem todo poder para cumprir suas promessas.",
+      "conteudo": "<h1>Lição 8: O Deus Todo-Poderoso</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 9,
+      "titulo": "O Senhor da História",
+      "data": "31/05/2026",
+      "verdade_aplicada": "Deus dirige a história segundo seus propósitos.",
+      "conteudo": "<h1>Lição 9: O Senhor da História</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 10,
+      "titulo": "A Vontade Soberana de Deus",
+      "data": "07/06/2026",
+      "verdade_aplicada": "A vontade de Deus é soberana e perfeita.",
+      "conteudo": "<h1>Lição 10: A Vontade Soberana de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 11,
+      "titulo": "A Providência Divina",
+      "data": "14/06/2026",
+      "verdade_aplicada": "Deus provê e sustenta sua criação.",
+      "conteudo": "<h1>Lição 11: A Providência Divina</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 12,
+      "titulo": "A Santidade de Deus",
+      "data": "21/06/2026",
+      "verdade_aplicada": "A santidade de Deus exige reverência e pureza.",
+      "conteudo": "<h1>Lição 12: A Santidade de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 2,
+      "numero": 13,
+      "titulo": "O Amor de Deus",
+      "data": "28/06/2026",
+      "verdade_aplicada": "O amor é a essência do caráter de Deus.",
+      "conteudo": "<h1>Lição 13: O Amor de Deus</h1><p>Conteúdo da lição...</p>"
     },
     {
       "trimestre": 3,
       "numero": 1,
       "titulo": "Vida de Oração",
       "data": "05/07/2026",
-      "verdade_aplicada": "A oração é o canal de comunicação.",
+      "verdade_aplicada": "A oração é o canal de comunicação com Deus.",
       "conteudo": "<h1>Lição 1: Vida de Oração</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 2,
+      "titulo": "O Jejum e a Busca por Deus",
+      "data": "12/07/2026",
+      "verdade_aplicada": "O jejum nos ajuda a humilhar-nos diante de Deus.",
+      "conteudo": "<h1>Lição 2: O Jejum e a Busca por Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 3,
+      "titulo": "Leitura e Meditação na Palavra",
+      "data": "19/07/2026",
+      "verdade_aplicada": "A Palavra de Deus é alimento para a alma.",
+      "conteudo": "<h1>Lição 3: Leitura e Meditação na Palavra</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 4,
+      "titulo": "A Comunhão com Deus e os Irmãos",
+      "data": "26/07/2026",
+      "verdade_aplicada": "A comunhão é essencial para o crescimento espiritual.",
+      "conteudo": "<h1>Lição 4: A Comunhão com Deus e os Irmãos</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 5,
+      "titulo": "A Batalha Espiritual",
+      "data": "02/08/2026",
+      "verdade_aplicada": "Estamos em uma guerra espiritual.",
+      "conteudo": "<h1>Lição 5: A Batalha Espiritual</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 6,
+      "titulo": "O Fruto do Espírito",
+      "data": "09/08/2026",
+      "verdade_aplicada": "O Espírito Santo produz em nós o caráter de Cristo.",
+      "conteudo": "<h1>Lição 6: O Fruto do Espírito</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 7,
+      "titulo": "Os Dons Espirituais",
+      "data": "16/08/2026",
+      "verdade_aplicada": "Os dons são concedidos para edificação da igreja.",
+      "conteudo": "<h1>Lição 7: Os Dons Espirituais</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 8,
+      "titulo": "A Importância do Culto",
+      "data": "23/08/2026",
+      "verdade_aplicada": "O culto a Deus deve ser central na vida do cristão.",
+      "conteudo": "<h1>Lição 8: A Importância do Culto</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 9,
+      "titulo": "O Discipulado e a Missão",
+      "data": "30/08/2026",
+      "verdade_aplicada": "Todo cristão é chamado a fazer discípulos.",
+      "conteudo": "<h1>Lição 9: O Discipulado e a Missão</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 10,
+      "titulo": "A Esperança da Volta de Cristo",
+      "data": "06/09/2026",
+      "verdade_aplicada": "A segunda vinda de Cristo é a nossa esperança.",
+      "conteudo": "<h1>Lição 10: A Esperança da Volta de Cristo</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 11,
+      "titulo": "A Ressurreição e a Vida Eterna",
+      "data": "13/09/2026",
+      "verdade_aplicada": "A certeza da ressurreição nos dá ânimo.",
+      "conteudo": "<h1>Lição 11: A Ressurreição e a Vida Eterna</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 12,
+      "titulo": "A Nova Jerusalém e a Eternidade",
+      "data": "20/09/2026",
+      "verdade_aplicada": "O céu é a morada eterna dos redimidos.",
+      "conteudo": "<h1>Lição 12: A Nova Jerusalém e a Eternidade</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 3,
+      "numero": 13,
+      "titulo": "Consumação de Todas as Coisas",
+      "data": "27/09/2026",
+      "verdade_aplicada": "Deus trará todas as coisas à consumação final.",
+      "conteudo": "<h1>Lição 13: Consumação de Todas as Coisas</h1><p>Conteúdo da lição...</p>"
     },
     {
       "trimestre": 4,
       "numero": 1,
       "titulo": "Andando em Novidade de Vida",
       "data": "04/10/2026",
-      "verdade_aplicada": "O novo nascimento produz nova vida.",
+      "verdade_aplicada": "O novo nascimento produz uma nova maneira de viver.",
       "conteudo": "<h1>Lição 1: Andando em Novidade de Vida</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 2,
+      "titulo": "A Santificação Progressiva",
+      "data": "11/10/2026",
+      "verdade_aplicada": "A santificação é um processo contínuo.",
+      "conteudo": "<h1>Lição 2: A Santificação Progressiva</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 3,
+      "titulo": "A Prática da Justiça",
+      "data": "18/10/2026",
+      "verdade_aplicada": "A fé verdadeira se expressa em obras de justiça.",
+      "conteudo": "<h1>Lição 3: A Prática da Justiça</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 4,
+      "titulo": "A Humildade e o Serviço",
+      "data": "25/10/2026",
+      "verdade_aplicada": "A humildade é a marca do verdadeiro discípulo.",
+      "conteudo": "<h1>Lição 4: A Humildade e o Serviço</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 5,
+      "titulo": "O Perdão e a Reconciliação",
+      "data": "01/11/2026",
+      "verdade_aplicada": "O perdão é uma ordem e uma bênção.",
+      "conteudo": "<h1>Lição 5: O Perdão e a Reconciliação</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 6,
+      "titulo": "A Generosidade e a Mordomia",
+      "data": "08/11/2026",
+      "verdade_aplicada": "Somos mordomos dos recursos que Deus nos confia.",
+      "conteudo": "<h1>Lição 6: A Generosidade e a Mordomia</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 7,
+      "titulo": "A Verdade e a Integridade",
+      "data": "15/11/2026",
+      "verdade_aplicada": "Deus se agrada dos que vivem na verdade.",
+      "conteudo": "<h1>Lição 7: A Verdade e a Integridade</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 8,
+      "titulo": "A Paciência nas Provações",
+      "data": "22/11/2026",
+      "verdade_aplicada": "As provações são oportunidades de crescimento.",
+      "conteudo": "<h1>Lição 8: A Paciência nas Provações</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 9,
+      "titulo": "A Alegria em Meio às Dificuldades",
+      "data": "29/11/2026",
+      "verdade_aplicada": "A alegria cristã não depende das circunstâncias.",
+      "conteudo": "<h1>Lição 9: A Alegria em Meio às Dificuldades</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 10,
+      "titulo": "A Paz que Excede o Entendimento",
+      "data": "06/12/2026",
+      "verdade_aplicada": "A paz de Deus nos guarda em meio à ansiedade.",
+      "conteudo": "<h1>Lição 10: A Paz que Excede o Entendimento</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 11,
+      "titulo": "A Esperança que Não Confunde",
+      "data": "13/12/2026",
+      "verdade_aplicada": "A esperança cristã é fundamentada no amor de Deus.",
+      "conteudo": "<h1>Lição 11: A Esperança que Não Confunde</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 12,
+      "titulo": "A Fé que Vence o Mundo",
+      "data": "20/12/2026",
+      "verdade_aplicada": "A fé em Cristo nos torna vitoriosos.",
+      "conteudo": "<h1>Lição 12: A Fé que Vence o Mundo</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 4,
+      "numero": 13,
+      "titulo": "A Consumação da Jornada",
+      "data": "27/12/2026",
+      "verdade_aplicada": "A jornada cristã termina na glória com Cristo.",
+      "conteudo": "<h1>Lição 13: A Consumação da Jornada</h1><p>Conteúdo da lição...</p>"
     }
   ],
   "youth": [
@@ -40,11 +424,23 @@
       "titulo": "Reconhecendo o Senhorio de Deus",
       "data": "04/01/2026",
       "versiculo_dia": "Salmos 24.1",
-      "versiculo_dia_texto": "Do Senhor é a terra.",
+      "versiculo_dia_texto": "Do Senhor é a terra e a sua plenitude.",
       "verdade_aplicada": "Deus é Senhor de tudo.",
-      "objetivos": ["Reconhecer o Senhorio de Deus"],
-      "momento_oracao": "Ore para descansar no amor de Deus.",
+      "objetivos": ["Reconhecer o Senhorio de Deus", "Saber que Deus é Soberano"],
+      "momento_oracao": "Ore para que o nosso coração descanse no Amor de Deus.",
       "conteudo": "<h1>Lição 1: Reconhecendo o Senhorio de Deus</h1><p>Conteúdo da lição...</p>"
+    },
+    {
+      "trimestre": 1,
+      "numero": 2,
+      "titulo": "A Trindade",
+      "data": "11/01/2026",
+      "versiculo_dia": "Mateus 28.19",
+      "versiculo_dia_texto": "Batizando-os em nome do Pai, e do Filho, e do Espírito Santo.",
+      "verdade_aplicada": "Deus se revela como Pai, Filho e Espírito Santo.",
+      "objetivos": ["Compreender o mistério da Trindade."],
+      "momento_oracao": "Ore para que possamos experimentar a comunhão com a Trindade.",
+      "conteudo": "<h1>Lição 2: A Trindade</h1><p>Conteúdo da lição...</p>"
     },
     {
       "trimestre": 2,
@@ -52,10 +448,10 @@
       "titulo": "Mordomia Cristã",
       "data": "05/04/2026",
       "versiculo_dia": "1 Coríntios 4.2",
-      "versiculo_dia_texto": "Requer-se que cada um seja fiel.",
-      "verdade_aplicada": "Somos administradores dos bens de Deus.",
-      "objetivos": ["Compreender o conceito de mordomia"],
-      "momento_oracao": "Ore por sabedoria para administrar bem.",
+      "versiculo_dia_texto": "Além disso, requer-se nos despenseiros que cada um seja fiel.",
+      "verdade_aplicada": "Somos administradores dos bens de Deus e devemos ser fiéis.",
+      "objetivos": ["Compreender o conceito de mordomia cristã"],
+      "momento_oracao": "Ore para que Deus lhe conceda sabedoria para administrar bem os recursos.",
       "conteudo": "<h1>Lição 1: Mordomia Cristã</h1><p>Conteúdo da lição...</p>"
     },
     {
@@ -65,9 +461,9 @@
       "data": "05/07/2026",
       "versiculo_dia": "Salmo 119.105",
       "versiculo_dia_texto": "Lâmpada para os meus pés é a tua palavra.",
-      "verdade_aplicada": "A poesia bíblica expressa a experiência com Deus.",
-      "objetivos": ["Conhecer os livros poéticos"],
-      "momento_oracao": "Ore para que a poesia nos ensine a adorar.",
+      "verdade_aplicada": "A poesia bíblica expressa a profundidade da experiência humana com Deus.",
+      "objetivos": ["Conhecer os livros poéticos do Antigo Testamento"],
+      "momento_oracao": "Ore para que Deus nos ensine a adorá-Lo com todo o nosso ser.",
       "conteudo": "<h1>Lição 1: Introdução aos Livros Poéticos</h1><p>Conteúdo da lição...</p>"
     },
     {
@@ -77,9 +473,9 @@
       "data": "04/10/2026",
       "versiculo_dia": "Romanos 12.2",
       "versiculo_dia_texto": "Não vos conformeis com este século.",
-      "verdade_aplicada": "Tecnologia deve ser usada com discernimento.",
-      "objetivos": ["Refletir sobre o uso da tecnologia"],
-      "momento_oracao": "Ore para usar a tecnologia sem escravidão.",
+      "verdade_aplicada": "A tecnologia pode ser uma ferramenta útil, mas devemos usá-la com discernimento.",
+      "objetivos": ["Refletir sobre o uso da tecnologia à luz da Bíblia"],
+      "momento_oracao": "Ore para que tenhamos sabedoria para usar a tecnologia sem nos tornarmos escravos dela.",
       "conteudo": "<h1>Lição 1: A tecnologia e a Bíblia</h1><p>Conteúdo da lição...</p>"
     }
   ]
